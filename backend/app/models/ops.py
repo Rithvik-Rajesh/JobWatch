@@ -77,3 +77,13 @@ class NotificationOutbox(IdMixin, Base):
         UniqueConstraint("channel", "dedupe_key", name="uq_notification_outbox_dedupe"),
         Index("ix_notification_outbox_due", "next_attempt_at", postgresql_where=text("state in ('pending','failed')")),
     )
+
+
+class WorkerHeartbeat(Base):
+    """Last-seen timestamp per worker process (written by the worker every tick; read by /scheduler)."""
+
+    __tablename__ = "worker_heartbeats"
+
+    name: Mapped[str] = mapped_column(Text, primary_key=True)
+    beat_at: Mapped[datetime] = mapped_column(server_default=text("now()"))
+    details: Mapped[dict[str, Any]] = mapped_column(JSONB, server_default=text("'{}'::jsonb"))

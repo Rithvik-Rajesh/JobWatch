@@ -128,7 +128,11 @@ class ScopeDecision:
 
 @dataclass
 class RunSummary:
-    """Returned by app/discovery/pipeline.py :: run_site(site_id, *, trigger, fetcher, now=None, dry_run=False).
+    """Returned by app/discovery/pipeline.py ::
+        run_site(site_id, *, trigger, fetcher, now=None, dry_run=False, scrape_run_id=None)
+    `scrape_run_id`: an existing queued run row (manual scrape via API) to execute; otherwise one is created.
+    run_site NEVER raises for adapter/HTTP errors: it records the failed run, updates site health
+    (blocked -> paused), and returns the summary. PoliteClient already retried transient errors.
 
     dry_run=True: list() first page(s) only, India gate + title filters applied, NOTHING written (no run row,
     no postings); used by POST /sites/{id}/test.

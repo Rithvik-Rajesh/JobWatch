@@ -14,7 +14,7 @@ from app.models.catalog import (
     Tag,
 )
 from app.models.jobs import DuplicateSuggestion, Job, JobTag, JobVersion, Posting, SalaryRecord
-from app.models.ops import NotificationOutbox, ScrapeRun
+from app.models.ops import NotificationOutbox, ScrapeRun, WorkerHeartbeat
 
 __all__ = [
     "AppSetting",
@@ -40,4 +40,5 @@ __all__ = [
     "Source",
     "Status",
     "Tag",
+    "WorkerHeartbeat",
 ]
