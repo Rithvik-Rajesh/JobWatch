@@ -14,7 +14,7 @@ from typing import Any, Protocol
 from pydantic import BaseModel, Field, HttpUrl
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.enums import DatePrecision, EmploymentType, WorkArrangement
+from app.models.enums import DatePrecision, EmploymentType, ScopeMatch, WorkArrangement
 
 
 class LocationInput(BaseModel):
@@ -33,6 +33,7 @@ class PostingInput(BaseModel):
 
     source_key: str  # sources.key, e.g. 'career_site', 'manual', 'capture', 'adzuna'
     company_id: int
+    career_site_id: int | None = None  # REQUIRED for source 'career_site' (misses are evaluated per portal)
     external_id: str = Field(min_length=1)  # stable id on that source
     requisition_id: str | None = None  # employer req id, e.g. Workday 'JR2029481'
     source_url: HttpUrl
@@ -59,6 +60,10 @@ class PostingInput(BaseModel):
     description_text: str | None = None
     listing_fingerprint: str | None = None
     raw_payload: dict[str, Any] | None = None
+    # India-gate decision computed by the pipeline from structured evidence. When given, ingest stores it
+    # (jobs.location_scope / scope_reason) instead of re-deriving scope from location text.
+    scope: ScopeMatch | None = None
+    scope_reason: str | None = None
 
 
 @dataclass
@@ -100,6 +105,7 @@ class IngestService(Protocol):
         source_key: str,
         company_id: int,
         seen_external_ids: set[str],
+        career_site_id: int | None = None,  # REQUIRED for 'career_site': only that portal's postings count
         run_complete: bool,
         run_trusted: bool,
         now: datetime | None = None,
@@ -107,3 +113,41 @@ class IngestService(Protocol):
         """Record absences after a run. No-op unless run_complete AND run_trusted (succeeded, not
         quarantined). Closes a posting after >= 2 recorded misses spanning >= 6 hours."""
         ...
+
+
+# ───────────────────────────── Phase 3: India gate & pipeline contracts ─────────────────────────────
+
+
+@dataclass(frozen=True)
+class ScopeDecision:
+    """Result of the India gate (app/discovery/india.py :: evaluate_listing)."""
+
+    scope: ScopeMatch
+    reason: str  # human-readable evidence, e.g. "country IN (structured)", "city: Pune", "remote: India listed"
+
+
+@dataclass
+class RunSummary:
+    """Returned by app/discovery/pipeline.py :: run_site(site_id, *, trigger, fetcher, now=None, dry_run=False).
+
+    dry_run=True: list() first page(s) only, India gate + title filters applied, NOTHING written (no run row,
+    no postings); used by POST /sites/{id}/test.
+    """
+
+    career_site_id: int
+    scrape_run_id: int | None
+    status: str  # RunStatus value
+    complete: bool
+    postings_seen: int = 0
+    postings_in_scope: int = 0
+    postings_unknown_scope: int = 0
+    postings_out_of_scope: int = 0
+    postings_filtered: int = 0
+    postings_new: int = 0
+    postings_updated: int = 0
+    postings_closed: int = 0
+    postings_reopened: int = 0
+    details_fetched: int = 0
+    error_class: str | None = None
+    error_message: str | None = None
+    samples: list[dict[str, Any]] = field(default_factory=list)  # dry-run: [{title, location, scope, reason}]

@@ -111,6 +111,7 @@ class ScrapeRunOut(APIModel):
     id: int
     company_id: int | None
     source_id: int | None
+    career_site_id: int | None = None
     trigger: RunTrigger
     status: RunStatus
     queued_at: datetime
@@ -120,6 +121,9 @@ class ScrapeRunOut(APIModel):
     complete: bool
     postings_seen: int
     postings_in_scope: int
+    postings_unknown_scope: int = 0
+    postings_out_of_scope: int = 0
+    postings_filtered: int = 0
     postings_new: int
     postings_updated: int
     postings_closed: int

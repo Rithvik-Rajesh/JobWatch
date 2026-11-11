@@ -23,7 +23,9 @@ class LocationScopeSettings(BaseModel):
 
     countries: list[str] = Field(default_factory=lambda: ["IN"], min_length=1)  # ISO 3166-1 alpha-2
     include_remote_anywhere: bool = False  # remote jobs with no in-scope country count as in scope
-    include_unknown: bool = True  # jobs with no parseable location are shown (flagged) rather than hidden
+    # Phase 3 (user rule): jobs whose India eligibility cannot be established are NOT shown in the inbox,
+    # default lists, dashboard or notifications; they live in the "Needs location review" queue (scope=unknown).
+    include_unknown: bool = False
 
     @field_validator("countries")
     @classmethod
@@ -60,11 +62,42 @@ class NotificationSettings(BaseModel):
     title_exclude: list[str] = Field(default_factory=list)
 
 
+class TitleFilterSettings(BaseModel):
+    """Global job-title filters applied to DISCOVERED postings (all sources) before ingest.
+
+    Matching is case-insensitive on whole words/phrases (e.g. "engineer" matches "Software Engineer II",
+    not "Engineering Manager" — add "engineering" explicitly if wanted). `include` empty = keep all.
+    `exclude` wins over `include`. Manual/bookmarklet entries are never filtered (user intent).
+    """
+
+    include: list[str] = Field(default_factory=list)
+    exclude: list[str] = Field(default_factory=list)
+
+    @field_validator("include", "exclude")
+    @classmethod
+    def _clean(cls, v: list[str]) -> list[str]:
+        return sorted({t.strip().lower() for t in v if t.strip()})
+
+
+class SchedulerSettings(BaseModel):
+    """Automatic monitoring. `enabled` is the global switch for scheduled scraping (default OFF until the
+    user approves the rollout). Per-site `check_interval_min` overrides `default_interval_min`."""
+
+    enabled: bool = False
+    default_interval_min: int = Field(default=30, ge=10, le=1440)
+    jitter_min: int = Field(default=3, ge=0, le=30)
+    max_concurrent_sites: int = Field(default=6, ge=1, le=32)
+    detail_concurrency: int = Field(default=4, ge=1, le=16)
+    detail_refresh_days: int = Field(default=7, ge=1, le=60)
+
+
 SETTINGS_MODELS: dict[str, type[BaseModel]] = {
     "location_scope": LocationScopeSettings,
     "timezone": TimezoneSettings,
     "reminder_defaults": ReminderDefaults,
     "notifications": NotificationSettings,
+    "title_filters": TitleFilterSettings,
+    "scheduler": SchedulerSettings,
 }
 
 

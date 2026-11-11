@@ -16,6 +16,7 @@ from app.health.router import router as health_router
 from app.jobs.router import router as jobs_router
 from app.reminders.router import router as reminders_router
 from app.settings.router import router as settings_router
+from app.sites.router import router as sites_router
 from app.sources.router import router as sources_router
 from app.statuses.router import router as statuses_router
 
@@ -47,6 +48,7 @@ def create_app() -> FastAPI:
         applications_router,
         reminders_router,
         companies_router,
+        sites_router,
         statuses_router,
         settings_router,
         sources_router,

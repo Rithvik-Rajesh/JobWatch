@@ -19,7 +19,14 @@ from sqlalchemy.dialects.postgresql import CITEXT, JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db import Base, IdMixin, TimestampMixin
-from app.models.enums import ExtractorKind, HealthStatus, SourceKind, StatusCategory
+from app.models.enums import (
+    ExtractorKind,
+    HealthStatus,
+    IndiaCoverage,
+    SourceKind,
+    StatusCategory,
+    SupportClass,
+)
 from app.models.types import pg_enum
 
 
@@ -61,6 +68,63 @@ class Company(IdMixin, TimestampMixin, Base):
             postgresql_where=text("monitoring_enabled and archived_at is null"),
         ),
         Index("ix_companies_name_trgm", "name", postgresql_using="gin", postgresql_ops={"name": "gin_trgm_ops"}),
+    )
+
+
+class CareerSite(IdMixin, TimestampMixin, Base):
+    """One monitored career portal of a company (a company may have several).
+
+    Scheduling, health, robots state and verification evidence live here, per portal. The legacy
+    `companies.extractor*` / `health` columns are kept as read-only summaries for API compatibility.
+    """
+
+    __tablename__ = "career_sites"
+
+    company_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("companies.id", ondelete="CASCADE"))
+    label: Mapped[str] = mapped_column(Text, server_default="main")
+    platform: Mapped[ExtractorKind] = mapped_column(pg_enum(ExtractorKind, "extractor_kind"))
+    config: Mapped[dict[str, Any]] = mapped_column(JSONB, server_default=text("'{}'::jsonb"))
+    careers_url: Mapped[str | None] = mapped_column(Text)
+    monitoring_enabled: Mapped[bool] = mapped_column(Boolean, server_default=text("false"))
+    check_interval_min: Mapped[int | None] = mapped_column(Integer)  # NULL -> scheduler default (setting)
+    next_check_at: Mapped[datetime | None]
+    health: Mapped[HealthStatus] = mapped_column(
+        pg_enum(HealthStatus, "health_status"), server_default=HealthStatus.unknown.value
+    )
+    consecutive_failures: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    last_checked_at: Mapped[datetime | None]
+    last_success_at: Mapped[datetime | None]
+    last_error: Mapped[str | None] = mapped_column(Text)
+    paused_reason: Mapped[str | None] = mapped_column(Text)  # set when auto-paused (robots/block)
+    open_jobs_count: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    baseline_jobs_count: Mapped[int | None] = mapped_column(Integer)
+    # robots.txt state of the data host, re-checked at least every run
+    robots_status: Mapped[str | None] = mapped_column(Text)  # allowed | disallowed | unavailable
+    robots_checked_at: Mapped[datetime | None]
+    # verification evidence (from data/verification, preserved and updatable)
+    support_class: Mapped[SupportClass] = mapped_column(
+        pg_enum(SupportClass, "support_class"), server_default=SupportClass.manual.value
+    )
+    india_coverage: Mapped[IndiaCoverage] = mapped_column(
+        pg_enum(IndiaCoverage, "india_coverage"), server_default=IndiaCoverage.unverified.value
+    )
+    verification_status: Mapped[str | None] = mapped_column(Text)
+    verified_at: Mapped[datetime | None]
+    evidence: Mapped[dict[str, Any]] = mapped_column(JSONB, server_default=text("'{}'::jsonb"))
+    archived_at: Mapped[datetime | None]
+
+    __table_args__ = (
+        UniqueConstraint("company_id", "label", name="uq_career_sites_company_label"),
+        CheckConstraint("check_interval_min is null or check_interval_min between 10 and 1440", name="interval_range"),
+        CheckConstraint(
+            "robots_status is null or robots_status in ('allowed','disallowed','unavailable')",
+            name="robots_status_valid",
+        ),
+        Index(
+            "ix_career_sites_due",
+            "next_check_at",
+            postgresql_where=text("monitoring_enabled and archived_at is null"),
+        ),
     )
 
 

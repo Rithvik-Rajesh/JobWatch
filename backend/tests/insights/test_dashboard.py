@@ -56,6 +56,8 @@ async def _seed_summary_world(session):
 
 async def test_summary_exact_counts_with_scope(session):
     await _seed_summary_world(session)
+    # this test pins the opt-in behaviour (unknown included); the default is covered below
+    await put_setting(session, "location_scope", {"countries": ["IN"], "include_unknown": True})
     s = await service.summary(session, now=NOW)
     assert s.total_discovered == 7  # US-only and merged excluded, unknown included
     assert s.new_today == 1  # only j1: first seen after 00:00 IST today
@@ -79,15 +81,15 @@ async def test_summary_new_today_uses_timezone_boundary(session):
     assert (await service.summary(session, now=NOW)).new_today == 0
 
 
-async def test_summary_hides_unknown_when_setting_off(session):
+async def test_summary_hides_unknown_by_default(session):
     co = await make_company(session)
     await make_job(session, co)
     await make_job(session, co, country_codes=[])
-    assert (await service.summary(session, now=NOW)).total_discovered == 2
+    assert (await service.summary(session, now=NOW)).total_discovered == 1  # default: unknown hidden
     await put_setting(
-        session, "location_scope", {"countries": ["IN"], "include_unknown": False, "include_remote_anywhere": False}
+        session, "location_scope", {"countries": ["IN"], "include_unknown": True, "include_remote_anywhere": False}
     )
-    assert (await service.summary(session, now=NOW)).total_discovered == 1
+    assert (await service.summary(session, now=NOW)).total_discovered == 2
 
 
 async def test_summary_empty(session):
@@ -244,6 +246,7 @@ async def test_funnel_empty(session):
 
 async def test_breakdown_status_includes_zero_counts_in_sort_order(session):
     await _seed_summary_world(session)
+    await put_setting(session, "location_scope", {"countries": ["IN"], "include_unknown": True})
     bd = await service.breakdown(session, "status")
     assert [i.key for i in bd.items] == [
         "new",

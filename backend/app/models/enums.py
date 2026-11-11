@@ -7,10 +7,18 @@ from enum import StrEnum
 
 
 class ExtractorKind(StrEnum):
+    """Career-site platform / adapter key (Phase 3: one shared adapter per platform)."""
+
     workday = "workday"
+    greenhouse = "greenhouse"
+    lever = "lever"
+    ashby = "ashby"
+    oracle_hcm = "oracle_hcm"
+    eightfold = "eightfold"
+    successfactors_csb = "successfactors_csb"
     jsonld = "jsonld"
     html = "html"
-    custom = "custom"
+    custom = "custom"  # company-specific adapter module (config.module)
     none = "none"
 
 
@@ -20,6 +28,7 @@ class HealthStatus(StrEnum):
     degraded = "degraded"
     failing = "failing"
     paused = "paused"
+    blocked = "blocked"  # robots disallow / bot protection: never retried automatically
 
 
 class SourceKind(StrEnum):
@@ -178,3 +187,19 @@ class EventType(StrEnum):
 class Actor(StrEnum):
     user = "user"
     system = "system"
+
+
+class SupportClass(StrEnum):
+    """Registry classification of a career site (from verification evidence)."""
+
+    auto = "auto"  # shared platform adapter
+    adapter = "adapter"  # company-specific adapter
+    not_reliable = "not_reliable"  # blocked / robots-disallowed / token-gated -> bookmarklet
+    manual = "manual"  # no machine-readable listings -> bookmarklet
+
+
+class IndiaCoverage(StrEnum):
+    confirmed = "confirmed"
+    none_observed = "none_observed"
+    unverified = "unverified"
+    not_applicable = "not_applicable"

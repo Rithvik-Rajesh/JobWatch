@@ -4,6 +4,7 @@ reviewed against docs/phase1/02-database-schema.md. Implementation agents must n
 from app.models.applications import Application, ApplicationEvent, Contact, Interview, Note, Reminder
 from app.models.catalog import (
     AppSetting,
+    CareerSite,
     Company,
     CompanyAlias,
     ResumeVersion,
@@ -19,6 +20,7 @@ __all__ = [
     "AppSetting",
     "Application",
     "ApplicationEvent",
+    "CareerSite",
     "Company",
     "CompanyAlias",
     "Contact",
