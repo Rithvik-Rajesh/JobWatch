@@ -56,6 +56,10 @@ class JobFilters(APIModel):
     starred: bool | None = None
     tag: list[str] = Field(default_factory=list)
     include_merged: bool = False
+    # Experience filter (freshers: max_experience_years=1). Jobs whose requirement couldn't be parsed are kept
+    # unless include_unknown_experience=false; titles like intern/graduate/fresher always match.
+    max_experience_years: Decimal | None = None
+    include_unknown_experience: bool = True
     sort: JobSort = "discovered_desc"
 
 
@@ -76,6 +80,8 @@ class CompanyRef(APIModel):
 
 class JobListItem(APIModel):
     id: int
+    experience_min_years: Decimal | None = None
+    experience_max_years: Decimal | None = None
     title: str
     company: CompanyRef
     location_text: str | None

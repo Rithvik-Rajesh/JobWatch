@@ -170,8 +170,8 @@ async def test_pagination_stops_on_empty_page_without_count():
 
 
 async def test_page_cap_marks_incomplete(monkeypatch):
-    monkeypatch.setattr(mod, "MAX_PAGES", 3)
     config = cfg("microsoft")
+    config = config.model_copy(update={"max_pages": 3})  # per-site cap (dry runs use it)
     f = FixtureFetcher()
     for n in range(3):
         add(f, config, n * 2, body(config, [pos(n * 2), pos(n * 2 + 1)], 10_000))

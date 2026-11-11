@@ -167,7 +167,7 @@ async def get_job_detail(session: AsyncSession, job_id: int, *, now: datetime | 
     )
     v = primary_version
     return JobDetail(
-        **item.model_dump(),
+        **item.model_dump(exclude={"experience_min_years", "experience_max_years"}),
         department=job.department,
         locations=list(job.locations or []),
         experience_text=v.experience_text if v else None,

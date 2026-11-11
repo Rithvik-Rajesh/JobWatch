@@ -98,9 +98,11 @@ class EightfoldAdapter:
         pages = 0
         complete = True
         while True:
-            if pages >= MAX_PAGES:
+            if pages >= getattr(config, "max_pages", MAX_PAGES):
                 complete = False
-                warnings.append({"code": "page_cap", "detail": f"stopped after {MAX_PAGES} pages"})
+                warnings.append(
+                    {"code": "page_cap", "detail": f"stopped after {getattr(config, 'max_pages', MAX_PAGES)} pages"}
+                )
                 break
             params: dict[str, str] = {"domain": config.domain}
             if variant == "pcsx":

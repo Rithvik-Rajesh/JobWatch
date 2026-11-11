@@ -323,7 +323,7 @@ async def test_dry_run_writes_nothing(env, session):
         postings_,
     )
     assert await count(session, JobVersion) == versions
-    assert env.adapter.detail_calls == []
+    assert len(env.adapter.detail_calls) <= 1  # one read-only detail probe for the coverage report
     assert env.site.last_checked_at is None and env.site.health == HealthStatus.unknown
     by_title = {x["title"]: x for x in s.samples}
     assert by_title["Sales Rep"]["filtered"] and by_title["Engineer"]["url"].startswith("https://")
@@ -366,3 +366,39 @@ async def test_detail_requests_are_capped_per_run_and_resumed_next_run(env, sess
         )
     ).all()
     assert sum(d is not None for d in fetched) == 4
+
+
+async def test_dry_run_is_read_only_everywhere_and_reports_diagnostics(env, session):
+    """Phase 3.5 safety: a dry run touches no table at all (jobs, postings, applications, events, runs, outbox,
+    the site row), yet returns field completeness and a single detail probe."""
+    from sqlalchemy import func
+
+    from app.models import (
+        Application,
+        ApplicationEvent,
+        CareerSite,
+        Job,
+        JobVersion,
+        NotificationOutbox,
+        Posting,
+        ScrapeRun,
+    )
+
+    tables = (Job, Posting, JobVersion, Application, ApplicationEvent, ScrapeRun, NotificationOutbox)
+
+    async def counts():
+        return [await session.scalar(select(func.count()).select_from(t)) for t in tables]
+
+    before = await counts()
+    keys = ("config", "health", "monitoring_enabled", "next_check_at", "robots_status", "last_checked_at")
+    row = await session.get(CareerSite, env.site.id, populate_existing=True)
+    site_before = {k: getattr(row, k) for k in keys}
+    s = await env.run(listing(lp("A", "Engineer"), lp("B", "Analyst", "Austin, TX")), dry_run=True)
+    assert await counts() == before
+    site_after = await session.get(CareerSite, env.site.id, populate_existing=True)
+    assert {k: getattr(site_after, k) for k in keys} == site_before
+    assert s.scrape_run_id is None and (s.postings_in_scope, s.postings_out_of_scope) == (1, 1)
+    d = s.diagnostics
+    assert d["detail_probe"]["attempted"] and d["detail_probe"]["ok"] and d["detail_probe"]["external_id"] == "A"
+    assert set(d["field_completeness_pct"]) >= {"location", "posted_at", "requisition_id", "structured_country"}
+    assert env.adapter.detail_calls == ["A"]

@@ -158,9 +158,11 @@ class OracleHcmAdapter:
         complete = True
         fetched = 0
         while True:
-            if fetched >= MAX_PAGES:
+            if fetched >= getattr(config, "max_pages", MAX_PAGES):
                 complete = False
-                warnings.append({"code": "page_cap", "detail": f"stopped after {MAX_PAGES} pages"})
+                warnings.append(
+                    {"code": "page_cap", "detail": f"stopped after {getattr(config, 'max_pages', MAX_PAGES)} pages"}
+                )
                 break
             payload = await http.get_json(url, params=_search_params(config, offset, location_id))
             pages += 1

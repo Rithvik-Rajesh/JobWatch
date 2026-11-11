@@ -5,7 +5,7 @@ from collections.abc import Sequence
 from datetime import UTC, datetime, timedelta
 from zoneinfo import ZoneInfo
 
-from sqlalchemy import case, exists, func, not_, select
+from sqlalchemy import case, exists, func, not_, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.pagination import Page, PageParams
@@ -84,6 +84,13 @@ def job_conditions(
         conds.append(Job.country_codes.overlap([c.upper() for c in filters.country]))
     if filters.location:
         conds.append(Job.location_text.ilike(f"%{filters.location}%"))
+    if filters.max_experience_years is not None:
+        fresher_words = r"\m(intern|internship|graduate|grad|fresher|entry[- ]level|trainee|apprentice)\M"
+        fresher_title = Job.title.op("~*")(fresher_words)
+        exp_ok = Job.experience_min_years <= filters.max_experience_years
+        if filters.include_unknown_experience:
+            exp_ok = or_(exp_ok, Job.experience_min_years.is_(None))
+        conds.append(or_(exp_ok, fresher_title))
     if filters.employment_type and skip != "employment_type":
         conds.append(Job.employment_type.in_(filters.employment_type))
     if filters.work_arrangement and skip != "work_arrangement":
@@ -226,6 +233,8 @@ async def build_items(
                 location_scope=job.location_scope,
                 employment_type=job.employment_type,
                 work_arrangement=job.work_arrangement,
+                experience_min_years=job.experience_min_years,
+                experience_max_years=job.experience_max_years,
                 posted_at=job.posted_at,
                 posted_at_precision=job.posted_at_precision,
                 first_seen_at=job.first_seen_at,

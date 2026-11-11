@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JobWatch</title>
+<style>
+  :root { --bg:#f7f7f8; --card:#fff; --text:#18181b; --muted:#71717a; --line:#e4e4e7; --accent:#4f46e5; --ok:#16a34a; --bad:#dc2626; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0b0b0d; --card:#151518; --text:#f4f4f5; --muted:#a1a1aa; --line:#27272a; --accent:#818cf8; } }
+  * { box-sizing: border-box; }
+  body { margin:0; font:14px/1.45 system-ui, -apple-system, Segoe UI, sans-serif; background:var(--bg); color:var(--text); }
+  header { display:flex; gap:12px; align-items:center; padding:12px 16px; border-bottom:1px solid var(--line); background:var(--card); position:sticky; top:0; flex-wrap:wrap; }
+  h1 { font-size:16px; margin:0 8px 0 0; }
+  input, select, button { font:inherit; padding:6px 10px; border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--text); }
+  button { cursor:pointer; } button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  button:disabled { opacity:.5; cursor:default; }
+  label { display:flex; gap:6px; align-items:center; color:var(--muted); }
+  main { padding:12px 16px; }
+  .status { color:var(--muted); font-size:13px; }
+  table { width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-size:12px; color:var(--muted); font-weight:600; background:var(--bg); }
+  td a { color:var(--accent); text-decoration:none; } td a:hover { text-decoration:underline; }
+  .pill { display:inline-block; padding:1px 8px; border-radius:999px; font-size:12px; border:1px solid var(--line); color:var(--muted); }
+  .row-actions button { padding:3px 8px; font-size:12px; }
+  .pager { display:flex; gap:8px; align-items:center; margin:12px 0; }
+  #login { max-width:320px; margin:15vh auto; display:grid; gap:10px; background:var(--card); padding:20px; border:1px solid var(--line); border-radius:12px; }
+  #log { font-size:12px; color:var(--muted); max-height:160px; overflow:auto; margin-top:8px; white-space:pre-wrap; }
+  @media (max-width: 700px) { .hide-sm { display:none; } }
+</style>
+</head>
+<body>
+<form id="login" hidden>
+  <strong>JobWatch sign in</strong>
+  <input id="u" placeholder="Username" value="admin" autocomplete="username">
+  <input id="p" type="password" placeholder="Password" autocomplete="current-password">
+  <button class="primary">Sign in</button>
+  <span id="loginErr" class="status"></span>
+</form>
+
+<div id="app" hidden>
+  <header>
+    <h1>JobWatch</h1>
+    <input id="q" placeholder="Search title, company, skills…" size="28">
+    <label><input type="checkbox" id="fresher" checked> Freshers (0–1 yrs)</label>
+    <label><input type="checkbox" id="unknownExp" checked> include unstated experience</label>
+    <select id="status">
+      <option value="">All statuses</option><option value="new">New</option><option value="interested">Interested</option>
+      <option value="applied">Applied</option><option value="not_interested">Not interested</option>
+    </select>
+    <button id="fetch" class="primary">Fetch all sites</button>
+    <span id="fetchStatus" class="status"></span>
+  </header>
+  <main>
+    <div id="log"></div>
+    <div class="pager"><button id="prev">←</button><span id="count" class="status"></span><button id="next">→</button></div>
+    <table>
+      <thead><tr><th>Role</th><th>Company</th><th class="hide-sm">Location</th><th>Exp</th><th class="hide-sm">Found</th><th>Status</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </main>
+</div>
+
+<script>
+const API = "/api/v1", H = {"Content-Type": "application/json", "X-JobWatch-Client": "web"};
+let page = 1; const pageSize = 100;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+async function api(path, opts = {}) {
+  const r = await fetch(API + path, {credentials: "same-origin", headers: H, ...opts});
+  if (r.status === 401) { showLogin(); throw new Error("unauthorized"); }
+  if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error?.message || r.statusText);
+  return r.status === 204 ? null : r.json();
+}
+function showLogin() { $("app").hidden = true; $("login").hidden = false; }
+
+$("login").onsubmit = async e => {
+  e.preventDefault();
+  const r = await fetch(API + "/auth/login", {method: "POST", headers: H, credentials: "same-origin",
+    body: JSON.stringify({username: $("u").value, password: $("p").value})});
+  if (!r.ok) { $("loginErr").textContent = "Invalid credentials"; return; }
+  $("login").hidden = true; $("app").hidden = false; load(); pollFetch();
+};
+
+function exp(j) {
+  if (j.experience_min_years == null) return '<span class="pill">not stated</span>';
+  const a = Number(j.experience_min_years), b = j.experience_max_years != null ? Number(j.experience_max_years) : null;
+  return b != null && b !== a ? `${a}–${b} yrs` : `${a}+ yrs`;
+}
+
+async function load() {
+  const p = new URLSearchParams({page, page_size: pageSize, sort: "discovered_desc"});
+  if ($("q").value.trim()) { p.set("q", $("q").value.trim()); p.set("sort", "relevance"); }
+  if ($("fresher").checked) { p.set("max_experience_years", "1"); p.set("include_unknown_experience", $("unknownExp").checked); }
+  if ($("status").value) p.set("status", $("status").value);
+  else p.append("status_category", "inbox"), ["considering","applied","in_process","offer"].forEach(c => p.append("status_category", c));
+  const data = await api("/jobs?" + p);
+  $("count").textContent = `${data.total} jobs · page ${data.page} of ${Math.max(1, Math.ceil(data.total / pageSize))}`;
+  $("prev").disabled = page <= 1; $("next").disabled = page * pageSize >= data.total;
+  $("rows").innerHTML = data.items.map(j => `
+    <tr data-id="${j.id}">
+      <td><a href="${esc(j.apply_url || "#")}" target="_blank" rel="noopener">${esc(j.title)}</a>${j.is_new ? ' <span class="pill">new</span>' : ""}</td>
+      <td>${esc(j.company.name)}</td>
+      <td class="hide-sm">${esc(j.location_text || "")}</td>
+      <td>${exp(j)}</td>
+      <td class="hide-sm">${new Date(j.first_seen_at).toLocaleDateString()}</td>
+      <td><span class="pill">${esc(j.status.label)}</span></td>
+      <td class="row-actions">
+        <button data-s="interested" title="Interested">★</button>
+        <button data-s="applied" title="Applied">✓</button>
+        <button data-s="not_interested" title="Not interested">✕</button>
+      </td>
+    </tr>`).join("") || '<tr><td colspan="7" class="status">No jobs yet — click “Fetch all sites”.</td></tr>';
+}
+
+$("rows").onclick = async e => {
+  const b = e.target.closest("button[data-s]"); if (!b) return;
+  const id = b.closest("tr").dataset.id;
+  await api(`/jobs/${id}/status`, {method: "PUT", body: JSON.stringify({status: b.dataset.s})});
+  load();
+};
+
+let fetchTimer = null;
+async function pollFetch() {
+  const s = await api("/fetch-all");
+  $("fetch").disabled = s.running;
+  if (s.running) $("fetchStatus").textContent = `Fetching… ${s.done}/${s.total} sites · ${s.new_jobs} new jobs`;
+  else if (s.finished_at) $("fetchStatus").textContent = `Last fetch: ${new Date(s.finished_at).toLocaleString()} · ${s.new_jobs} new jobs`;
+  $("log").textContent = (s.sites || []).map(x => `${x.status === "succeeded" ? "✓" : x.status === "partial" ? "~" : "✗"} ${x.site}: ${x.in_scope} India · ${x.new} new${x.error ? " — " + x.error : ""}`).join("\n");
+  clearTimeout(fetchTimer);
+  if (s.running) { fetchTimer = setTimeout(pollFetch, 3000); load(); }
+}
+$("fetch").onclick = async () => { await api("/fetch-all", {method: "POST"}); pollFetch(); };
+
+let t; $("q").oninput = () => { clearTimeout(t); t = setTimeout(() => { page = 1; load(); }, 300); };
+["fresher", "unknownExp", "status"].forEach(id => $(id).onchange = () => { page = 1; load(); });
+$("prev").onclick = () => { page--; load(); }; $("next").onclick = () => { page++; load(); };
+
+api("/auth/me").then(() => { $("app").hidden = false; load(); pollFetch(); }).catch(() => {});
+</script>
+</body>
+</html>

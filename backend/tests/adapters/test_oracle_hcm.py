@@ -180,8 +180,8 @@ async def test_pagination_stops_on_empty_page_without_total():
 
 
 async def test_page_cap_marks_incomplete(monkeypatch):
-    monkeypatch.setattr(mod, "MAX_PAGES", 3)
     config = cfg("jpmc")
+    config = config.model_copy(update={"max_pages": 3})  # per-site cap (dry runs use it)
     f = FixtureFetcher()
     for n in range(3):
         page(config, n * 25, envelope([req(i) for i in range(n * 25, n * 25 + 25)], 10_000), f)

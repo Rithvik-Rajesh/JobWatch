@@ -52,6 +52,7 @@ from app.discovery.title_filter import passes
 from app.models import CareerSite, Company, Posting, ScrapeRun, Source
 from app.models.enums import (
     Availability,
+    DatePrecision,
     ExtractorKind,
     HealthStatus,
     RunStatus,
@@ -371,6 +372,9 @@ async def run_site(
                 _tally(summary, c)
             summary.samples = [_sample(c) for c in candidates]
             summary.complete = outcome.complete
+            summary.diagnostics = await _dry_run_diagnostics(
+                adapter, list_cfg, fetcher, result, postings, candidates, loc_cfg, requests_before
+            )
             return summary
 
         # -- phase C/D: decide and fetch details --------------------------------------------------------------
@@ -495,6 +499,83 @@ async def run_site(
     summary.complete = outcome.complete and listing_ok
     summary.error_class, summary.error_message = outcome.error_class, outcome.error_message
     return summary
+
+
+ABSOLUTE_DATES = (DatePrecision.exact, DatePrecision.day)
+
+
+def _pct(n: int, d: int) -> float | None:
+    return round(100.0 * n / d, 1) if d else None
+
+
+async def _dry_run_diagnostics(
+    adapter: Any,
+    cfg: BaseModel,
+    fetcher: Fetcher,
+    result: Any,
+    postings: list[ListedPosting],
+    candidates: list["_Candidate"],
+    loc_cfg: LocationScopeSettings,
+    requests_before: int,
+) -> dict[str, Any]:
+    """Read-only quality signals for the Phase 3.5 coverage report. Probes ONE detail (the first India-eligible,
+    unfiltered posting) so description availability can be reported; nothing is written."""
+    n = len(postings)
+    completeness = {
+        "location": _pct(sum(1 for p in postings if p.location_texts or p.country_codes), n),
+        "structured_country": _pct(sum(1 for p in postings if p.country_codes), n),
+        "posted_at": _pct(sum(1 for p in postings if p.posted_at), n),
+        "posted_at_absolute": _pct(
+            sum(
+                1 for p in postings if p.posted_at and p.posted_at_precision in (DatePrecision.exact, DatePrecision.day)
+            ),
+            n,
+        ),
+        "requisition_id": _pct(sum(1 for p in postings if p.requisition_id), n),
+        "department": _pct(sum(1 for p in postings if p.department), n),
+        "employment_type": _pct(sum(1 for p in postings if p.employment_type), n),
+        "full_detail_in_listing": _pct(sum(1 for p in postings if p.has_full_detail), n),
+    }
+    probe: dict[str, Any] = {"attempted": False}
+    target = next((c for c in candidates if c.decision.scope == ScopeMatch.in_scope and not c.filtered), None) or next(
+        (c for c in candidates if c.decision.scope == ScopeMatch.unknown), None
+    )
+    if target is not None:
+        probe = {"attempted": True, "external_id": target.posting.external_id, "title": target.posting.title}
+        try:
+            d = await adapter.detail(cfg, target.posting, fetcher)
+            text = (d.description_text or "") + (d.description_html or "")
+            after = evaluate_listing(target.posting, d, loc_cfg)
+            probe.update(
+                ok=True,
+                description_chars=len(text),
+                description_available=len(text.strip()) >= 200,
+                apply_url=bool(d.apply_url),
+                posted_at=d.posted_at.isoformat() if d.posted_at else None,
+                posted_at_precision=(d.posted_at_precision.value if d.posted_at_precision else None),
+                employment_type=d.employment_type.value if d.employment_type else None,
+                work_arrangement=d.work_arrangement.value if d.work_arrangement else None,
+                salary_text=bool(d.salary_text),
+                detail_locations=(d.location_texts or [])[:5],
+                detail_country_codes=d.country_codes or [],
+                scope_before=target.decision.scope.value,
+                scope_after_detail=after.scope.value,
+                reason_after_detail=after.reason,
+            )
+        except (PortalBlocked, RobotsDisallowed) as e:
+            probe.update(ok=False, error_class=type(e).__name__, error=str(e)[:300])
+        except Exception as e:  # report, never fail the dry run on the probe
+            probe.update(ok=False, error_class=type(e).__name__, error=str(e)[:300])
+    return {
+        "adapter_complete": result.complete,
+        "pages_fetched": result.pages_fetched,
+        "source_total": result.source_total,
+        "used_source_india_filter": result.used_source_india_filter,
+        "adapter_warnings": result.warnings[:20],
+        "field_completeness_pct": completeness,
+        "detail_probe": probe,
+        "http_requests": max(0, _request_count(fetcher) - requests_before),
+    }
 
 
 def _tally(summary: RunSummary, c: _Candidate) -> None:
