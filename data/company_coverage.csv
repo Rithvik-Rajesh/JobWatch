@@ -1,0 +1,92 @@
+company,category,endpoint_accessible,india_coverage,india_jobs_observed,portals,automatable_portals,primary_portal_url,primary_platform,reason
+Accenture,auto,true,confirmed,2000,1,1,https://accenture.wd103.myworkdayjobs.com/AccentureCareers,workday,Workday; India facet >2000 results -> adapter must split by sub-facet (city/timeType) to page fully.
+Adobe,auto,true,confirmed,36,1,1,https://adobe.wd5.myworkdayjobs.com/external_experienced,workday,Shared workday adapter; public data; India via source_filter.
+Airbnb,auto,true,confirmed,10,1,1,https://careers.airbnb.com/positions/,greenhouse,Shared greenhouse adapter; public data; India via location_text.
+Airbus,auto,true,confirmed,213,1,1,https://ag.wd3.myworkdayjobs.com/Airbus,workday,Shared workday adapter; public data; India via source_filter.
+Amazon,adapter,true,confirmed,2101,1,1,https://www.amazon.jobs/en/search?normalized_country_code[]=IND,custom_api,amazon.jobs search.json (normalized_country_code[]=IND); robots allows. ~2100 India jobs.
+AMD,adapter,true,confirmed,207,1,1,https://careers.amd.com/careers-home/jobs,icims,iCIMS/Jibe /api/jobs; robots crawl-delay 5 s must be honoured.
+American Express,not_reliable,false,not_applicable,,1,0,https://aexp.eightfold.ai/careers,eightfold,Eightfold tenant requires a browser session/CSRF.
+Apple,not_reliable,false,not_applicable,,1,0,https://jobs.apple.com/en-in/search?location=india-INDC,custom_api,JSON search API requires a CSRF token handshake; HTML gives only page 1.
+Arista Networks,manual,false,not_applicable,,1,0,https://www.arista.com/en/careers,unknown,Site returns HTTP 406; ATS unknown.
+Atlassian,adapter,true,confirmed,44,1,1,https://www.atlassian.com/company/careers/all-jobs,custom_api,Public listings JSON used by the careers page.
+Autodesk,auto,true,confirmed,1,1,1,https://autodesk.wd1.myworkdayjobs.com/Ext,workday,"Workday 'Ext' site lists only 4 jobs and autodesk.com blocks the honest UA -> LOW CONFIDENCE, re-verify."
+Barclays,auto,true,confirmed,304,1,1,https://barclays.wd3.myworkdayjobs.com/External_Career_Site_Barclays,workday,Shared workday adapter; public data; India via location_text.
+BlackRock,auto,true,confirmed,34,1,1,https://blackrock.wd1.myworkdayjobs.com/BlackRock_Professional,workday,Shared workday adapter; public data; India via source_filter.
+Blinkit,not_reliable,false,not_applicable,,2,0,https://blinkit.com/careers,unknown,Honest User-Agent blocked (bot_protected); not circumvented.
+Bloomberg,not_reliable,false,not_applicable,,1,0,https://careers.bloomberg.com,,Honest User-Agent blocked (bot_protected); not circumvented.
+Boeing,auto,true,confirmed,4,1,1,https://boeing.wd1.myworkdayjobs.com/EXTERNAL_CAREERS,workday,Shared workday adapter; public data; India via source_filter.
+BrowserStack,auto,true,confirmed,28,1,1,https://browserstack.wd3.myworkdayjobs.com/External,workday,Shared workday adapter; public data; India via source_filter.
+Capgemini,adapter,true,confirmed,720,1,1,https://www.capgemini.com/in-en/careers/join-capgemini/job-search/,custom_api,Public job-stream API used by the search page (India filter).
+Cisco,adapter,true,confirmed,300,1,1,https://careers.cisco.com/global/en/search-results?qcountry=India,phenom,Phenom: job data embedded in search pages; robots allows search.
+Cognizant,not_reliable,false,not_applicable,,1,0,https://careers.cognizant.com/global-en/jobs/,unknown,Honest User-Agent blocked (bot_protected); not circumvented.
+Cohesity,not_reliable,false,not_applicable,,1,0,https://careers.cohesity.com/,unknown,Honest User-Agent blocked (bot_protected); not circumvented.
+Coinbase,auto,true,confirmed,10,1,1,https://www.coinbase.com/careers/positions,greenhouse,Shared greenhouse adapter; public data; India via location_text.
+Confluent,manual,false,not_applicable,,1,0,https://www.ibm.com/careers/search?q=confluent,custom_api,No machine-readable listings found.
+CRED,auto,true,confirmed,14,1,1,https://careers.cred.club/careers/openings,lever,Shared lever adapter; public data; India via location_text.
+D. E. Shaw,manual,false,not_applicable,,2,0,https://apply.deshaw.com/,custom_html,No machine-readable listings found.
+Databricks,auto,true,confirmed,89,1,1,https://www.databricks.com/company/careers/open-positions,greenhouse,Shared greenhouse adapter; public data; India via location_text.
+Datadog,auto,true,confirmed,8,1,1,https://careers.datadoghq.com/all-jobs/,greenhouse,Shared greenhouse adapter; public data; India via location_text.
+Dell Technologies,auto,true,confirmed,88,1,1,https://enterpriseplatform.dell.com/hcmUI/CandidateExperience/en/sites/careers,oracle_hcm,Oracle HCM; use locationId (keyword=India undercounts 11 vs 88).
+Deutsche Bank,not_reliable,false,not_applicable,,1,0,https://careers.db.com/professionals/search-roles/,custom_html,No public listing API identified yet.
+Dream11,manual,false,not_applicable,,1,0,https://jobs.lever.co/dreamsports,lever,Careers page links a Lever board that returns 404; no live listings host found.
+Eightfold AI,auto,true,confirmed,21,1,1,https://app.eightfold.ai/careers?start=0&pid=68763995769&sort_by=hot,eightfold,Shared eightfold adapter; public data; India via source_filter.
+Flipkart,not_reliable,false,not_applicable,,1,0,https://flipkart.turbohire.co/careerpage/4d757ba0-3d57-448a-b82c-238ed87ac90f,turbohire,TurboHire host robots.txt: Disallow: / for all bots.
+Goldman Sachs,not_reliable,false,not_applicable,,1,0,https://higher.gs.com/results,custom_api,higher.gs.com robots disallows all but /roles/; GraphQL API undocumented. Fragile.
+Google,not_reliable,false,not_applicable,,1,0,https://www.google.com/about/careers/applications/jobs/results?location=India,custom_html,Only page 1 (20 of ~272 India jobs) is reachable: robots.txt disallows ?page= pagination. Incomplete listings cannot drive new/closed detection.
+Grab,adapter,true,confirmed,9,1,1,https://www.grab.careers/en/jobs/,custom_api,XML job feed; country filter applied client-side.
+Graviton Research Capital,manual,false,not_applicable,,1,0,https://www.gravitontrading.com/careers.html,custom_html,No machine-readable listings found.
+Groww,auto,true,confirmed,9,1,1,https://job-boards.eu.greenhouse.io/groww,greenhouse,Shared greenhouse adapter; public data; India via location_text.
+Harness,auto,true,confirmed,16,1,1,https://job-boards.greenhouse.io/harnessinc,greenhouse,Shared greenhouse adapter; public data; India via location_text.
+HCLTech,adapter,true,unverified,0,1,1,https://careers.hcltech.com/,successfactors,SuccessFactors; India isolation unresolved (no location in sitemap) -> needs detail-page parsing.
+Hewlett Packard Enterprise,auto,true,confirmed,400,1,1,https://hpe.wd5.myworkdayjobs.com/Jobsathpe,workday,Shared workday adapter; public data; India via location_text.
+IBM,adapter,true,confirmed,1971,1,1,https://www.ibm.com/careers/search,custom_api,IBM search API (POST); endpoint not visible in page source -> verify provenance before enabling.
+Infosys,not_reliable,false,not_applicable,,1,0,https://career.infosys.com/,unknown,Honest User-Agent blocked (bot_protected); not circumvented.
+Intel,auto,true,confirmed,94,1,1,https://intel.wd1.myworkdayjobs.com/External,workday,Shared workday adapter; public data; India via source_filter.
+Intuit,adapter,true,confirmed,27,1,1,https://jobs.intuit.com/,custom_html,robots disallows /search-jobs/; only sitemap.xml + individual job pages (JSON-LD unverified).
+Jane Street,adapter,true,none_observed,0,1,1,https://www.janestreet.com/join-jane-street/open-roles/,custom_api,"Public main.json, but NO India offices (ATX/CHI/HKG/LDN/NYC/SGP). Monitoring yields nothing today."
+JPMorgan Chase,auto,true,confirmed,303,1,1,https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001,oracle_hcm,Shared oracle_hcm adapter; public data; India via source_filter.
+LinkedIn,manual,false,not_applicable,,1,0,https://careers.linkedin.com/,linkedin_only,Listings live on linkedin.com; LinkedIn's terms forbid automated access (also Cloudflare-challenged).
+LTIMindtree,manual,false,not_applicable,,2,0,https://careers.ltm.com/,successfactors,No machine-readable listings found.
+Mastercard,auto,true,confirmed,225,1,1,https://mastercard.wd1.myworkdayjobs.com/CorporateCareers,workday,Shared workday adapter; public data; India via source_filter.
+Meesho,auto,true,confirmed,49,1,1,https://www.meesho.io/jobs,lever,Shared lever adapter; public data; India via location_text.
+Meta,not_reliable,false,not_applicable,,1,0,https://www.metacareers.com/jobsearch,custom_api,GraphQL requires per-page tokens (lsd/fb_dtsg); robots comment prohibits automated collection.
+Microsoft,auto,true,confirmed,234,1,1,https://apply.careers.microsoft.com/careers?location=India,eightfold,Eightfold PCSX; robots.txt explicitly allows /api/pcsx.
+Morgan Stanley,not_reliable,false,not_applicable,,1,0,https://morganstanley.eightfold.ai/careers,eightfold,robots.txt Disallow: / except /careers and /api/apply; the allowed endpoint returns 'Not authorized'.
+Myntra,manual,false,not_applicable,,1,0,https://jobs.myntra.com/home,custom_html,No machine-readable listings found.
+NetApp,auto,true,confirmed,75,1,1,https://netapp.eightfold.ai/careers?domain=netapp.com,eightfold,Eightfold apply/v2 (PCSX disabled for this tenant).
+Nike,not_reliable,false,not_applicable,,1,0,https://nike.wd1.myworkdayjobs.com/nke,workday,robots.txt disallows the Workday site paths.
+Nvidia,auto,true,confirmed,242,1,1,https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite,workday,Shared workday adapter; public data; India via source_filter.
+Oracle,auto,true,confirmed,345,1,1,https://careers.oracle.com/en/sites/jobsearch/jobs,oracle_hcm,"Oracle HCM Candidate Experience REST, India via locationId."
+Palo Alto Networks,not_reliable,false,not_applicable,,1,0,https://paloaltonetworks.wd5.myworkdayjobs.com/panwexternalcareers,workday,robots.txt disallows /panwexternalcareers/ (the Workday site path); cxs API path not mentioned. Treated as disallowed until you decide otherwise.
+PayPal,not_reliable,false,not_applicable,,1,0,https://careers.pypl.com,,Honest User-Agent blocked (bot_protected); not circumvented.
+Postman,manual,false,not_applicable,,1,0,https://www.postman.com/company/careers/open-positions/,unknown,No machine-readable listings found.
+Qualcomm,auto,true,confirmed,497,1,1,https://careers.qualcomm.com/careers,eightfold,Eightfold PCSX (apply/v2 returns 403 for this tenant).
+Razorpay,auto,true,confirmed,23,1,1,https://job-boards.greenhouse.io/razorpaysoftwareprivatelimited,greenhouse,Shared greenhouse adapter; public data; India via location_text.
+Red Hat,auto,true,confirmed,6,1,1,https://redhat.wd5.myworkdayjobs.com/Jobs,workday,Shared workday adapter; public data; India via source_filter.
+Rippling,adapter,true,confirmed,101,1,1,https://www.rippling.com/careers/open-roles,custom_api,"Rippling ATS board JSON; endpoint inferred from platform pattern, robots unavailable -> verify first."
+Rubrik,auto,true,confirmed,30,1,1,https://boards.greenhouse.io/rubrik,greenhouse,Shared greenhouse adapter; public data; India via location_text.
+Salesforce,auto,true,confirmed,96,2,2,https://salesforce.wd12.myworkdayjobs.com/External_Career_Site,workday,Shared workday adapter; public data; India via source_filter.
+Samsung,auto,true,confirmed,34,2,2,https://sec.wd3.myworkdayjobs.com/Samsung_Careers,workday,Shared workday adapter; public data; India via source_filter.
+SAP,not_reliable,false,not_applicable,,1,0,https://jobs.sap.com/,successfactors,Honest User-Agent blocked (bot_protected); not circumvented.
+ServiceNow,not_reliable,false,not_applicable,,1,0,https://careers.servicenow.com/jobs,unknown,Honest User-Agent blocked (bot_protected); not circumvented.
+Slice,not_reliable,false,not_applicable,,1,0,https://careers.kula.ai/slice?jobs=true,kula,Kula ATS robots.txt disallows /api/.
+Snowflake,auto,true,confirmed,11,1,1,https://jobs.ashbyhq.com/snowflake,ashby,Shared ashby adapter; public data; India via location_text.
+Spotify,auto,true,confirmed,1,1,1,https://jobs.lever.co/spotify,lever,Shared lever adapter; public data; India via location_text.
+Stripe,auto,true,confirmed,45,1,1,https://stripe.com/jobs/search,greenhouse,Shared greenhouse adapter; public data; India via location_text.
+Swiggy,not_reliable,false,not_applicable,,1,0,https://careers.swiggy.in/,smartrecruiters,SmartRecruiters public API host robots.txt disallows generic bots.
+Target,auto,true,confirmed,71,1,1,https://target.wd5.myworkdayjobs.com/targetcareers,workday,Shared workday adapter; public data; India via source_filter.
+Tata Consultancy Services,not_reliable,false,not_applicable,,1,0,https://www.tcs.com/careers,unknown,Honest User-Agent blocked (bot_protected); not circumvented.
+Tech Mahindra,manual,false,not_applicable,,1,0,https://careers.techmahindra.com/CurrentOpportunity.aspx,custom_html,No machine-readable listings found.
+Texas Instruments,auto,true,confirmed,126,1,1,https://careers.ti.com/en/sites/CX,oracle_hcm,Oracle HCM (site CX).
+Tower Research Capital,auto,true,confirmed,12,1,1,https://tower-research.com/open-positions/,greenhouse,Shared greenhouse adapter; public data; India via location_text.
+Twilio,auto,true,confirmed,14,1,1,https://job-boards.greenhouse.io/twilio,greenhouse,Shared greenhouse adapter; public data; India via location_text.
+Uber,not_reliable,false,not_applicable,,1,0,https://www.uber.com/us/en/careers/,custom_api,Honest User-Agent blocked (bot_protected); not circumvented.
+Visa,auto,true,confirmed,92,2,2,https://visa.wd5.myworkdayjobs.com/Visa,workday,Shared workday adapter; public data; India via source_filter.
+Walmart,not_reliable,false,not_applicable,,1,0,https://careers.walmart.com/us/en/search-results,custom_html,Data API under robots-disallowed /api.
+Wayfair,not_reliable,false,not_applicable,,1,0,https://www.wayfair.com/careers/jobs,custom_html,No public listing API identified yet.
+Wells Fargo,not_reliable,false,not_applicable,,1,0,https://www.wellsfargojobs.com,unknown,Honest User-Agent blocked (bot_protected); not circumvented.
+WinZO,manual,false,not_applicable,,1,0,https://www.winzogames.com/,none,No working careers page (404) and robots disallows most paths.
+Wipro,adapter,true,confirmed,5720,1,1,https://careers.wipro.com/,successfactors,SuccessFactors Career Site Builder: sitemap + job pages; India via '-IND-' slug.
+Workday,auto,true,confirmed,20,1,1,https://workday.wd5.myworkdayjobs.com/Workday,workday,Shared workday adapter; public data; India via source_filter.
+Zoho,adapter,true,confirmed,2,1,1,https://careers.zohocorp.com/jobs/Careers,zoho_recruit,Zoho Recruit embedded data; very low volume (2 jobs). Low priority.
+Zscaler,auto,true,confirmed,78,1,1,https://job-boards.greenhouse.io/zscaler,greenhouse,Shared greenhouse adapter; public data; India via location_text.

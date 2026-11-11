@@ -34,13 +34,16 @@ async def seed(session):
     return acme, globex, ids
 
 
-async def test_default_scope_hides_us_only_jobs(client, session):
+async def test_default_scope_hides_us_only_and_unknown_jobs(client, session):
+    """Phase 3 rule: only established India eligibility is shown by default; unknown -> review queue."""
     _, _, ids = await seed(session)
     r = await client.get(f"{API}/jobs")
     assert r.status_code == 200, r.text
     body = r.json()
     got = {i["id"] for i in body["items"]}
-    assert got == {ids["in"], ids["unk"], ids["gx"]} and body["total"] == 3
+    assert got == {ids["in"], ids["gx"]} and body["total"] == 2
+    r = await client.get(f"{API}/jobs", params={"scope": "unknown"})  # "Needs location review" queue
+    assert [i["id"] for i in r.json()["items"]] == [ids["unk"]]
     r = await client.get(f"{API}/jobs", params={"scope": "all"})
     assert {i["id"] for i in r.json()["items"]} == set(ids.values())
     r = await client.get(f"{API}/jobs", params={"scope": "out_of_scope"})
@@ -53,9 +56,9 @@ async def test_scope_default_follows_setting(client, session):
     from app.settings.registry import put_setting
 
     _, _, ids = await seed(session)
-    await put_setting(session, "location_scope", {"countries": ["IN"], "include_unknown": False})
+    await put_setting(session, "location_scope", {"countries": ["IN"], "include_unknown": True})
     r = await client.get(f"{API}/jobs")
-    assert {i["id"] for i in r.json()["items"]} == {ids["in"], ids["gx"]}
+    assert {i["id"] for i in r.json()["items"]} == {ids["in"], ids["unk"], ids["gx"]}
 
 
 async def test_list_item_shape(client, session):
@@ -197,16 +200,16 @@ async def test_facets_exclude_own_filter(client, session):
     assert r.status_code == 200, r.text
     f = r.json()
     company = {v["label"]: v["count"] for v in f["company"]}
-    assert company == {"Acme Robotics": 2, "Globex": 1}  # default scope hides the US job
+    assert company == {"Acme Robotics": 1, "Globex": 1}  # default scope hides the US and unknown jobs
     assert {v["value"]: v["count"] for v in f["scope"]} == {"in_scope": 2, "unknown": 1, "out_of_scope": 1}
     assert {v["value"]: v["count"] for v in f["country"]} == {"IN": 2}
-    assert {v["value"]: v["count"] for v in f["status"]} == {"new": 3}
-    assert {v["value"]: v["count"] for v in f["source"]} == {"career_site": 3}
+    assert {v["value"]: v["count"] for v in f["status"]} == {"new": 2}
+    assert {v["value"]: v["count"] for v in f["source"]} == {"career_site": 2}
     assert {v["value"] for v in f["employment_type"]} <= {"contract", "unknown"}
     # filtering by company must not shrink the company facet itself, but shrinks the others
     r = await client.get(f"{API}/jobs/facets", params={"company_id": globex.id})
     f = r.json()
-    assert {v["label"]: v["count"] for v in f["company"]} == {"Acme Robotics": 2, "Globex": 1}
+    assert {v["label"]: v["count"] for v in f["company"]} == {"Acme Robotics": 1, "Globex": 1}
     assert {v["value"]: v["count"] for v in f["employment_type"]} == {"contract": 1}
     # scope=all: the scope facet is the same, the others now include the US job
     r = await client.get(f"{API}/jobs/facets", params={"scope": "in_scope"})
@@ -220,16 +223,16 @@ async def test_inbox_review_and_unreview(client, session):
     r = await client.get(f"{API}/inbox")
     assert r.status_code == 200
     got = {i["id"] for i in r.json()["items"]}
-    assert got == {ids["in"], ids["unk"], ids["gx"]}  # unreviewed + visible scopes
+    assert got == {ids["in"], ids["gx"]}  # unreviewed + visible scopes (unknown -> review queue, not inbox)
     r = await client.get(f"{API}/inbox/summary")
     s = r.json()
-    assert s["unreviewed"] == 3 and s["unreviewed_today"] == 3
-    assert {v["label"]: v["count"] for v in s["by_company"]} == {"Acme Robotics": 2, "Globex": 1}
+    assert s["unreviewed"] == 2 and s["unreviewed_today"] == 2
+    assert {v["label"]: v["count"] for v in s["by_company"]} == {"Acme Robotics": 1, "Globex": 1}
 
-    r = await client.post(f"{API}/jobs/review", json={"job_ids": [ids["in"], ids["gx"]]})
+    r = await client.post(f"{API}/jobs/review", json={"job_ids": [ids["in"]]})
     assert r.status_code == 204
     r = await client.get(f"{API}/inbox")
-    assert [i["id"] for i in r.json()["items"]] == [ids["unk"]]
+    assert [i["id"] for i in r.json()["items"]] == [ids["gx"]]
     app = await session.scalar(select(Application).where(Application.job_id == ids["in"]))
     await session.refresh(app)
     assert app.reviewed_at is not None and app.row_version == 1
@@ -249,12 +252,12 @@ async def test_inbox_review_and_unreview(client, session):
     await session.refresh(app)
     assert app.reviewed_at == first_reviewed
     r = await client.get(f"{API}/jobs", params={"inbox": "false"})
-    assert {i["id"] for i in r.json()["items"]} == {ids["in"], ids["gx"]}
+    assert {i["id"] for i in r.json()["items"]} == {ids["in"]}  # reviewed (gx is still unreviewed)
 
     r = await client.post(f"{API}/jobs/unreview", json={"job_ids": [ids["in"]]})
     assert r.status_code == 204
     r = await client.get(f"{API}/inbox")
-    assert {i["id"] for i in r.json()["items"]} == {ids["in"], ids["unk"]}
+    assert {i["id"] for i in r.json()["items"]} == {ids["in"], ids["gx"]}
     r = await client.post(f"{API}/jobs/review", json={"job_ids": []})
     assert r.status_code == 422
 

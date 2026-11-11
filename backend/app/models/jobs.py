@@ -63,6 +63,7 @@ class Job(IdMixin, TimestampMixin, Base):
         pg_enum(ScopeMatch, "scope_match"), server_default=ScopeMatch.unknown.value
     )
     scope_overridden: Mapped[bool] = mapped_column(Boolean, server_default=text("false"))
+    scope_reason: Mapped[str | None] = mapped_column(Text)  # evidence, e.g. "city: Pune", "remote: India listed"
     employment_type: Mapped[EmploymentType] = mapped_column(
         pg_enum(EmploymentType, "employment_type"), server_default=EmploymentType.unknown.value
     )
@@ -123,6 +124,8 @@ class Posting(IdMixin, TimestampMixin, Base):
     job_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("jobs.id"))
     source_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("sources.id"))
     company_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("companies.id"))
+    # Portal that discovered it (career-site sources). Misses/closure are evaluated PER PORTAL.
+    career_site_id: Mapped[int | None] = mapped_column(BigInteger, ForeignKey("career_sites.id", ondelete="SET NULL"))
     external_id: Mapped[str] = mapped_column(Text)
     # Employer requisition number (e.g. Workday "JR2029481") when known. Equal requisition IDs at the
     # same company are the ONLY automatic cross-source merge signal besides an identical apply URL.
@@ -149,6 +152,7 @@ class Posting(IdMixin, TimestampMixin, Base):
     __table_args__ = (
         UniqueConstraint("source_id", "company_id", "external_id", name="uq_postings_identity"),
         Index("ix_postings_job", "job_id"),
+        Index("ix_postings_site_open", "career_site_id", postgresql_where=text("availability = 'open'")),
         Index("ix_postings_company_open", "company_id", postgresql_where=text("availability = 'open'")),
         Index(
             "ix_postings_requisition",

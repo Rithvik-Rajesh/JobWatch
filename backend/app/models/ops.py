@@ -17,6 +17,9 @@ class ScrapeRun(IdMixin, Base):
 
     company_id: Mapped[int | None] = mapped_column(BigInteger, ForeignKey("companies.id", ondelete="CASCADE"))
     source_id: Mapped[int | None] = mapped_column(BigInteger, ForeignKey("sources.id", ondelete="CASCADE"))
+    career_site_id: Mapped[int | None] = mapped_column(
+        BigInteger, ForeignKey("career_sites.id", ondelete="CASCADE"), index=True
+    )
     trigger: Mapped[RunTrigger] = mapped_column(pg_enum(RunTrigger, "run_trigger"))
     status: Mapped[RunStatus] = mapped_column(pg_enum(RunStatus, "run_status"), server_default=RunStatus.queued.value)
     queued_at: Mapped[datetime] = mapped_column(server_default=text("now()"))
@@ -28,6 +31,9 @@ class ScrapeRun(IdMixin, Base):
     complete: Mapped[bool] = mapped_column(Boolean, server_default=text("false"))
     postings_seen: Mapped[int] = mapped_column(Integer, server_default=text("0"))
     postings_in_scope: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    postings_out_of_scope: Mapped[int] = mapped_column(Integer, server_default=text("0"))  # dropped, not stored
+    postings_unknown_scope: Mapped[int] = mapped_column(Integer, server_default=text("0"))  # stored, review queue
+    postings_filtered: Mapped[int] = mapped_column(Integer, server_default=text("0"))  # title filters
     postings_new: Mapped[int] = mapped_column(Integer, server_default=text("0"))
     postings_updated: Mapped[int] = mapped_column(Integer, server_default=text("0"))
     postings_closed: Mapped[int] = mapped_column(Integer, server_default=text("0"))
@@ -71,3 +77,13 @@ class NotificationOutbox(IdMixin, Base):
         UniqueConstraint("channel", "dedupe_key", name="uq_notification_outbox_dedupe"),
         Index("ix_notification_outbox_due", "next_attempt_at", postgresql_where=text("state in ('pending','failed')")),
     )
+
+
+class WorkerHeartbeat(Base):
+    """Last-seen timestamp per worker process (written by the worker every tick; read by /scheduler)."""
+
+    __tablename__ = "worker_heartbeats"
+
+    name: Mapped[str] = mapped_column(Text, primary_key=True)
+    beat_at: Mapped[datetime] = mapped_column(server_default=text("now()"))
+    details: Mapped[dict[str, Any]] = mapped_column(JSONB, server_default=text("'{}'::jsonb"))

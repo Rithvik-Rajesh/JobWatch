@@ -3918,6 +3918,601 @@
         }
       }
     },
+    "/api/v1/sites": {
+      "get": {
+        "tags": [
+          "sites"
+        ],
+        "summary": "List Sites",
+        "operationId": "list_sites_api_v1_sites_get",
+        "parameters": [
+          {
+            "name": "company_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Company Id"
+            }
+          },
+          {
+            "name": "platform",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ExtractorKind"
+              },
+              "default": [],
+              "title": "Platform"
+            }
+          },
+          {
+            "name": "health",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/HealthStatus"
+              },
+              "default": [],
+              "title": "Health"
+            }
+          },
+          {
+            "name": "support_class",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SupportClass"
+              },
+              "default": [],
+              "title": "Support Class"
+            }
+          },
+          {
+            "name": "india_coverage",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/IndiaCoverage"
+              },
+              "default": [],
+              "title": "India Coverage"
+            }
+          },
+          {
+            "name": "monitoring",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Monitoring"
+            }
+          },
+          {
+            "name": "include_archived",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Archived"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Page Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_CareerSiteOut_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/companies/{company_id}/sites": {
+      "get": {
+        "tags": [
+          "sites"
+        ],
+        "summary": "Company Sites",
+        "operationId": "company_sites_api_v1_companies__company_id__sites_get",
+        "parameters": [
+          {
+            "name": "company_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Company Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CareerSiteOut"
+                  },
+                  "title": "Response Company Sites Api V1 Companies  Company Id  Sites Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "sites"
+        ],
+        "summary": "Create Site",
+        "operationId": "create_site_api_v1_companies__company_id__sites_post",
+        "parameters": [
+          {
+            "name": "company_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Company Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CareerSiteCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CareerSiteOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sites/{site_id}": {
+      "get": {
+        "tags": [
+          "sites"
+        ],
+        "summary": "Get Site",
+        "operationId": "get_site_api_v1_sites__site_id__get",
+        "parameters": [
+          {
+            "name": "site_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Site Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CareerSiteOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "sites"
+        ],
+        "summary": "Update Site",
+        "operationId": "update_site_api_v1_sites__site_id__patch",
+        "parameters": [
+          {
+            "name": "site_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Site Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CareerSiteUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CareerSiteOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sites/{site_id}/archive": {
+      "post": {
+        "tags": [
+          "sites"
+        ],
+        "summary": "Archive Site",
+        "operationId": "archive_site_api_v1_sites__site_id__archive_post",
+        "parameters": [
+          {
+            "name": "site_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Site Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CareerSiteOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sites/{site_id}/resume": {
+      "post": {
+        "tags": [
+          "sites"
+        ],
+        "summary": "Resume Site",
+        "description": "Clear an automatic pause (blocked/robots) after the user has reviewed it. Robots is re-checked on\nthe next run; if still disallowed the site is paused again.",
+        "operationId": "resume_site_api_v1_sites__site_id__resume_post",
+        "parameters": [
+          {
+            "name": "site_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Site Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CareerSiteOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sites/{site_id}/test": {
+      "post": {
+        "tags": [
+          "sites"
+        ],
+        "summary": "Test Site",
+        "description": "Dry run: first page(s) only, India gate + title filters, nothing written. Respects robots/blocks.",
+        "operationId": "test_site_api_v1_sites__site_id__test_post",
+        "parameters": [
+          {
+            "name": "site_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Site Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DryRunResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sites/{site_id}/scrape": {
+      "post": {
+        "tags": [
+          "sites"
+        ],
+        "summary": "Scrape Site",
+        "description": "Enqueue one manual run. Idempotent while a run is queued/running. 409 if blocked/archived/no adapter.",
+        "operationId": "scrape_site_api_v1_sites__site_id__scrape_post",
+        "parameters": [
+          {
+            "name": "site_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Site Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScrapeRunOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sites/{site_id}/runs": {
+      "get": {
+        "tags": [
+          "sites"
+        ],
+        "summary": "Site Runs",
+        "operationId": "site_runs_api_v1_sites__site_id__runs_get",
+        "parameters": [
+          {
+            "name": "site_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Site Id"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Page Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_ScrapeRunOut_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/scheduler": {
+      "get": {
+        "tags": [
+          "sites"
+        ],
+        "summary": "Scheduler Status",
+        "operationId": "scheduler_status_api_v1_scheduler_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchedulerStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/statuses": {
       "get": {
         "tags": [
@@ -5754,6 +6349,27 @@
         "title": "ApplicationUpdate",
         "description": "PATCH /jobs/{job_id}/application. Requires expected_row_version. Milestone dates are editable.\nEach changed field is recorded as a 'field_changed' timeline event."
       },
+      "AshbyConfig": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "ashby",
+            "title": "Kind",
+            "default": "ashby"
+          },
+          "org": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.-]+$",
+            "title": "Org"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "org"
+        ],
+        "title": "AshbyConfig"
+      },
       "Availability": {
         "type": "string",
         "enum": [
@@ -6209,6 +6825,378 @@
         ],
         "title": "CaptureResult"
       },
+      "CareerSiteCreate": {
+        "properties": {
+          "label": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_. -]{1,60}$",
+            "title": "Label",
+            "default": "main"
+          },
+          "platform": {
+            "$ref": "#/components/schemas/ExtractorKind"
+          },
+          "config": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Config"
+          },
+          "careers_url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2083,
+                "minLength": 1,
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Careers Url"
+          },
+          "monitoring_enabled": {
+            "type": "boolean",
+            "title": "Monitoring Enabled",
+            "default": false
+          },
+          "check_interval_min": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1440.0,
+                "minimum": 10.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Check Interval Min"
+          }
+        },
+        "type": "object",
+        "required": [
+          "platform",
+          "config"
+        ],
+        "title": "CareerSiteCreate"
+      },
+      "CareerSiteOut": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "company_id": {
+            "type": "integer",
+            "title": "Company Id"
+          },
+          "company_name": {
+            "type": "string",
+            "title": "Company Name"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "platform": {
+            "$ref": "#/components/schemas/ExtractorKind"
+          },
+          "config": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Config"
+          },
+          "careers_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Careers Url"
+          },
+          "monitoring_enabled": {
+            "type": "boolean",
+            "title": "Monitoring Enabled"
+          },
+          "check_interval_min": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Check Interval Min"
+          },
+          "effective_interval_min": {
+            "type": "integer",
+            "title": "Effective Interval Min"
+          },
+          "next_check_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Check At"
+          },
+          "health": {
+            "$ref": "#/components/schemas/HealthStatus"
+          },
+          "consecutive_failures": {
+            "type": "integer",
+            "title": "Consecutive Failures"
+          },
+          "last_checked_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Checked At"
+          },
+          "last_success_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Success At"
+          },
+          "last_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Error"
+          },
+          "paused_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Paused Reason"
+          },
+          "open_jobs_count": {
+            "type": "integer",
+            "title": "Open Jobs Count"
+          },
+          "robots_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Robots Status"
+          },
+          "robots_checked_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Robots Checked At"
+          },
+          "support_class": {
+            "$ref": "#/components/schemas/SupportClass"
+          },
+          "india_coverage": {
+            "$ref": "#/components/schemas/IndiaCoverage"
+          },
+          "verification_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verification Status"
+          },
+          "verified_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified At"
+          },
+          "evidence": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Evidence"
+          },
+          "adapter_available": {
+            "type": "boolean",
+            "title": "Adapter Available"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          },
+          "archived_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Archived At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "company_id",
+          "company_name",
+          "label",
+          "platform",
+          "config",
+          "careers_url",
+          "monitoring_enabled",
+          "check_interval_min",
+          "effective_interval_min",
+          "next_check_at",
+          "health",
+          "consecutive_failures",
+          "last_checked_at",
+          "last_success_at",
+          "last_error",
+          "paused_reason",
+          "open_jobs_count",
+          "robots_status",
+          "robots_checked_at",
+          "support_class",
+          "india_coverage",
+          "verification_status",
+          "verified_at",
+          "evidence",
+          "adapter_available",
+          "created_at",
+          "updated_at",
+          "archived_at"
+        ],
+        "title": "CareerSiteOut"
+      },
+      "CareerSiteUpdate": {
+        "properties": {
+          "label": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_. -]{1,60}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "config": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Config"
+          },
+          "careers_url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2083,
+                "minLength": 1,
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Careers Url"
+          },
+          "monitoring_enabled": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monitoring Enabled"
+          },
+          "check_interval_min": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 1440.0,
+                "minimum": 10.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Check Interval Min"
+          },
+          "clear_check_interval": {
+            "type": "boolean",
+            "title": "Clear Check Interval",
+            "default": false
+          }
+        },
+        "type": "object",
+        "title": "CareerSiteUpdate"
+      },
       "CompanyCreate": {
         "properties": {
           "name": {
@@ -6313,10 +7301,28 @@
                     "$ref": "#/components/schemas/WorkdayConfig"
                   },
                   {
+                    "$ref": "#/components/schemas/GreenhouseConfig"
+                  },
+                  {
+                    "$ref": "#/components/schemas/LeverConfig"
+                  },
+                  {
+                    "$ref": "#/components/schemas/AshbyConfig"
+                  },
+                  {
+                    "$ref": "#/components/schemas/OracleHcmConfig"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EightfoldConfig"
+                  },
+                  {
                     "$ref": "#/components/schemas/JsonLdConfig"
                   },
                   {
                     "$ref": "#/components/schemas/HtmlConfig"
+                  },
+                  {
+                    "$ref": "#/components/schemas/SuccessFactorsCsbConfig"
                   },
                   {
                     "$ref": "#/components/schemas/CustomConfig"
@@ -6325,9 +7331,15 @@
                 "discriminator": {
                   "propertyName": "kind",
                   "mapping": {
+                    "ashby": "#/components/schemas/AshbyConfig",
                     "custom": "#/components/schemas/CustomConfig",
+                    "eightfold": "#/components/schemas/EightfoldConfig",
+                    "greenhouse": "#/components/schemas/GreenhouseConfig",
                     "html": "#/components/schemas/HtmlConfig",
                     "jsonld": "#/components/schemas/JsonLdConfig",
+                    "lever": "#/components/schemas/LeverConfig",
+                    "oracle_hcm": "#/components/schemas/OracleHcmConfig",
+                    "successfactors_csb": "#/components/schemas/SuccessFactorsCsbConfig",
                     "workday": "#/components/schemas/WorkdayConfig"
                   }
                 }
@@ -6806,10 +7818,28 @@
                     "$ref": "#/components/schemas/WorkdayConfig"
                   },
                   {
+                    "$ref": "#/components/schemas/GreenhouseConfig"
+                  },
+                  {
+                    "$ref": "#/components/schemas/LeverConfig"
+                  },
+                  {
+                    "$ref": "#/components/schemas/AshbyConfig"
+                  },
+                  {
+                    "$ref": "#/components/schemas/OracleHcmConfig"
+                  },
+                  {
+                    "$ref": "#/components/schemas/EightfoldConfig"
+                  },
+                  {
                     "$ref": "#/components/schemas/JsonLdConfig"
                   },
                   {
                     "$ref": "#/components/schemas/HtmlConfig"
+                  },
+                  {
+                    "$ref": "#/components/schemas/SuccessFactorsCsbConfig"
                   },
                   {
                     "$ref": "#/components/schemas/CustomConfig"
@@ -6818,9 +7848,15 @@
                 "discriminator": {
                   "propertyName": "kind",
                   "mapping": {
+                    "ashby": "#/components/schemas/AshbyConfig",
                     "custom": "#/components/schemas/CustomConfig",
+                    "eightfold": "#/components/schemas/EightfoldConfig",
+                    "greenhouse": "#/components/schemas/GreenhouseConfig",
                     "html": "#/components/schemas/HtmlConfig",
                     "jsonld": "#/components/schemas/JsonLdConfig",
+                    "lever": "#/components/schemas/LeverConfig",
+                    "oracle_hcm": "#/components/schemas/OracleHcmConfig",
+                    "successfactors_csb": "#/components/schemas/SuccessFactorsCsbConfig",
                     "workday": "#/components/schemas/WorkdayConfig"
                   }
                 }
@@ -7286,13 +8322,12 @@
             "title": "Module"
           },
           "options": {
-            "additionalProperties": {
-              "type": "string"
-            },
+            "additionalProperties": true,
             "type": "object",
             "title": "Options"
           }
         },
+        "additionalProperties": false,
         "type": "object",
         "required": [
           "module"
@@ -7415,6 +8450,144 @@
         ],
         "title": "DiscoveryHistoryPoint"
       },
+      "DryRunResult": {
+        "properties": {
+          "career_site_id": {
+            "type": "integer",
+            "title": "Career Site Id"
+          },
+          "ok": {
+            "type": "boolean",
+            "title": "Ok"
+          },
+          "complete": {
+            "type": "boolean",
+            "title": "Complete"
+          },
+          "postings_seen": {
+            "type": "integer",
+            "title": "Postings Seen"
+          },
+          "postings_in_scope": {
+            "type": "integer",
+            "title": "Postings In Scope"
+          },
+          "postings_unknown_scope": {
+            "type": "integer",
+            "title": "Postings Unknown Scope"
+          },
+          "postings_out_of_scope": {
+            "type": "integer",
+            "title": "Postings Out Of Scope"
+          },
+          "postings_filtered": {
+            "type": "integer",
+            "title": "Postings Filtered"
+          },
+          "error_class": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Class"
+          },
+          "error_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Message"
+          },
+          "robots_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Robots Status"
+          },
+          "samples": {
+            "items": {
+              "$ref": "#/components/schemas/DryRunSample"
+            },
+            "type": "array",
+            "title": "Samples"
+          }
+        },
+        "type": "object",
+        "required": [
+          "career_site_id",
+          "ok",
+          "complete",
+          "postings_seen",
+          "postings_in_scope",
+          "postings_unknown_scope",
+          "postings_out_of_scope",
+          "postings_filtered",
+          "error_class",
+          "error_message",
+          "robots_status",
+          "samples"
+        ],
+        "title": "DryRunResult",
+        "description": "POST /sites/{id}/test \u2014 first page(s) only, nothing written."
+      },
+      "DryRunSample": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "scope": {
+            "type": "string",
+            "title": "Scope"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "filtered": {
+            "type": "boolean",
+            "title": "Filtered"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "title",
+          "location",
+          "scope",
+          "reason",
+          "filtered",
+          "url"
+        ],
+        "title": "DryRunSample"
+      },
       "DuplicateState": {
         "type": "string",
         "enum": [
@@ -7468,6 +8641,45 @@
         ],
         "title": "DuplicateSuggestionOut"
       },
+      "EightfoldConfig": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "eightfold",
+            "title": "Kind",
+            "default": "eightfold"
+          },
+          "host": {
+            "type": "string",
+            "title": "Host"
+          },
+          "domain": {
+            "type": "string",
+            "title": "Domain"
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "pcsx",
+              "apply_v2"
+            ],
+            "title": "Variant",
+            "default": "pcsx"
+          },
+          "location_query": {
+            "type": "string",
+            "title": "Location Query",
+            "default": "India"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "host",
+          "domain"
+        ],
+        "title": "EightfoldConfig"
+      },
       "EmploymentType": {
         "type": "string",
         "enum": [
@@ -7507,12 +8719,19 @@
         "type": "string",
         "enum": [
           "workday",
+          "greenhouse",
+          "lever",
+          "ashby",
+          "oracle_hcm",
+          "eightfold",
+          "successfactors_csb",
           "jsonld",
           "html",
           "custom",
           "none"
         ],
-        "title": "ExtractorKind"
+        "title": "ExtractorKind",
+        "description": "Career-site platform / adapter key (Phase 3: one shared adapter per platform)."
       },
       "FacetValue": {
         "properties": {
@@ -7608,6 +8827,32 @@
           "conversion_from_previous"
         ],
         "title": "FunnelStage"
+      },
+      "GreenhouseConfig": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "greenhouse",
+            "title": "Kind",
+            "default": "greenhouse"
+          },
+          "board_token": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Board Token"
+          },
+          "api_host": {
+            "type": "string",
+            "title": "Api Host",
+            "default": "boards-api.greenhouse.io"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "board_token"
+        ],
+        "title": "GreenhouseConfig"
       },
       "HTTPValidationError": {
         "properties": {
@@ -7741,7 +8986,8 @@
           "healthy",
           "degraded",
           "failing",
-          "paused"
+          "paused",
+          "blocked"
         ],
         "title": "HealthStatus"
       },
@@ -7795,13 +9041,9 @@
             "minimum": 1.0,
             "title": "Max Pages",
             "default": 20
-          },
-          "render": {
-            "type": "boolean",
-            "title": "Render",
-            "default": false
           }
         },
+        "additionalProperties": false,
         "type": "object",
         "required": [
           "listing_url",
@@ -7835,6 +9077,16 @@
           "by_company"
         ],
         "title": "InboxSummary"
+      },
+      "IndiaCoverage": {
+        "type": "string",
+        "enum": [
+          "confirmed",
+          "none_observed",
+          "unverified",
+          "not_applicable"
+        ],
+        "title": "IndiaCoverage"
       },
       "InterviewCreate": {
         "properties": {
@@ -8918,18 +10170,44 @@
             "minimum": 1.0,
             "title": "Max Pages",
             "default": 20
-          },
-          "render": {
-            "type": "boolean",
-            "title": "Render",
-            "default": false
           }
         },
+        "additionalProperties": false,
         "type": "object",
         "required": [
           "listing_url"
         ],
         "title": "JsonLdConfig"
+      },
+      "LeverConfig": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "lever",
+            "title": "Kind",
+            "default": "lever"
+          },
+          "company": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.-]+$",
+            "title": "Company"
+          },
+          "region": {
+            "type": "string",
+            "enum": [
+              "global",
+              "eu"
+            ],
+            "title": "Region",
+            "default": "global"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "company"
+        ],
+        "title": "LeverConfig"
       },
       "LoginRequest": {
         "properties": {
@@ -9358,6 +10636,80 @@
           "sent_at"
         ],
         "title": "NotificationOut"
+      },
+      "OracleHcmConfig": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "oracle_hcm",
+            "title": "Kind",
+            "default": "oracle_hcm"
+          },
+          "host": {
+            "type": "string",
+            "pattern": "^[a-z0-9.-]+\\.oraclecloud\\.com$",
+            "title": "Host"
+          },
+          "site_number": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_]+$",
+            "title": "Site Number"
+          },
+          "language": {
+            "type": "string",
+            "title": "Language",
+            "default": "en"
+          },
+          "india_location_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "India Location Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "host",
+          "site_number"
+        ],
+        "title": "OracleHcmConfig"
+      },
+      "Page_CareerSiteOut_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/CareerSiteOut"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "page_size": {
+            "type": "integer",
+            "title": "Page Size"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "page",
+          "page_size",
+          "total"
+        ],
+        "title": "Page[CareerSiteOut]"
       },
       "Page_CompanyListItem_": {
         "properties": {
@@ -10681,6 +12033,62 @@
         "type": "object",
         "title": "SavedViewUpdate"
       },
+      "SchedulerStatus": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "default_interval_min": {
+            "type": "integer",
+            "title": "Default Interval Min"
+          },
+          "sites_total": {
+            "type": "integer",
+            "title": "Sites Total"
+          },
+          "sites_monitored": {
+            "type": "integer",
+            "title": "Sites Monitored"
+          },
+          "sites_due": {
+            "type": "integer",
+            "title": "Sites Due"
+          },
+          "sites_blocked": {
+            "type": "integer",
+            "title": "Sites Blocked"
+          },
+          "runs_queued_or_running": {
+            "type": "integer",
+            "title": "Runs Queued Or Running"
+          },
+          "worker_heartbeat_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Worker Heartbeat At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "enabled",
+          "default_interval_min",
+          "sites_total",
+          "sites_monitored",
+          "sites_due",
+          "sites_blocked",
+          "runs_queued_or_running",
+          "worker_heartbeat_at"
+        ],
+        "title": "SchedulerStatus"
+      },
       "ScopeMatch": {
         "type": "string",
         "enum": [
@@ -10718,6 +12126,17 @@
               }
             ],
             "title": "Source Id"
+          },
+          "career_site_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Career Site Id"
           },
           "trigger": {
             "$ref": "#/components/schemas/RunTrigger"
@@ -10776,6 +12195,21 @@
           "postings_in_scope": {
             "type": "integer",
             "title": "Postings In Scope"
+          },
+          "postings_unknown_scope": {
+            "type": "integer",
+            "title": "Postings Unknown Scope",
+            "default": 0
+          },
+          "postings_out_of_scope": {
+            "type": "integer",
+            "title": "Postings Out Of Scope",
+            "default": 0
+          },
+          "postings_filtered": {
+            "type": "integer",
+            "title": "Postings Filtered",
+            "default": 0
           },
           "postings_new": {
             "type": "integer",
@@ -11297,6 +12731,56 @@
         },
         "type": "object",
         "title": "StatusUpdate"
+      },
+      "SuccessFactorsCsbConfig": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "successfactors_csb",
+            "title": "Kind",
+            "default": "successfactors_csb"
+          },
+          "base_url": {
+            "type": "string",
+            "maxLength": 2083,
+            "minLength": 1,
+            "format": "uri",
+            "title": "Base Url"
+          },
+          "sitemap_path": {
+            "type": "string",
+            "title": "Sitemap Path",
+            "default": "/sitemap.xml"
+          },
+          "india_slug_pattern": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "India Slug Pattern"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "base_url"
+        ],
+        "title": "SuccessFactorsCsbConfig"
+      },
+      "SupportClass": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "adapter",
+          "not_reliable",
+          "manual"
+        ],
+        "title": "SupportClass",
+        "description": "Registry classification of a career site (from verification evidence)."
       },
       "TagCreate": {
         "properties": {
@@ -11963,16 +13447,17 @@
             "format": "uri",
             "title": "Url"
           },
-          "scope_override": {
+          "india_strategy": {
             "type": "string",
             "enum": [
-              "global",
-              "all_locations"
+              "auto",
+              "facet",
+              "location_text"
             ],
-            "title": "Scope Override",
-            "default": "global"
+            "title": "India Strategy",
+            "default": "auto"
           },
-          "search_text": {
+          "facet_param": {
             "anyOf": [
               {
                 "type": "string"
@@ -11981,21 +13466,7 @@
                 "type": "null"
               }
             ],
-            "title": "Search Text"
-          },
-          "title_include": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Title Include"
-          },
-          "title_exclude": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Title Exclude"
+            "title": "Facet Param"
           },
           "facet_cache": {
             "additionalProperties": {
@@ -12006,8 +13477,27 @@
             },
             "type": "object",
             "title": "Facet Cache"
+          },
+          "split_facet_param": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Split Facet Param"
+          },
+          "max_pages": {
+            "type": "integer",
+            "maximum": 1000.0,
+            "minimum": 1.0,
+            "title": "Max Pages",
+            "default": 150
           }
         },
+        "additionalProperties": false,
         "type": "object",
         "required": [
           "url"

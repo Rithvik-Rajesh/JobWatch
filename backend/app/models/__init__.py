@@ -4,6 +4,7 @@ reviewed against docs/phase1/02-database-schema.md. Implementation agents must n
 from app.models.applications import Application, ApplicationEvent, Contact, Interview, Note, Reminder
 from app.models.catalog import (
     AppSetting,
+    CareerSite,
     Company,
     CompanyAlias,
     ResumeVersion,
@@ -13,12 +14,13 @@ from app.models.catalog import (
     Tag,
 )
 from app.models.jobs import DuplicateSuggestion, Job, JobTag, JobVersion, Posting, SalaryRecord
-from app.models.ops import NotificationOutbox, ScrapeRun
+from app.models.ops import NotificationOutbox, ScrapeRun, WorkerHeartbeat
 
 __all__ = [
     "AppSetting",
     "Application",
     "ApplicationEvent",
+    "CareerSite",
     "Company",
     "CompanyAlias",
     "Contact",
@@ -38,4 +40,5 @@ __all__ = [
     "Source",
     "Status",
     "Tag",
+    "WorkerHeartbeat",
 ]
