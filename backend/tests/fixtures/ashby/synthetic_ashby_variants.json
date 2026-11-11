@@ -1,0 +1,230 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://api.ashbyhq.com/posting-api/job-board/synthetic-example?includeCompensation=true",
+  "params": null,
+  "json": null
+ },
+ "response": {
+  "status": 200,
+  "content_type": "application/json",
+  "json": {
+   "apiVersion": "1",
+   "jobs": [
+    {
+     "id": "00000000-0000-4000-8000-000000000001",
+     "title": "Senior Backend Engineer (India Remote)",
+     "department": "Engineering",
+     "team": "Platform",
+     "employmentType": "FullTime",
+     "location": "India (Remote)",
+     "shouldDisplayCompensationOnJobPostings": true,
+     "secondaryLocations": [],
+     "publishedAt": "2026-10-01T09:30:00.000+00:00",
+     "isListed": true,
+     "isRemote": true,
+     "workplaceType": "Remote",
+     "address": {
+      "postalAddress": {
+       "addressLocality": null,
+       "addressRegion": null,
+       "addressCountry": "India"
+      }
+     },
+     "jobUrl": "https://jobs.ashbyhq.com/synthetic-example/00000000-0000-4000-8000-000000000001",
+     "applyUrl": "https://jobs.ashbyhq.com/synthetic-example/00000000-0000-4000-8000-000000000001/application",
+     "descriptionHtml": "<p>Synthetic description 1.</p><ul><li>Build things</li></ul>",
+     "descriptionPlain": "Synthetic description 1.\n- Build things",
+     "compensation": {
+      "compensationTierSummary": "₹40L – ₹60L",
+      "scrapeableCompensationSalarySummary": "₹40L – ₹60L",
+      "compensationTiers": [],
+      "summaryComponents": [
+       {
+        "compensationType": "Salary",
+        "interval": "1 YEAR",
+        "currencyCode": "INR",
+        "minValue": 4000000,
+        "maxValue": 6000000
+       }
+      ]
+     }
+    },
+    {
+     "id": "00000000-0000-4000-8000-000000000002",
+     "title": "Staff Engineer",
+     "department": "Engineering",
+     "team": "Platform",
+     "employmentType": "FullTime",
+     "location": "Bengaluru, India",
+     "shouldDisplayCompensationOnJobPostings": true,
+     "secondaryLocations": [
+      {
+       "location": "Remote - India",
+       "address": {
+        "postalAddress": {
+         "addressLocality": null,
+         "addressRegion": null,
+         "addressCountry": "India"
+        }
+       }
+      },
+      {
+       "location": "Singapore",
+       "address": {
+        "postalAddress": {
+         "addressLocality": "Singapore",
+         "addressRegion": null,
+         "addressCountry": "Singapore"
+        }
+       }
+      }
+     ],
+     "publishedAt": "2026-10-02T09:30:00.000+00:00",
+     "isListed": true,
+     "isRemote": true,
+     "workplaceType": "Hybrid",
+     "address": {
+      "postalAddress": {
+       "addressLocality": "Bengaluru",
+       "addressRegion": "Karnataka",
+       "addressCountry": "India"
+      }
+     },
+     "jobUrl": "https://jobs.ashbyhq.com/synthetic-example/00000000-0000-4000-8000-000000000002",
+     "applyUrl": "https://jobs.ashbyhq.com/synthetic-example/00000000-0000-4000-8000-000000000002/application",
+     "descriptionHtml": "<p>Synthetic description 2.</p><ul><li>Build things</li></ul>",
+     "descriptionPlain": "Synthetic description 2.\n- Build things",
+     "compensation": {
+      "compensationTierSummary": "₹70L – ₹95L",
+      "scrapeableCompensationSalarySummary": "₹70L – ₹95L",
+      "compensationTiers": [],
+      "summaryComponents": [
+       {
+        "compensationType": "Salary",
+        "interval": "1 YEAR",
+        "currencyCode": "INR",
+        "minValue": 7000000,
+        "maxValue": 9500000
+       }
+      ]
+     }
+    },
+    {
+     "id": "00000000-0000-4000-8000-000000000003",
+     "title": "Developer Advocate",
+     "department": "Engineering",
+     "team": "Platform",
+     "employmentType": "FullTime",
+     "location": "Remote",
+     "shouldDisplayCompensationOnJobPostings": true,
+     "secondaryLocations": [],
+     "publishedAt": "2026-10-03T09:30:00.000+00:00",
+     "isListed": true,
+     "isRemote": true,
+     "workplaceType": null,
+     "address": null,
+     "jobUrl": "https://jobs.ashbyhq.com/synthetic-example/00000000-0000-4000-8000-000000000003",
+     "applyUrl": "https://jobs.ashbyhq.com/synthetic-example/00000000-0000-4000-8000-000000000003/application",
+     "descriptionHtml": "<p>Synthetic description 3.</p><ul><li>Build things</li></ul>",
+     "descriptionPlain": "Synthetic description 3.\n- Build things",
+     "compensation": null
+    },
+    {
+     "id": "00000000-0000-4000-8000-000000000004",
+     "title": "Data Analyst",
+     "department": "Engineering",
+     "team": "Platform",
+     "employmentType": "Intern",
+     "location": "Austin, TX",
+     "shouldDisplayCompensationOnJobPostings": false,
+     "secondaryLocations": [],
+     "publishedAt": "2026-10-04T09:30:00.000+00:00",
+     "isListed": true,
+     "isRemote": false,
+     "workplaceType": "OnSite",
+     "address": {
+      "postalAddress": {
+       "addressLocality": "Austin",
+       "addressRegion": "Texas",
+       "addressCountry": "United States"
+      }
+     },
+     "jobUrl": "https://jobs.ashbyhq.com/synthetic-example/00000000-0000-4000-8000-000000000004",
+     "applyUrl": "https://jobs.ashbyhq.com/synthetic-example/00000000-0000-4000-8000-000000000004/application",
+     "descriptionHtml": "<p>Synthetic description 4.</p><ul><li>Build things</li></ul>",
+     "descriptionPlain": "Synthetic description 4.\n- Build things",
+     "compensation": null
+    },
+    {
+     "id": "00000000-0000-4000-8000-000000000005",
+     "title": "Site Reliability Engineer",
+     "department": "Engineering",
+     "team": "Platform",
+     "employmentType": "Contract",
+     "location": "London",
+     "shouldDisplayCompensationOnJobPostings": true,
+     "secondaryLocations": [
+      {
+       "location": "Pune",
+       "address": {
+        "postalAddress": {
+         "addressLocality": "Pune",
+         "addressRegion": "Maharashtra",
+         "addressCountry": "India"
+        }
+       }
+      }
+     ],
+     "publishedAt": "2026-10-05T09:30:00.000+00:00",
+     "isListed": true,
+     "isRemote": false,
+     "workplaceType": "OnSite",
+     "address": {
+      "postalAddress": {
+       "addressLocality": "London",
+       "addressRegion": null,
+       "addressCountry": "United Kingdom"
+      }
+     },
+     "jobUrl": "https://jobs.ashbyhq.com/synthetic-example/00000000-0000-4000-8000-000000000005",
+     "applyUrl": "https://jobs.ashbyhq.com/synthetic-example/00000000-0000-4000-8000-000000000005/application",
+     "descriptionHtml": "<p>Synthetic description 5.</p><ul><li>Build things</li></ul>",
+     "descriptionPlain": "Synthetic description 5.\n- Build things",
+     "compensation": null
+    },
+    {
+     "id": "00000000-0000-4000-8000-000000000006",
+     "title": "Unlisted Internal Role",
+     "department": "Engineering",
+     "team": "Platform",
+     "employmentType": "FullTime",
+     "location": "Mumbai",
+     "shouldDisplayCompensationOnJobPostings": true,
+     "secondaryLocations": [],
+     "publishedAt": "2026-10-06T09:30:00.000+00:00",
+     "isListed": false,
+     "isRemote": null,
+     "workplaceType": null,
+     "address": {
+      "postalAddress": {
+       "addressLocality": "Mumbai",
+       "addressRegion": null,
+       "addressCountry": "India"
+      }
+     },
+     "jobUrl": "https://jobs.ashbyhq.com/synthetic-example/00000000-0000-4000-8000-000000000006",
+     "applyUrl": "https://jobs.ashbyhq.com/synthetic-example/00000000-0000-4000-8000-000000000006/application",
+     "descriptionHtml": "<p>Synthetic description 6.</p><ul><li>Build things</li></ul>",
+     "descriptionPlain": "Synthetic description 6.\n- Build things",
+     "compensation": null
+    }
+   ]
+  },
+  "text": null
+ },
+ "recorded_at": "2026-11-12T00:00:00+00:00",
+ "user_agent": "synthetic",
+ "synthetic": true,
+ "notes": "SYNTHETIC hand-written fixture (not recorded from the network). Snowflake is the only Ashby company in the registry, so this covers secondaryLocations (incl. India only as a secondary), isRemote with an India address, bare Remote, compensation (INR, absent, hidden) and an unlisted job."
+}

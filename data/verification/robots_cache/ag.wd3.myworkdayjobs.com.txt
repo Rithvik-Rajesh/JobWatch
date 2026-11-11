@@ -1,0 +1,6 @@
+Sitemap: https://ag.wd3.myworkdayjobs.com/Airbus/siteMap.xml
+
+User-agent: *
+Allow: /Airbus/
+Disallow: /Airbus_Specific/
+Disallow: /refreshFacet/

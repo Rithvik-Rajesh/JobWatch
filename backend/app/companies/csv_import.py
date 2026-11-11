@@ -16,7 +16,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.companies.schemas import CsvImportPreview, CsvImportResult, CsvImportRow
-from app.companies.service import add_aliases, clean_aliases, config_url, insert_company, slugify
+from app.companies.service import add_aliases, clean_aliases, insert_company, slugify
 from app.core.errors import Conflict, NotFound, ValidationFailed
 from app.discovery.configs import WorkdayConfig, parse_workday_url
 from app.models import Company, CompanyAlias
@@ -243,26 +243,23 @@ async def commit_csv(session: AsyncSession, token: str, *, now: datetime | None 
             company = await session.get(Company, row.existing_company_id)
             if company is None:
                 raise Conflict(f"Company for row {row.row_number} no longer exists; re-upload the file")
+            # Phase 3: route through update_company so the company's `main` career site (the source of
+            # truth for extractor/schedule) stays in sync with the company summary fields.
+            from app.companies.schemas import CompanyUpdate
+            from app.companies.service import update_company
+
+            fields: dict = {}
             if row.careers_url:
-                company.careers_url = row.careers_url
+                fields["careers_url"] = row.careers_url
             if row.website_url:
-                company.website_url = row.website_url
+                fields["website_url"] = row.website_url
             if row.workday:
-                cfg = WorkdayConfig(url=row.careers_url)  # type: ignore[arg-type]
-                company.extractor = ExtractorKind.workday
-                company.extractor_config = cfg.model_dump(mode="json")
-                company.careers_url = company.careers_url or config_url(cfg)
+                fields["extractor_config"] = WorkdayConfig(url=row.careers_url)  # type: ignore[arg-type]
             if row.monitoring_enabled is not None:
-                company.monitoring_enabled = row.monitoring_enabled
-            if (
-                company.monitoring_enabled
-                and company.extractor != ExtractorKind.none
-                and company.archived_at is None
-                and company.next_check_at is None
-            ):
-                company.next_check_at = now
-            if not company.monitoring_enabled:
-                company.next_check_at = None
+                fields["monitoring_enabled"] = row.monitoring_enabled
+            if fields:
+                await update_company(session, company.id, CompanyUpdate(**fields), now=now)
+                await session.refresh(company)
             await session.flush()
             await add_aliases(session, company, row.aliases)
             updated += 1

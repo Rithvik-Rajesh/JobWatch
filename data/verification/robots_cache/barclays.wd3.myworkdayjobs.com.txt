@@ -1,0 +1,6 @@
+Sitemap: https://barclays.wd3.myworkdayjobs.com/External_Career_Site_Barclays/siteMap.xml
+
+User-agent: *
+Allow: /External_Career_Site_Barclays/
+Disallow: /Private/
+Disallow: /refreshFacet/

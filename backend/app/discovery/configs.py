@@ -96,7 +96,8 @@ class AshbyConfig(_Base):
 
 class OracleHcmConfig(_Base):
     kind: Literal["oracle_hcm"] = "oracle_hcm"
-    host: str = Field(pattern=r"^[a-z0-9.-]+\.oraclecloud\.com$")  # e.g. jpmc.fa.oraclecloud.com
+    # Usually *.oraclecloud.com, but tenants may use their own domain (Dell: enterpriseplatform.dell.com).
+    host: str = Field(pattern=r"^[a-z0-9-]+(\.[a-z0-9-]+)+$")
     site_number: str = Field(pattern=r"^[A-Za-z0-9_]+$")  # e.g. CX_1001
     language: str = "en"
     india_location_id: str | None = None  # resolved by the adapter if absent (cached here)

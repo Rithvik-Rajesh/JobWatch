@@ -24,12 +24,12 @@ import time
 from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import urlparse
-from urllib.robotparser import RobotFileParser
 
 import httpx
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from app.discovery.adapters.base import USER_AGENT
+from app.discovery.http import RobotsRules
 
 REPO = Path(__file__).resolve().parents[2]
 LEDGER = REPO / "data" / "verification" / "fixture_requests.jsonl"
@@ -69,7 +69,7 @@ def _check_budget(tag: str, budget: int) -> None:
         sys.exit(f"REFUSED: global fixture request cap reached ({len(entries)}/{GLOBAL_CAP})")
 
 
-def _robots(client: httpx.Client, scheme: str, host: str, tag: str, budget: int) -> tuple[RobotFileParser, float]:
+def _robots(client: httpx.Client, scheme: str, host: str, tag: str, budget: int) -> tuple[RobotsRules, float]:
     ROBOTS_CACHE.mkdir(parents=True, exist_ok=True)
     cache = ROBOTS_CACHE / f"{host}.txt"
     status_file = ROBOTS_CACHE / f"{host}.status"
@@ -78,7 +78,7 @@ def _robots(client: httpx.Client, scheme: str, host: str, tag: str, budget: int)
         _wait_for_host(host, MIN_HOST_INTERVAL_S)
         url = f"{scheme}://{host}/robots.txt"
         try:
-            r = client.get(url)
+            r = client.get(url, headers={"Accept": "text/plain,*/*;q=0.8"})
             status, body = r.status_code, r.text if r.status_code == 200 else ""
         except httpx.HTTPError as exc:
             status, body = 0, ""
@@ -98,15 +98,11 @@ def _robots(client: httpx.Client, scheme: str, host: str, tag: str, budget: int)
         cache.write_text(body)
         status_file.write_text(str(status))
     status = int(status_file.read_text() or 0)
-    rp = RobotFileParser()
     if status >= 500 or status == 0:
-        rp.disallow_all = True  # RFC 9309: unreachable -> assume disallowed
-    elif status >= 400:
-        rp.allow_all = True  # RFC 9309: 4xx -> no restrictions
-    else:
-        rp.parse(cache.read_text().splitlines())
-    delay = max(MIN_HOST_INTERVAL_S, float(rp.crawl_delay(USER_AGENT) or 0))
-    return rp, delay
+        sys.exit(f"REFUSED: robots.txt for {host} unreachable (HTTP {status}); RFC 9309 -> assume disallowed")
+    rules = RobotsRules.allow_all() if status >= 400 else RobotsRules.parse(cache.read_text())
+    delay = max(MIN_HOST_INTERVAL_S, float(rules.crawl_delay or 0))
+    return rules, delay
 
 
 def main() -> None:
@@ -119,6 +115,7 @@ def main() -> None:
     ap.add_argument("--params", default=None, help="JSON object of query params")
     ap.add_argument("--json", default=None, help="JSON request body (POST)")
     ap.add_argument("--accept", default="application/json")
+    ap.add_argument("--robots-only", action="store_true", help="(re)fetch and report robots.txt for --url's host")
     args = ap.parse_args()
 
     parsed = urlparse(args.url)
@@ -129,7 +126,15 @@ def main() -> None:
 
     with httpx.Client(headers=headers, timeout=25, follow_redirects=True) as client:
         rp, delay = _robots(client, parsed.scheme, host, args.tag, args.budget)
-        if not rp.can_fetch(USER_AGENT, args.url):
+        if args.robots_only:
+            path = (parsed.path or "/") + (f"?{parsed.query}" if parsed.query else "")
+            status = (ROBOTS_CACHE / f"{host}.status").read_text()
+            print(f"robots {host}: HTTP {status}; {path} allowed={rp.can_fetch(path)}; crawl-delay={rp.crawl_delay}")
+            return
+        path = parsed.path or "/"
+        if parsed.query:
+            path += "?" + parsed.query
+        if not rp.can_fetch(path):
             sys.exit(f"REFUSED: robots.txt disallows {args.url} for our User-Agent")
         _check_budget(args.tag, args.budget)
         _wait_for_host(host, delay)

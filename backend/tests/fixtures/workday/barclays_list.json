@@ -1,0 +1,767 @@
+{
+ "request": {
+  "method": "POST",
+  "url": "https://barclays.wd3.myworkdayjobs.com/wday/cxs/barclays/External_Career_Site_Barclays/jobs",
+  "params": null,
+  "json": {
+   "appliedFacets": {},
+   "limit": 20,
+   "offset": 0,
+   "searchText": ""
+  }
+ },
+ "response": {
+  "status": 200,
+  "content_type": "application/json",
+  "json": {
+   "total": 622,
+   "jobPostings": [
+    {
+     "title": "Relationship Director (Media) Barclays UK Corporate Bank",
+     "externalPath": "/job/Canary-Wharf-1-Churchill-Place/Relationship-Director---Media_JR-0000137565",
+     "timeType": "Full time",
+     "locationsText": "Canary Wharf, 1 Churchill Place",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000137565"
+     ]
+    },
+    {
+     "title": "Audit Director – Head of Audit Ireland",
+     "externalPath": "/job/Dublin-Molesworth-Street/Barclays-Europe--Risk--Finance-and-Treasury_JR-0000087621",
+     "timeType": "Full time",
+     "locationsText": "2 Locations",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000087621"
+     ]
+    },
+    {
+     "title": "Personal Assistant",
+     "externalPath": "/job/Canary-Wharf-1-Churchill-Place/Personal-Assistant_JR-0000135848-1",
+     "timeType": "Full time",
+     "locationsText": "Canary Wharf, 1 Churchill Place",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000135848"
+     ]
+    },
+    {
+     "title": "Colleague Happiness Officer (Graduate level)- BPL",
+     "externalPath": "/job/Canary-Wharf-1-Churchill-Place/Colleague-Happiness-Officer--Graduate-level---BPL_JR-0000137127",
+     "timeType": "Full time",
+     "locationsText": "2 Locations",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000137127"
+     ]
+    },
+    {
+     "title": "Financial Crime Risk Transaction Monitoring Control Owner - AVP",
+     "externalPath": "/job/Canary-Wharf-1-Churchill-Place/Financial-Crime-Risk-Transaction-Monitoring-Control-Owner---AVP_JR-0000123409",
+     "timeType": "Full time",
+     "locationsText": "2 Locations",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000123409"
+     ]
+    },
+    {
+     "title": "Head of Execution & Oversight for USCB IB Markets CISO",
+     "externalPath": "/job/Wilmington-125-South-West-Street/Head-of-Execution---Oversight-USCB---IB-Markets-CISO_JR-0000090923",
+     "timeType": "Full time",
+     "locationsText": "2 Locations",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000090923"
+     ]
+    },
+    {
+     "title": "Penetration Tester",
+     "externalPath": "/job/Knutsford-Radbroke-Hall/Penetration-Tester_JR-0000096898-1",
+     "timeType": "Full time",
+     "locationsText": "2 Locations",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000096898"
+     ]
+    },
+    {
+     "title": "Senior Full Stack Developer",
+     "externalPath": "/job/Canary-Wharf-1-Churchill-Place/Senior-Full-Stack-Developer_JR-0000137940",
+     "timeType": "Full time",
+     "locationsText": "Canary Wharf, 1 Churchill Place",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000137940"
+     ]
+    },
+    {
+     "title": "AI Transformation",
+     "externalPath": "/job/Canary-Wharf-1-Churchill-Place/AI-Commercialization-and-Transformation_JR-0000137334",
+     "timeType": "Full time",
+     "locationsText": "Canary Wharf, 1 Churchill Place",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000137334"
+     ]
+    },
+    {
+     "title": "PEP & HR Hub Analyst",
+     "externalPath": "/job/Glasgow-Campus/PEP---HR-Hub-Analyst_JR-0000126501",
+     "timeType": "Full time",
+     "locationsText": "Glasgow Campus",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000126501"
+     ]
+    },
+    {
+     "title": "Mobile BA4 Software Engineer",
+     "externalPath": "/job/Bengaluru-Maruthi-Onyx---TESCO-TSA/Mobile-BA4-Software-Engineer_JR-0000124262-1",
+     "timeType": "Full time",
+     "locationsText": "Bengaluru, Maruthi Onyx - TESCO TSA",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000124262"
+     ]
+    },
+    {
+     "title": "Investment Bank Diversified Industries, Analyst",
+     "externalPath": "/job/Toronto-Bay-Wellington-Tower-L47/Investment-Bank-Diversified-Industries--Analyst_JR-0000138735",
+     "timeType": "Full time",
+     "locationsText": "Toronto, Bay Wellington Tower L47",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000138735"
+     ]
+    },
+    {
+     "title": "Business Development Director - Financial Institutions - BPL",
+     "externalPath": "/job/Canary-Wharf-1-Churchill-Place/Business-Development-Director---Financial-Institutions---BPL_JR-0000138900",
+     "timeType": "Full time",
+     "locationsText": "Canary Wharf, 1 Churchill Place",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000138900"
+     ]
+    },
+    {
+     "title": "Salesforce Developer",
+     "externalPath": "/job/Glasgow-Campus/Salesforce-Developer_JR-0000101936",
+     "timeType": "Full time",
+     "locationsText": "Glasgow Campus",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000101936"
+     ]
+    },
+    {
+     "title": "API Business Analyst - AVP",
+     "externalPath": "/job/Bengaluru-Maruthi-Onyx---TESCO-TSA/API-Business-Analyst---AVP_JR-0000133245",
+     "timeType": "Full time",
+     "locationsText": "Bengaluru, Maruthi Onyx - TESCO TSA",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000133245"
+     ]
+    },
+    {
+     "title": "Customer Journey Labs - Business Analyst - AVP",
+     "externalPath": "/job/Bengaluru-Maruthi-Onyx---TESCO-TSA/Customer-Journey-Labs---Business-Analyst---AVP_JR-0000133229",
+     "timeType": "Full time",
+     "locationsText": "Bengaluru, Maruthi Onyx - TESCO TSA",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000133229"
+     ]
+    },
+    {
+     "title": "Core Banking AVP Service Engg",
+     "externalPath": "/job/Bengaluru-Maruthi-Onyx---TESCO-TSA/Core-Banking-AVP-Service-Engg_JR-0000128260",
+     "timeType": "Full time",
+     "locationsText": "Bengaluru, Maruthi Onyx - TESCO TSA",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000128260"
+     ]
+    },
+    {
+     "title": "Customer Journey Labs - Business Analyst - AVP",
+     "externalPath": "/job/Bengaluru-Maruthi-Onyx---TESCO-TSA/Customer-Journey-Labs---Business-Analyst---AVP_JR-0000133228-1",
+     "timeType": "Full time",
+     "locationsText": "Bengaluru, Maruthi Onyx - TESCO TSA",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000133228"
+     ]
+    },
+    {
+     "title": "Customer Journey Labs -  Business Analyst - AVP",
+     "externalPath": "/job/Bengaluru-Maruthi-Onyx---TESCO-TSA/Customer-Journey-Labs----Business-Analyst---AVP_JR-0000133224",
+     "timeType": "Full time",
+     "locationsText": "Bengaluru, Maruthi Onyx - TESCO TSA",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000133224"
+     ]
+    },
+    {
+     "title": "Records Management - AVP",
+     "externalPath": "/job/Pune-Gera-Commerzone-SEZ/Records-Management---AVP_JR-0000111170-1",
+     "timeType": "Full time",
+     "locationsText": "Pune, Gera Commerzone SEZ",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR-0000111170"
+     ]
+    }
+   ],
+   "facets": [
+    {
+     "facetParameter": "timeType",
+     "descriptor": "Full/Part-time",
+     "values": [
+      {
+       "descriptor": "Full time",
+       "id": "259ef6e735f8101411549dcf4d1e0003",
+       "count": 621
+      },
+      {
+       "descriptor": "Part time",
+       "id": "259ef6e735f8101411549dcf4d1e0002",
+       "count": 1
+      }
+     ]
+    },
+    {
+     "facetParameter": "workerSubType",
+     "descriptor": "Job Type",
+     "values": [
+      {
+       "descriptor": "Apprentice",
+       "id": "6139d325cdcc1001a72ceac9adfe0000",
+       "count": 20
+      },
+      {
+       "descriptor": "Graduate",
+       "id": "6139d325cdcc1001a72ce8fbe2290000",
+       "count": 22
+      },
+      {
+       "descriptor": "Intern",
+       "id": "6139d325cdcc1001a72ceb63d5d60001",
+       "count": 46
+      },
+      {
+       "descriptor": "Outsourced Resource (non-Headcount)",
+       "id": "36f241aa0cd21000abfca98533c50001",
+       "count": 1
+      },
+      {
+       "descriptor": "Permanent/Regular",
+       "id": "6139d325cdcc1001a72ceb63d5d60000",
+       "count": 525
+      },
+      {
+       "descriptor": "Temp/Contractor Payroll (Fixed Term)",
+       "id": "6139d325cdcc1001a72cea2feb060001",
+       "count": 8
+      }
+     ]
+    },
+    {
+     "facetParameter": "jobFamilyGroup",
+     "descriptor": "Job Category",
+     "values": [
+      {
+       "descriptor": "Audit",
+       "id": "1ab48a98eb7c1001e8e091fac2010000",
+       "count": 6
+      },
+      {
+       "descriptor": "Banking Operations",
+       "id": "1ab48a98eb7c1001e8e097fadc220000",
+       "count": 55
+      },
+      {
+       "descriptor": "Business Management",
+       "id": "112c054282011001e915b83ecb1c0000",
+       "count": 9
+      },
+      {
+       "descriptor": "Business Support & Administration",
+       "id": "112c054282011001e915bda8383e0000",
+       "count": 5
+      },
+      {
+       "descriptor": "Change",
+       "id": "1ab48a98eb7c1001e8e0a8c79c020000",
+       "count": 27
+      },
+      {
+       "descriptor": "Compliance",
+       "id": "1ab48a98eb7c1001e8e0ae2eea0a0000",
+       "count": 18
+      },
+      {
+       "descriptor": "Controls",
+       "id": "112c054282011001e915cde70f610000",
+       "count": 3
+      },
+      {
+       "descriptor": "Data & Analytics",
+       "id": "1ab48a98eb7c1001e8e0bdc7d4a10000",
+       "count": 23
+      },
+      {
+       "descriptor": "Early Careers",
+       "id": "1ab48a98eb7c1001e8e0c2947eeb0000",
+       "count": 89
+      },
+      {
+       "descriptor": "Finance",
+       "id": "1ab48a98eb7c1001e8e0ccc6d3af0000",
+       "count": 16
+      },
+      {
+       "descriptor": "Human Resources",
+       "id": "112c054282011001e915eca739750000",
+       "count": 3
+      },
+      {
+       "descriptor": "Investment Banking",
+       "id": "112c054282011001e915f210568e0000",
+       "count": 5
+      },
+      {
+       "descriptor": "Legal",
+       "id": "1ab48a98eb7c1001e8e0dcfc0fd60000",
+       "count": 18
+      },
+      {
+       "descriptor": "Marketing",
+       "id": "1ab48a98eb7c1001e8e0e1c8f92e0000",
+       "count": 1
+      },
+      {
+       "descriptor": "Markets",
+       "id": "112c054282011001e91601afc8d90000",
+       "count": 13
+      },
+      {
+       "descriptor": "Product Development & Management",
+       "id": "1ab48a98eb7c1001e8e0f1fd6ba70000",
+       "count": 22
+      },
+      {
+       "descriptor": "Real Estate & Physical Security",
+       "id": "112c054282011001e916114dbeec0000",
+       "count": 2
+      },
+      {
+       "descriptor": "Relationship Management",
+       "id": "1ab48a98eb7c1001e8e0fc3bd9440000",
+       "count": 49
+      },
+      {
+       "descriptor": "Research",
+       "id": "112c054282011001e9161cb8b7960000",
+       "count": 10
+      },
+      {
+       "descriptor": "Risk",
+       "id": "112c054282011001e9162220a12b0000",
+       "count": 15
+      },
+      {
+       "descriptor": "Strategy",
+       "id": "112c054282011001e916279208720000",
+       "count": 2
+      },
+      {
+       "descriptor": "Technology",
+       "id": "112c054282011001e9162cfccdc10000",
+       "count": 230
+      },
+      {
+       "descriptor": "Third Party Colleagues",
+       "id": "1ab48a98eb7c1001e8e117e5bec20000",
+       "count": 1
+      }
+     ]
+    },
+    {
+     "facetParameter": "locationMainGroup",
+     "values": [
+      {
+       "facetParameter": "locations",
+       "descriptor": "Locations",
+       "values": [
+        {
+         "descriptor": "115 South Jefferson Rd Campus, Whippany",
+         "id": "112c054282011001637790a7a5310000",
+         "count": 2
+        },
+        {
+         "descriptor": "2099 Pennsylvania Avenue, Washington DC",
+         "id": "1ab48a98eb7c10016341772a6b7e0000",
+         "count": 1
+        },
+        {
+         "descriptor": "Amsterdam, SOM Building",
+         "id": "1ab48a98eb7c10016341292153db0000",
+         "count": 3
+        },
+        {
+         "descriptor": "Belfast, Bedford Street",
+         "id": "112c0542820110016381d0fe90910000",
+         "count": 1
+        },
+        {
+         "descriptor": "Bengaluru, Maruthi Onyx - TESCO TSA",
+         "id": "1110a9ca6540100196e1f0c315e90000",
+         "count": 40
+        },
+        {
+         "descriptor": "Birmingham, One Snow Hill",
+         "id": "1ab48a98eb7c100163437710797a0000",
+         "count": 8
+        },
+        {
+         "descriptor": "Bournemouth, The Helm, Holdenhurst Road",
+         "id": "112c05428201100163816973d8130000",
+         "count": 2
+        },
+        {
+         "descriptor": "Bristol, Bridgewater House",
+         "id": "1ab48a98eb7c100163422724f1690000",
+         "count": 1
+        },
+        {
+         "descriptor": "Building 100-Whippany Campus, Jefferson Park",
+         "id": "51bc94af1f6f1001b79f105ba9360000",
+         "count": 2
+        },
+        {
+         "descriptor": "Building 300-Whippany Campus, Jefferson Park",
+         "id": "d2c0c09f9d161001b7a6d389a3af0000",
+         "count": 6
+        },
+        {
+         "descriptor": "Building 400-Whippany Campus, Jefferson Park",
+         "id": "09eec88a8d151001b79dff127e170000",
+         "count": 24
+        },
+        {
+         "descriptor": "Cambridge, St Andrews Street",
+         "id": "1ab48a98eb7c10016342c3fa76c40000",
+         "count": 2
+        },
+        {
+         "descriptor": "Canary Wharf, 1 Churchill Place",
+         "id": "1ab48a98eb7c1001633eb0711e740000",
+         "count": 67
+        },
+        {
+         "descriptor": "Ceejay House, Mumbai",
+         "id": "112c0542820110016378a0a3e68d0000",
+         "count": 2
+        },
+        {
+         "descriptor": "Chennai, DLF IT Park",
+         "id": "112c05428201100163788a5627320000",
+         "count": 19
+        },
+        {
+         "descriptor": "Chicago, 190 South LaSalle Street",
+         "id": "1ab48a98eb7c10016340c1c9feed0000",
+         "count": 1
+        },
+        {
+         "descriptor": "Cramlington, Craster Court",
+         "id": "1ab48a98eb7c1001633fc01f21880000",
+         "count": 1
+        },
+        {
+         "descriptor": "Dubai International Financial Centre, Dubai",
+         "id": "112c054282011001637b94e1ddfc0000",
+         "count": 2
+        },
+        {
+         "descriptor": "Dublin, Molesworth Street",
+         "id": "1ab48a98eb7c1001634150c091430000",
+         "count": 3
+        },
+        {
+         "descriptor": "Frankfurt, Taunus Turm",
+         "id": "112c0542820110016376aa9493390000",
+         "count": 9
+        },
+        {
+         "descriptor": "Gemini Building A, Prague",
+         "id": "1ab48a98eb7c100163431b19e4110000",
+         "count": 9
+        },
+        {
+         "descriptor": "Gemini Building B, Prague",
+         "id": "112c054282011001637b42605aba0000",
+         "count": 2
+        },
+        {
+         "descriptor": "Glasgow, Clyde Place",
+         "id": "c58206e6ec7510011bb83e325d8c0000",
+         "count": 3
+        },
+        {
+         "descriptor": "Glasgow Campus",
+         "id": "1ab48a98eb7c100163411a1947370000",
+         "count": 51
+        },
+        {
+         "descriptor": "Gurugram, DLF Downtown",
+         "id": "253dfca5ccfc10016b1361f46cfe0000",
+         "count": 25
+        },
+        {
+         "descriptor": "Hamburg, Paul-Dessau-Strasse 8/ Gasstrasse 2",
+         "id": "1ab48a98eb7c1001634be270841f0000",
+         "count": 1
+        },
+        {
+         "descriptor": "Henderson, 2280 Corporate Circle",
+         "id": "112c0542820110016377311348c60000",
+         "count": 2
+        },
+        {
+         "descriptor": "Hong Kong, Cheung Kong Center",
+         "id": "112c054282011001637824970f090000",
+         "count": 6
+        },
+        {
+         "descriptor": "Houston, 609 Main Street",
+         "id": "1ab48a98eb7c100163410baf3ab70000",
+         "count": 1
+        },
+        {
+         "descriptor": "Ipswich, Princes Street",
+         "id": "1ab48a98eb7c10016336111cbdd30000",
+         "count": 2
+        },
+        {
+         "descriptor": "Isle of Man, Eagle Court",
+         "id": "1ab48a98eb7c1001633ede1f2b7c0000",
+         "count": 3
+        },
+        {
+         "descriptor": "Italy - Default Legacy Site",
+         "id": "1ab48a98eb7c1001634a56500de50000",
+         "count": 1
+        },
+        {
+         "descriptor": "Jersey, 5-6 Esplanade",
+         "id": "112c0542820110016375f347164f0000",
+         "count": 2
+        },
+        {
+         "descriptor": "Kanyon Building, Istanbul",
+         "id": "620f2b6034901001b9f54d5bd39a0000",
+         "count": 1
+        },
+        {
+         "descriptor": "Knutsford, Radbroke Hall",
+         "id": "1ab48a98eb7c1001633623b929e80000",
+         "count": 39
+        },
+        {
+         "descriptor": "Leeds, Park Row",
+         "id": "1ab48a98eb7c1001633ea1ffa8610000",
+         "count": 5
+        },
+        {
+         "descriptor": "Liverpool, Chapel Street (Flex office)",
+         "id": "1ab48a98eb7c1001634c996b97ae0000",
+         "count": 1
+        },
+        {
+         "descriptor": "Liverpool, Dale House, Wavertree",
+         "id": "112c0542820110016374787e181e0000",
+         "count": 2
+        },
+        {
+         "descriptor": "Luton, George Street",
+         "id": "112c054282011001636e5ffb8fd60000",
+         "count": 1
+        },
+        {
+         "descriptor": "Manchester, 4 Piccadilly Place",
+         "id": "1ab48a98eb7c10016341f1b145a90000",
+         "count": 15
+        },
+        {
+         "descriptor": "Manchester, Spinningfields",
+         "id": "1ab48a98eb7c1001633e82b319e90000",
+         "count": 6
+        },
+        {
+         "descriptor": "Mexico City, Avenida Paseo de la Reforma 505",
+         "id": "112c0542820110016380ed6257dc0000",
+         "count": 3
+        },
+        {
+         "descriptor": "Monaco, Le Labor",
+         "id": "112c0542820110016377ee7575e80000",
+         "count": 1
+        },
+        {
+         "descriptor": "Monaco, Le Riviera",
+         "id": "bc38953bd3a51000cbd70d519a5c0000",
+         "count": 1
+        },
+        {
+         "descriptor": "Monaco - Default Legacy Site",
+         "id": "112c054282011001637ec6e246d80000",
+         "count": 2
+        },
+        {
+         "descriptor": "Monaco La Costa, Le Saint Michel Building",
+         "id": "112c054282011001637b8d072aef0000",
+         "count": 2
+        },
+        {
+         "descriptor": "Mumbai, Altimus",
+         "id": "1ab48a98eb7c1001634cf23b210c0000",
+         "count": 6
+        },
+        {
+         "descriptor": "Mumbai, Nirlon Knowledge Park (BX) 9th & 11-12 floor",
+         "id": "b8f75d1cb9781000cd91027a85e30000",
+         "count": 16
+        },
+        {
+         "descriptor": "Mumbai, Nirlon Knowledge Park (IB) , 9th floor",
+         "id": "1ab48a98eb7c100163423aff71b80000",
+         "count": 9
+        },
+        {
+         "descriptor": "New Delhi, Eros Corporate Tower",
+         "id": "112c0542820110016377af553b050000",
+         "count": 2
+        },
+        {
+         "descriptor": "New York, 745 7th Avenue",
+         "id": "1ab48a98eb7c10016340ac23e4860000",
+         "count": 42
+        },
+        {
+         "descriptor": "Noida, Candor TechSpace",
+         "id": "112c0542820110016377c02c6ef00000",
+         "count": 14
+        },
+        {
+         "descriptor": "Northampton, Barclays Campus, Pavilion Drive",
+         "id": "1ab48a98eb7c1001633ecfadb9d70000",
+         "count": 21
+        },
+        {
+         "descriptor": "Norwich, Red Lion Street",
+         "id": "1ab48a98eb7c1001633c64fa37dd0000",
+         "count": 1
+        },
+        {
+         "descriptor": "Norwich, St James' Court",
+         "id": "112c05428201100163731c4096a90000",
+         "count": 1
+        },
+        {
+         "descriptor": "Paris, 52 avenue Hoche",
+         "id": "5311bdbd43ba1001934579bf54400000",
+         "count": 3
+        },
+        {
+         "descriptor": "Paris, Origami",
+         "id": "1ab48a98eb7c10016342fa9f60770000",
+         "count": 1
+        },
+        {
+         "descriptor": "Prestige Meridian, Bengaluru",
+         "id": "1ab48a98eb7c100163465bf6c3310000",
+         "count": 2
+        },
+        {
+         "descriptor": "Pune, Gera Commerzone SEZ",
+         "id": "112c05428201100163763bd6ad400000",
+         "count": 159
+        },
+        {
+         "descriptor": "San Francisco, Four Embarcadero Center",
+         "id": "112c05428201100163762d1061590000",
+         "count": 2
+        },
+        {
+         "descriptor": "Singapore, Marina Bay Financial Tower 2",
+         "id": "112c0542820110016378d8a615cf0000",
+         "count": 20
+        },
+        {
+         "descriptor": "Southampton, Tagus House",
+         "id": "112c05428201100163742621eb130000",
+         "count": 1
+        },
+        {
+         "descriptor": "Sunderland, Wear House, Admiral Way",
+         "id": "112c0542820110016373d2a2764f0000",
+         "count": 2
+        },
+        {
+         "descriptor": "Tel Aviv, The Platinum Building",
+         "id": "1ab48a98eb7c10016343ad2619a50000",
+         "count": 2
+        },
+        {
+         "descriptor": "The Medelan Building, Milan",
+         "id": "1ab48a98eb7c1001634b7fdeeb170000",
+         "count": 1
+        },
+        {
+         "descriptor": "Tokyo, Roppongi Hills Mori Tower",
+         "id": "1ab48a98eb7c1001634312b18a9d0000",
+         "count": 4
+        },
+        {
+         "descriptor": "Toronto, Bay Wellington Tower L47",
+         "id": "14be90eeb4d81001bacf98e273570000",
+         "count": 2
+        },
+        {
+         "descriptor": "Wilmington, 125 South West Street",
+         "id": "1ab48a98eb7c10016346632ee73f0000",
+         "count": 7
+        },
+        {
+         "descriptor": "Working From Home, NEW JERSEY",
+         "id": "112c054282011001637c7344ce7b0000",
+         "count": 1
+        },
+        {
+         "descriptor": "Working From Home, UK",
+         "id": "112c054282011001637bb9a001bc0000",
+         "count": 1
+        },
+        {
+         "descriptor": "Working From Home, WASHINGTON",
+         "id": "1ab48a98eb7c10016346dc6df43a0000",
+         "count": 1
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "userAuthenticated": false
+  },
+  "text": null
+ },
+ "recorded_at": "2026-11-11T18:35:03.043875+00:00",
+ "user_agent": "Mozilla/5.0 (compatible; JobWatch/0.1; personal job tracker)"
+}

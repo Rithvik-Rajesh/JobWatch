@@ -10647,7 +10647,7 @@
           },
           "host": {
             "type": "string",
-            "pattern": "^[a-z0-9.-]+\\.oraclecloud\\.com$",
+            "pattern": "^[a-z0-9-]+(\\.[a-z0-9-]+)+$",
             "title": "Host"
           },
           "site_number": {

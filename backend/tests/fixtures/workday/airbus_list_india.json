@@ -1,0 +1,770 @@
+{
+ "request": {
+  "method": "POST",
+  "url": "https://ag.wd3.myworkdayjobs.com/wday/cxs/ag/Airbus/jobs",
+  "params": null,
+  "json": {
+   "appliedFacets": {
+    "locationCountry": [
+     "c4f78be1a8f14da0ab49ce1162348a5e"
+    ]
+   },
+   "limit": 20,
+   "offset": 0,
+   "searchText": ""
+  }
+ },
+ "response": {
+  "status": 200,
+  "content_type": "application/json",
+  "json": {
+   "total": 213,
+   "jobPostings": [
+    {
+     "title": "Technical Data Analyst - AMM",
+     "externalPath": "/job/Bangalore-Area/Technical-Data-Analyst---AMM_JR10454601",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR10454601"
+     ]
+    },
+    {
+     "title": "In-service Engineer - Avionics Anemo & Inertial Systems",
+     "externalPath": "/job/Bangalore-Area/In-service-Engineer---Avionics-Anemo---Inertial-Systems_JR10456296-1",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR10456296"
+     ]
+    },
+    {
+     "title": "Simulation Engineer",
+     "externalPath": "/job/Bangalore-Area/Lead-Simulation-Frameworks-Engineer_JR10396910",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 2 Days Ago",
+     "bulletFields": [
+      "JR10396910"
+     ]
+    },
+    {
+     "title": "AIOps Leader",
+     "externalPath": "/job/Bangalore-Area/AIOps-Leader_JR10435733",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 6 Days Ago",
+     "bulletFields": [
+      "JR10435733"
+     ]
+    },
+    {
+     "title": "Software Engineer",
+     "externalPath": "/job/Bangalore-Area/Software-Engineer_JR10455480",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 6 Days Ago",
+     "bulletFields": [
+      "JR10455480"
+     ]
+    },
+    {
+     "title": "Cabin Retrofit Solution Engineer",
+     "externalPath": "/job/Bangalore-Area/Cabin-Retrofit-Solution-Engineer_JR10432569-1",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 6 Days Ago",
+     "bulletFields": [
+      "JR10432569"
+     ]
+    },
+    {
+     "title": "Service Delivery Manager – SAP MES",
+     "externalPath": "/job/Bangalore-Area/Service-Delivery-Manager---SAP-MES_JR10455173",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 7 Days Ago",
+     "bulletFields": [
+      "JR10455173"
+     ]
+    },
+    {
+     "title": "Stress and F&DT Engineer - A220",
+     "externalPath": "/job/Bangalore-Area/Stress-and-F-DT-Engineer---A220_JR10454492-1",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 7 Days Ago",
+     "bulletFields": [
+      "JR10454492"
+     ]
+    },
+    {
+     "title": "Internship- Structures",
+     "externalPath": "/job/Bangalore-Area/Internship--Structures_JR10449142",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 7 Days Ago",
+     "bulletFields": [
+      "JR10449142"
+     ]
+    },
+    {
+     "title": "Senior PM Business Analytics Solution Architect",
+     "externalPath": "/job/Bangalore-Area/Senior-PM-Digital-Analytics-Solution-Developer_JR10453643",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 7 Days Ago",
+     "bulletFields": [
+      "JR10453643"
+     ]
+    },
+    {
+     "title": "Job Title: Workflow Manager – In-Service Engineering Daily Repairs",
+     "externalPath": "/job/Bangalore-Area/Job-Title--Workflow-Manager---In-Service-Engineering-Daily-Repairs_JR10451466-1",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 7 Days Ago",
+     "bulletFields": [
+      "JR10451466"
+     ]
+    },
+    {
+     "title": "Cabin Technical Change Management Engineer",
+     "externalPath": "/job/Bangalore-Area/DMU-Integration-Engineer--Cabin-_JR10417853",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 7 Days Ago",
+     "bulletFields": [
+      "JR10417853"
+     ]
+    },
+    {
+     "title": "Finance Analyst",
+     "externalPath": "/job/Bangalore-Area/Finance-Analyst_JR10453816",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 8 Days Ago",
+     "bulletFields": [
+      "JR10453816"
+     ]
+    },
+    {
+     "title": "Lead Technology Analyst , SAP BTP",
+     "externalPath": "/job/Bangalore-Area/Lead-Technology-Analyst---SAP-BTP_JR10422852",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 8 Days Ago",
+     "bulletFields": [
+      "JR10422852"
+     ]
+    },
+    {
+     "title": "Technical Data Analyst - CMM",
+     "externalPath": "/job/Bangalore-Area/Technical-Data-Analyst---CMM_JR10454587",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 8 Days Ago",
+     "bulletFields": [
+      "JR10454587"
+     ]
+    },
+    {
+     "title": "Technical Data Analyst - CMM",
+     "externalPath": "/job/Bangalore-Area/Technical-Data-Analyst---CMM_JR10454597",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 8 Days Ago",
+     "bulletFields": [
+      "JR10454597"
+     ]
+    },
+    {
+     "title": "Technical Data Analyst (AMM)",
+     "externalPath": "/job/Bangalore-Area/Technical-Data-Analyst--AMM-_JR10454631",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 8 Days Ago",
+     "bulletFields": [
+      "JR10454631"
+     ]
+    },
+    {
+     "title": "Technical Data Analyst - AMM",
+     "externalPath": "/job/Bangalore-Area/Technical-Data-Analyst---AMM_JR10454634",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 8 Days Ago",
+     "bulletFields": [
+      "JR10454634"
+     ]
+    },
+    {
+     "title": "Technical Data Analyst - AMM",
+     "externalPath": "/job/Bangalore-Area/Technical-Data-Analyst---AMM_JR10454636-1",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 8 Days Ago",
+     "bulletFields": [
+      "JR10454636"
+     ]
+    },
+    {
+     "title": "Technical Data Analyst - Wiring",
+     "externalPath": "/job/Bangalore-Area/Technical-Data-Analyst---Wiring_JR10454805",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 8 Days Ago",
+     "bulletFields": [
+      "JR10454805"
+     ]
+    }
+   ],
+   "facets": [
+    {
+     "facetParameter": "startDate",
+     "descriptor": "Posting Date",
+     "values": [
+      {
+       "descriptor": "1 Day",
+       "id": "29d7affdc34a10001f8fca311c1900f7",
+       "count": 2
+      },
+      {
+       "descriptor": "1 Week",
+       "id": "29d7affdc34a10001f8fca3a631900f8",
+       "count": 10
+      },
+      {
+       "descriptor": "2-4 Weeks",
+       "id": "29d7affdc34a10001f8fca432d1900f9",
+       "count": 60
+      },
+      {
+       "descriptor": "5-8 Weeks",
+       "id": "29d7affdc34a10001f8fca4bdfa900fa",
+       "count": 28
+      },
+      {
+       "descriptor": "9-12 Weeks",
+       "id": "29d7affdc34a10001f8fca54962100fb",
+       "count": 23
+      },
+      {
+       "descriptor": "12+ Weeks",
+       "id": "29d7affdc34a10001f8fca5d314100fc",
+       "count": 88
+      }
+     ]
+    },
+    {
+     "facetParameter": "jobFamilyGroup",
+     "descriptor": "Job Category",
+     "values": [
+      {
+       "descriptor": "Engineering <FU-EN>",
+       "id": "f5811cef9cb5018463377f3f550a1bf2",
+       "count": 76
+      },
+      {
+       "descriptor": "Digital <FU-IM>",
+       "id": "f5811cef9cb5015323ad7f3f550a1df2",
+       "count": 54
+      },
+      {
+       "descriptor": "Customer Services and Support <FU-CS>",
+       "id": "f5811cef9cb501204ba8803f550a23f2",
+       "count": 36
+      },
+      {
+       "descriptor": "P&PM and Configuration Mgmt <FU-PP>",
+       "id": "f5811cef9cb501e5d34e803f550a21f2",
+       "count": 12
+      },
+      {
+       "descriptor": "Management <FU-FA>",
+       "id": "f5811cef9cb50102a000803f550a1ff2",
+       "count": 8
+      },
+      {
+       "descriptor": "Marketing, Sales & Commercial Contracts <FU-MC>",
+       "id": "f5811cef9cb5012a71527e3f550a17f2",
+       "count": 6
+      },
+      {
+       "descriptor": "Finance <FU-FI>",
+       "id": "f5811cef9cb5015f16047e3f550a15f2",
+       "count": 6
+      },
+      {
+       "descriptor": "Manuf., Assembly, Integr. & Test <FU-MA>",
+       "id": "f5811cef9cb5010551c57e3f550a19f2",
+       "count": 5
+      },
+      {
+       "descriptor": "Supply Management <FU-SM>",
+       "id": "f5811cef9cb501b88b02813f550a25f2",
+       "count": 3
+      },
+      {
+       "descriptor": "Quality <FU-QU>",
+       "id": "f5811cef9cb50109de76813f550a27f2",
+       "count": 3
+      },
+      {
+       "descriptor": "Corporate Governance <FU-CG>",
+       "id": "f5811cef9cb501d44e8f7d3f550a13f2",
+       "count": 2
+      },
+      {
+       "descriptor": "Human Resources <FU-HR>",
+       "id": "f5811cef9cb50129aec07c3f550a11f2",
+       "count": 1
+      }
+     ]
+    },
+    {
+     "facetParameter": "jobFamily",
+     "descriptor": "Job Family",
+     "values": [
+      {
+       "descriptor": "Digital <JF-IM-DI>",
+       "id": "f5811cef9cb501602cf214e9540adaec",
+       "count": 54
+      },
+      {
+       "descriptor": "Software Engineering <JF-EN-EK>",
+       "id": "f5811cef9cb5018f6f641ee9540a16ed",
+       "count": 20
+      },
+      {
+       "descriptor": "Customer Eng.&Technical Support&Services <JF-CS-PS>",
+       "id": "f5811cef9cb501b8d3af13e9540ad0ec",
+       "count": 15
+      },
+      {
+       "descriptor": "Technical Data & Publications <JF-CS-TD>",
+       "id": "f5811cef9cb5013db07826e9540a36ed",
+       "count": 13
+      },
+      {
+       "descriptor": "Structure Design & Integration <JF-EN-EO>",
+       "id": "f5811cef9cb501640dcd27e9540a40ed",
+       "count": 11
+      },
+      {
+       "descriptor": "Programme & Project Management <JF-PP-PM>",
+       "id": "f5811cef9cb501a0e0c525e9540a30ed",
+       "count": 11
+      },
+      {
+       "descriptor": "Structure & Dynamic Systems Analysis <JF-EN-EN>",
+       "id": "f5811cef9cb501035f702ae9540a50ed",
+       "count": 8
+      },
+      {
+       "descriptor": "Training support & services <JF-CS-TS>",
+       "id": "f5811cef9cb50164fe3f11e9540ac0ec",
+       "count": 7
+      },
+      {
+       "descriptor": "Sub-system development <JF-EN-EQ>",
+       "id": "f5811cef9cb501b57dc616e9540ae8ec",
+       "count": 6
+      },
+      {
+       "descriptor": "Sales, Marketing & Commercial Contracts <JF-MC-VE>",
+       "id": "f5811cef9cb501d5fd8e18e9540af4ec",
+       "count": 6
+      },
+      {
+       "descriptor": "Leadership <JF-FA-EM>",
+       "id": "f5811cef9cb50147e10916e9540ae2ec",
+       "count": 6
+      },
+      {
+       "descriptor": "System Installation <JF-EN-ER>",
+       "id": "f5811cef9cb501eca20928e9540a42ed",
+       "count": 5
+      },
+      {
+       "descriptor": "Manufacturing Engineering <JF-MA-ME>",
+       "id": "f5811cef9cb5019c573925e9540a2ced",
+       "count": 5
+      },
+      {
+       "descriptor": "Elec.Electron.&Electromag,Optics&Optron. <JF-EN-ED>",
+       "id": "f5811cef9cb50110ae0b18e9540af0ec",
+       "count": 5
+      },
+      {
+       "descriptor": "Testing <JF-EN-ET>",
+       "id": "f5811cef9cb50154f3b02ae9540a52ed",
+       "count": 4
+      },
+      {
+       "descriptor": "Flight & Space Physics <JF-EN-EE>",
+       "id": "f5811cef9cb501b289ee1de9540a12ed",
+       "count": 4
+      },
+      {
+       "descriptor": "Stdized Platform, Module & Version Eng. <JF-EN-EL>",
+       "id": "f5811cef9cb501e1b07816e9540ae6ec",
+       "count": 3
+      },
+      {
+       "descriptor": "Qualification & Operability <JF-EN-EJ>",
+       "id": "f5811cef9cb501d1819127e9540a3eed",
+       "count": 3
+      },
+      {
+       "descriptor": "Fluid & Hydromechanics, Thermal <JF-EN-EF>",
+       "id": "f5811cef9cb501eef88812e9540ac6ec",
+       "count": 3
+      },
+      {
+       "descriptor": "Support to Management <JF-FA-ES>",
+       "id": "f5811cef9cb50126afe528e9540a48ed",
+       "count": 2
+      },
+      {
+       "descriptor": "Supplier Management <JF-SM-SR>",
+       "id": "f5811cef9cb501dbd22229e9540a4aed",
+       "count": 2
+      },
+      {
+       "descriptor": "Quality Assurance <JF-QU-QA>",
+       "id": "f5811cef9cb5019a2fe613e9540ad2ec",
+       "count": 2
+      },
+      {
+       "descriptor": "Financial Expertise <JF-FI-FE>",
+       "id": "f5811cef9cb501a4a79719e9540afcec",
+       "count": 2
+      },
+      {
+       "descriptor": "Accounting <JF-FI-FA>",
+       "id": "f5811cef9cb5014bb26b1fe9540a1ced",
+       "count": 2
+      },
+      {
+       "descriptor": "Vehicle Mission & Control <JF-EN-EU>",
+       "id": "f5811cef9cb501586f6617e9540aeaec",
+       "count": 1
+      },
+      {
+       "descriptor": "Transactional Accounting <JF-FI-FB>",
+       "id": "fc93714e6359011f1a1d0b41da01584b",
+       "count": 1
+      },
+      {
+       "descriptor": "Strategy & Policy <JF-CG-SL>",
+       "id": "f5811cef9cb50190962a15e9540adcec",
+       "count": 1
+      },
+      {
+       "descriptor": "Sourcing, Buying and Ordering <JF-SM-SP>",
+       "id": "f5811cef9cb5012bde3314e9540ad4ec",
+       "count": 1
+      },
+      {
+       "descriptor": "Quality Inspection <JF-QU-QC>",
+       "id": "f5811cef9cb501d616d029e9540a4ced",
+       "count": 1
+      },
+      {
+       "descriptor": "Powerplant and Propulsion <JF-EN-EI>",
+       "id": "f5811cef9cb501bcf91a12e9540ac2ec",
+       "count": 1
+      },
+      {
+       "descriptor": "Materials & Processes <JF-EN-EG>",
+       "id": "f5811cef9cb501f9c82b1ee9540a14ed",
+       "count": 1
+      },
+      {
+       "descriptor": "HR Expertise <JF-HR-CC>",
+       "id": "f5811cef9cb501e9064213e9540accec",
+       "count": 1
+      },
+      {
+       "descriptor": "Engineering Services Sub-contracting <JF-EN-EP>",
+       "id": "f5811cef9cb501c6bfbb1ce9540a10ed",
+       "count": 1
+      },
+      {
+       "descriptor": "Cyber Security <JF-CG-ST>",
+       "id": "f5811cef9cb5016f4d2a2ae9540a4eed",
+       "count": 1
+      },
+      {
+       "descriptor": "Customer Account  and Service Management <JF-CS-CA>",
+       "id": "f5811cef9cb5013d8b6a28e9540a44ed",
+       "count": 1
+      },
+      {
+       "descriptor": "Controlling <JF-FI-FO>",
+       "id": "f5811cef9cb5016186d71ee9540a1aed",
+       "count": 1
+      },
+      {
+       "descriptor": "Configuration Management <JF-PP-CM>",
+       "id": "f5811cef9cb5012e6b1d20e9540a22ed",
+       "count": 1
+      }
+     ]
+    },
+    {
+     "facetParameter": "hiringCompany",
+     "descriptor": "Company",
+     "values": [
+      {
+       "descriptor": "1127 Airbus India Private Limited",
+       "id": "f5811cef9cb501f6e6a91d144e0a9362",
+       "count": 208
+      },
+      {
+       "descriptor": "5572 Airbus India Training Centre Private Limited",
+       "id": "0ea3dc43a5c610010093645b7fbf0000",
+       "count": 5
+      }
+     ]
+    },
+    {
+     "facetParameter": "workerSubType",
+     "descriptor": "Job Type",
+     "values": [
+      {
+       "descriptor": "Regular",
+       "id": "f5811cef9cb501a69768a71d470a6d15",
+       "count": 206
+      },
+      {
+       "descriptor": "Trainee / Student (Fixed Term)",
+       "id": "f5811cef9cb50193723ed01d470a6e15",
+       "count": 7
+      }
+     ]
+    },
+    {
+     "facetParameter": "FullPartTime",
+     "descriptor": "Full/Part Time",
+     "values": [
+      {
+       "descriptor": "Full time",
+       "id": "70a157281071017ad8c0ee4170448100",
+       "count": 213
+      }
+     ]
+    },
+    {
+     "facetParameter": "locationMainGroup",
+     "values": [
+      {
+       "facetParameter": "locationCountry",
+       "descriptor": "Country",
+       "values": [
+        {
+         "descriptor": "France",
+         "id": "54c5b6971ffb4bf0b116fe7651ec789a",
+         "count": 928
+        },
+        {
+         "descriptor": "Germany",
+         "id": "dcc5b7608d8644b3a93716604e78e995",
+         "count": 458
+        },
+        {
+         "descriptor": "Spain",
+         "id": "bd34c524a6a04ae6915f5d96fa086199",
+         "count": 384
+        },
+        {
+         "descriptor": "United States of America",
+         "id": "bc33aa3152ec42d4995f4791a106ed09",
+         "count": 266
+        },
+        {
+         "descriptor": "Canada",
+         "id": "a30a87ed25634629aa6c3958aa2b91ea",
+         "count": 230
+        },
+        {
+         "descriptor": "India",
+         "id": "c4f78be1a8f14da0ab49ce1162348a5e",
+         "count": 213
+        },
+        {
+         "descriptor": "United Kingdom",
+         "id": "29247e57dbaf46fb855b224e03170bc7",
+         "count": 125
+        },
+        {
+         "descriptor": "China",
+         "id": "6cb77610a8a543aea2d6bc10457e35d4",
+         "count": 75
+        },
+        {
+         "descriptor": "Romania",
+         "id": "f2e609fe92974a55a05fc1cdc2852122",
+         "count": 63
+        },
+        {
+         "descriptor": "Portugal",
+         "id": "2e8c5034deb045d49315417c347472ca",
+         "count": 60
+        },
+        {
+         "descriptor": "Malaysia",
+         "id": "972dc4ba8d454bc0b893ff84b1529077",
+         "count": 29
+        },
+        {
+         "descriptor": "Saudi Arabia",
+         "id": "50423b5190ad49bb89e94cd58dfaad69",
+         "count": 25
+        },
+        {
+         "descriptor": "Poland",
+         "id": "131d5ac7e3ee4d7b962bdc96e498e412",
+         "count": 24
+        },
+        {
+         "descriptor": "Brazil",
+         "id": "1a29bb1357b240ab99a2fa755cc87c0e",
+         "count": 21
+        },
+        {
+         "descriptor": "Singapore",
+         "id": "80938777cac5440fab50d729f9634969",
+         "count": 20
+        },
+        {
+         "descriptor": "Mexico",
+         "id": "e2adff9272454660ac4fdb56fc70bb51",
+         "count": 18
+        },
+        {
+         "descriptor": "Thailand",
+         "id": "873d0f604e3b458c990cb4d83a5c0f14",
+         "count": 15
+        },
+        {
+         "descriptor": "Japan",
+         "id": "8b705da2becf43cfaccc091da0988ab2",
+         "count": 15
+        },
+        {
+         "descriptor": "Philippines",
+         "id": "e56f1daf83e04bacae794ba5c5593560",
+         "count": 7
+        },
+        {
+         "descriptor": "Denmark",
+         "id": "49ab063f422741e2aef271de00efeac8",
+         "count": 6
+        },
+        {
+         "descriptor": "Taiwan",
+         "id": "a4e08b475d6a4176853c9d1cb9854e02",
+         "count": 5
+        },
+        {
+         "descriptor": "Hungary",
+         "id": "9db257f5937e4421b2fac64eec6832f8",
+         "count": 5
+        },
+        {
+         "descriptor": "Ireland",
+         "id": "04a05835925f45b3a59406a2a6b72c8a",
+         "count": 4
+        },
+        {
+         "descriptor": "Indonesia",
+         "id": "b31234dbcdda4da9ba8fa073c5944e36",
+         "count": 4
+        },
+        {
+         "descriptor": "Korea, Republic of",
+         "id": "7a5a2aadf9d34086a2bfbfd408bc28da",
+         "count": 3
+        },
+        {
+         "descriptor": "Hong Kong",
+         "id": "d4afdeb461d446e4babd204bd102dba8",
+         "count": 3
+        },
+        {
+         "descriptor": "Vietnam",
+         "id": "db69e8c8446c11de98360015c5e6daf6",
+         "count": 2
+        },
+        {
+         "descriptor": "Netherlands",
+         "id": "9696868b09c64d52a62ee13b052383cc",
+         "count": 2
+        },
+        {
+         "descriptor": "Kazakhstan",
+         "id": "db69ebac446c11de98360015c5e6daf6",
+         "count": 2
+        },
+        {
+         "descriptor": "Italy",
+         "id": "8cd04a563fd94da7b06857a79faaf815",
+         "count": 2
+        },
+        {
+         "descriptor": "Slovakia",
+         "id": "d2f29df0c90f4cea9e7d17f2ed8a86ad",
+         "count": 1
+        },
+        {
+         "descriptor": "Morocco",
+         "id": "7aaca3f6fc774f16802a4df4718a5b53",
+         "count": 1
+        },
+        {
+         "descriptor": "Finland",
+         "id": "0afb2fa656da42e8bfb6d47bd24a26fa",
+         "count": 1
+        },
+        {
+         "descriptor": "Colombia",
+         "id": "e8106cd6a3534f2dba6fdee2d41db89d",
+         "count": 1
+        },
+        {
+         "descriptor": "Chile",
+         "id": "53fe09ef12b9408682a1d2439823f2e0",
+         "count": 1
+        },
+        {
+         "descriptor": "United Arab Emirates",
+         "id": "7b4fa1f369bd4604ba3692682fcbe345",
+         "count": 1
+        }
+       ]
+      },
+      {
+       "facetParameter": "locations",
+       "descriptor": "Locations",
+       "values": [
+        {
+         "descriptor": "Bangalore Area",
+         "id": "f5811cef9cb501f0b948d1684c0abf43",
+         "count": 189
+        },
+        {
+         "descriptor": "New Delhi",
+         "id": "f5811cef9cb50183a08b706a4c0a4149",
+         "count": 14
+        },
+        {
+         "descriptor": "Gurugram",
+         "id": "79a95643a3f91000ff60828806880000",
+         "count": 6
+        },
+        {
+         "descriptor": "Vadodara",
+         "id": "4b4dd91da0ea1001e2db956613b60000",
+         "count": 4
+        },
+        {
+         "descriptor": "Hyderabad",
+         "id": "7c569a58dff91001e29f58f3d4e20000",
+         "count": 1
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "userAuthenticated": false
+  },
+  "text": null
+ },
+ "recorded_at": "2026-11-11T18:35:27.837272+00:00",
+ "user_agent": "Mozilla/5.0 (compatible; JobWatch/0.1; personal job tracker)"
+}

@@ -20,12 +20,14 @@ from app.companies.schemas import (
 )
 from app.core.errors import Conflict, NotFound, ValidationFailed
 from app.core.pagination import Page, PageParams
-from app.models import Application, Company, CompanyAlias, Job, ScrapeRun, Status
-from app.models.enums import ExtractorKind, HealthStatus, RunStatus, RunTrigger, StatusCategory
+from app.models import Application, CareerSite, Company, CompanyAlias, Job, ScrapeRun, Status
+from app.models.enums import ExtractorKind, HealthStatus, StatusCategory
 from app.settings.registry import TimezoneSettings, get_setting
+from app.sites import service as sites_service
 
 SORTS = ("name_asc", "name_desc", "open_jobs_desc", "last_success_desc", "health")
 _HEALTH_RANK = {
+    HealthStatus.blocked: -1,
     HealthStatus.failing: 0,
     HealthStatus.degraded: 1,
     HealthStatus.unknown: 2,
@@ -187,6 +189,19 @@ async def insert_company(
     session.add(company)
     await session.flush()
     await add_aliases(session, company, aliases or [])
+    if config is not None:  # Phase 3: the configured extractor lives on the company's `main` career site
+        await sites_service.create_site_row(
+            session,
+            company,
+            label=sites_service.MAIN_LABEL,
+            platform=extractor,
+            config=config.model_dump(mode="json"),
+            careers_url=careers_url,
+            monitoring_enabled=monitoring_enabled,
+            check_interval_min=check_interval_min if check_interval_min != 30 else None,
+            now=now,
+        )
+        await sites_service.sync_company_summary(session, company.id)
     return company
 
 
@@ -312,31 +327,54 @@ async def update_company(
     if "check_interval_min" in provided and body.check_interval_min is not None:
         company.check_interval_min = body.check_interval_min
 
-    config_changed = False
+    # Phase 3: extractor / schedule live on career sites. Company fields are read-only summaries of them;
+    # these company-level inputs are applied to the `main` site.
+    main = await sites_service.get_main_site(session, company.id, include_archived=True)
     if body.clear_extractor:
-        company.extractor = ExtractorKind.none
-        company.extractor_config = {}
-        company.next_check_at = None
+        if main is not None and main.archived_at is None:
+            main.archived_at = now
+            main.monitoring_enabled = False
+            main.next_check_at = None
     elif body.extractor_config is not None:
         cfg = body.extractor_config
-        company.extractor = ExtractorKind(cfg.kind)
-        company.extractor_config = cfg.model_dump(mode="json")
-        if not company.careers_url:
-            company.careers_url = config_url(cfg)
-        config_changed = True
-    if company.extractor != ExtractorKind.none and not company.careers_url:
-        raise ValidationFailed("careers_url is required when an extractor is configured")
+        careers_url = company.careers_url or config_url(cfg)
+        if not careers_url:
+            raise ValidationFailed("careers_url is required when an extractor is configured")
+        company.careers_url = careers_url
+        if main is None:
+            await session.flush()
+            main = await sites_service.create_site_row(
+                session,
+                company,
+                label=sites_service.MAIN_LABEL,
+                platform=ExtractorKind(cfg.kind),
+                config=cfg.model_dump(mode="json"),
+                careers_url=careers_url,
+                monitoring_enabled=company.monitoring_enabled,
+                check_interval_min=company.check_interval_min if company.check_interval_min != 30 else None,
+                now=now,
+            )
+        else:
+            main.platform = ExtractorKind(cfg.kind)
+            main.config = cfg.model_dump(mode="json")
+            main.careers_url = careers_url
+            if main.archived_at is not None:
+                main.archived_at = None
+                main.monitoring_enabled = company.monitoring_enabled
+                main.next_check_at = now if company.monitoring_enabled else None
+            elif company.monitoring_enabled and main.monitoring_enabled and main.next_check_at is None:
+                main.next_check_at = now
 
     if "monitoring_enabled" in provided and body.monitoring_enabled is not None:
         company.monitoring_enabled = body.monitoring_enabled
-        if not body.monitoring_enabled:
-            company.next_check_at = None
-    schedulable = company.monitoring_enabled and company.extractor != ExtractorKind.none and company.archived_at is None
-    if schedulable and company.next_check_at is None and (config_changed or "monitoring_enabled" in provided):
-        company.next_check_at = now
-    if not schedulable:
-        company.next_check_at = None
-
+    if main is not None and main.archived_at is None:
+        if "check_interval_min" in provided and body.check_interval_min is not None:
+            main.check_interval_min = body.check_interval_min
+        if "monitoring_enabled" in provided and body.monitoring_enabled is not None:
+            sites_service.set_monitoring(main, body.monitoring_enabled, now)
+    await session.flush()
+    if main is not None:
+        await sites_service.sync_company_summary(session, company.id)
     await session.flush()
     if body.aliases is not None:
         await replace_aliases(session, company, body.aliases)
@@ -349,7 +387,11 @@ async def archive_company(session: AsyncSession, company_id: int, *, now: dateti
         company.archived_at = _now(now)
     company.monitoring_enabled = False
     company.next_check_at = None
+    for site in (await session.scalars(select(CareerSite).where(CareerSite.company_id == company.id))).all():
+        site.monitoring_enabled = False
+        site.next_check_at = None
     await session.flush()
+    await sites_service.sync_company_summary(session, company.id)
     return await company_out(session, company)
 
 
@@ -364,30 +406,14 @@ async def unarchive_company(session: AsyncSession, company_id: int) -> CompanyOu
 
 
 async def trigger_scrape(session: AsyncSession, company_id: int, *, now: datetime | None = None) -> ScrapeRunOut:
-    """Phase 2: record a queued manual run. Phase 3 enqueues the worker task for it."""
+    """Manual run of the company's primary (`main`, else first) career site."""
     company = await _get(session, company_id)
     if company.archived_at is not None:
         raise Conflict("Company is archived")
-    if company.extractor == ExtractorKind.none:
+    site = await sites_service.primary_site(session, company.id)
+    if site is None or site.platform == ExtractorKind.none:
         raise Conflict("Company has no extractor configured")
-    run = await session.scalar(
-        select(ScrapeRun)
-        .where(ScrapeRun.company_id == company.id, ScrapeRun.status.in_([RunStatus.queued, RunStatus.running]))
-        .order_by(ScrapeRun.queued_at.desc(), ScrapeRun.id.desc())
-        .limit(1)
-    )
-    if run is None:
-        run = ScrapeRun(
-            company_id=company.id,
-            trigger=RunTrigger.manual,
-            status=RunStatus.queued,
-            extractor=company.extractor,
-            queued_at=_now(now),
-        )
-        session.add(run)
-        await session.flush()
-        await session.refresh(run)
-    return ScrapeRunOut.model_validate(run)
+    return await sites_service.scrape_site(session, site.id, now=now)
 
 
 async def company_runs(session: AsyncSession, company_id: int, paging: PageParams) -> Page[ScrapeRunOut]:

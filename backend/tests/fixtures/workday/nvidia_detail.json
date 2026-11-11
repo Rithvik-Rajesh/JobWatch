@@ -1,0 +1,96 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://nvidia.wd5.myworkdayjobs.com/wday/cxs/nvidia/NVIDIAExternalCareerSite/job/India-Bengaluru/Senior-Physical-Design-Engineer_JR2026183",
+  "params": null,
+  "json": null
+ },
+ "response": {
+  "status": 200,
+  "content_type": "application/json",
+  "json": {
+   "jobPostingInfo": {
+    "id": "16b3aa54f81f10439f4d2e6f46060000",
+    "title": "Senior Physical Design Methodology Engineer",
+    "jobDescription": "<p>NVIDIA has continuously reinvented itself. Our invention of the GPU sparked the growth of the PC gaming market, redefined modern computer graphics, and revolutionized parallel computing. Today, research in artificial intelligence is booming worldwide, which calls for highly scalable and massively parallel computation horsepower that NVIDIA GPUs excel NVIDIA is a &#34;learning machine&#34; that constantly evolves by adapting to new opportunities that are hard to solve, that only we can address, and that matter to the world. This is our life&#39;s work, to amplify human creativity and intelligence. As an NVIDIAN, you&#39;ll be immersed in a diverse, supportive environment where everyone is inspired to do their best work. Come join our diverse team and see how you can make a lasting impact on the world!</p><br /><p>NVIDIA is seeking passionate, highly motivated, and creative design engineers to be part of a team working on industry-leading GPUs and SOCs. This position offers the opportunity to have real impact in a dynamic, technology-focused company impacting product lines ranging from consumer graphics to self-driving cars and the growing field of artificial intelligence. We have crafted a team of exceptional people stretching around the globe, whose mission is to push the frontiers of what is possible today and define the platform for the future of computing.</p><br /><p><b>What you&#39;ll be doing:</b></p><ul><li>&#xfeff;&#xfeff;In this position, you will expected to be part of the physical design methodology team supporting top level timing closure flows. &#xfeff;&#xfeff;PD activities includes floorplanning, Placement, CTS, Postroute Optimization, STA, EMIR drop, IO Timing, ECO &amp; DRC closure.</li><li>Work in collaboration with design team for addressing design challenges. &#xfeff;&#xfeff;Help team members in debugging tool/flow/design related issues. &#xfeff;&#xfeff;Constantly look for improvement in top level timing optimization and closure flows to improve TAT. Troubleshoots a wide variety up to and including difficult design issues and applied proactive intervention.</li><li>Build flows based on industry standard and custom EDA tools to implement designs efficiently and improve PPA. Support flows for chip design teams across tapeouts and tech nodes.</li><li>Work closely with EDA vendors to improve toolchains to fix bugs and implement innovative ideas</li></ul><br /><p><b>What we need to see:</b></p><ul><li>&#xfeff;&#xfeff;BE/BTECH/MTECH, or equivalent experience. &#xfeff;&#xfeff;4&#43; years of experience in Physical Design, preferably with methodology/flow experience.</li><li>Working experience with tools like ICC2/Innovus, Aspen, PrimeClosure, Tempus, Seahawk etc used in the RTL2GDSIl implementation.</li><li>Strong algorithmic thinking with good automation skills in Python, TCL, tool specific scripting on one of the industry leading Place &amp; Route tools.</li><li>&#xfeff;&#xfeff;Ability to multi-task and flexibility to work in global environment. &#xfeff;&#xfeff;Good communication skills and strong motivation, Strong analytical &amp; Problem Solving skills</li><li>Willingness to learn and master new techniques quickly. Innovate and drive changes across teams &amp; workflows</li></ul><br /><p>#LI-Hybrid </p><p style=\"text-align:inherit\"></p><p style=\"text-align:inherit\"></p><p style=\"text-align:inherit\"></p><p style=\"text-align:inherit\"></p>",
+    "location": "India, Bengaluru",
+    "additionalLocations": [
+     "India, Hyderabad"
+    ],
+    "postedOn": "Posted Today",
+    "startDate": "2026-11-11",
+    "timeType": "Full time",
+    "jobReqId": "JR2026183",
+    "jobPostingId": "Senior-Physical-Design-Engineer_JR2026183",
+    "jobPostingSiteId": "NVIDIAExternalCareerSite",
+    "country": {
+     "descriptor": "India",
+     "id": "c4f78be1a8f14da0ab49ce1162348a5e"
+    },
+    "canApply": true,
+    "posted": true,
+    "includeResumeParsing": true,
+    "jobRequisitionLocation": {
+     "descriptor": "India, Bengaluru",
+     "country": {
+      "descriptor": "India",
+      "id": "c4f78be1a8f14da0ab49ce1162348a5e",
+      "alpha2Code": "IN"
+     }
+    },
+    "externalUrl": "https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite/job/India-Bengaluru/Senior-Physical-Design-Engineer_JR2026183",
+    "questionnaireId": "2f2764b3a82910064296831695150000"
+   },
+   "hiringOrganization": {
+    "name": "IN01 NVIDIA Graphics Bengaluru",
+    "url": ""
+   },
+   "similarJobs": [
+    {
+     "title": "Senior Physical Design AI Engineer",
+     "externalPath": "/job/India-Bengaluru/Senior-Physical-Design-AI-Engineer_JR2026884",
+     "timeType": "Full time",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted 30+ Days Ago",
+     "startDate": "2026-10-07"
+    },
+    {
+     "title": "Senior Physical Verification Engineer",
+     "externalPath": "/job/India-Bengaluru/Senior-Physical-Verification-Engineer_JR2027234",
+     "timeType": "Full time",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted 30+ Days Ago",
+     "startDate": "2026-10-07"
+    },
+    {
+     "title": "Senior ASIC Design Engineer, GPU Core Pipeline IP",
+     "externalPath": "/job/India-Bengaluru/Senior-ASIC-Design-Engineer--GPU-Core-Pipeline-IP_JR2025698",
+     "timeType": "Full time",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted 19 Days Ago",
+     "startDate": "2026-10-23"
+    },
+    {
+     "title": "AI Developer Technology Engineer",
+     "externalPath": "/job/India-Bengaluru/AI-Developer-Technology-Engineer_JR2008156",
+     "timeType": "Full time",
+     "locationsText": "2 Locations",
+     "postedOn": "Posted 30+ Days Ago",
+     "startDate": "2026-07-20"
+    },
+    {
+     "title": "Senior DFT Engineer - Hardware",
+     "externalPath": "/job/India-Bengaluru/Senior-DFT-Engineer---Hardware_JR2020076",
+     "timeType": "Full time",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted 30+ Days Ago",
+     "startDate": "2026-06-25"
+    }
+   ],
+   "userAuthenticated": false
+  },
+  "text": null
+ },
+ "recorded_at": "2026-11-11T18:34:58.426247+00:00",
+ "user_agent": "Mozilla/5.0 (compatible; JobWatch/0.1; personal job tracker)"
+}

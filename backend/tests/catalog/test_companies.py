@@ -1,11 +1,25 @@
 from datetime import UTC, datetime, timedelta
 
+import pytest
 from sqlalchemy import select
 
 from app.models import Company, ScrapeRun
+from app.sites import service as sites_service
 from tests.factories import application_for, make_company, make_job, status_id
 
 P = "/api/v1/companies"
+
+
+@pytest.fixture(autouse=True)
+def _no_real_queue(monkeypatch):
+    """Phase 3: manual scrapes hand the run to the worker queue; these tests must not touch a real queue."""
+
+    async def _enqueue(site_id, run_id, trigger):
+        return None
+
+    monkeypatch.setattr(sites_service, "enqueue_run", _enqueue)
+
+
 WORKDAY = "https://acme.wd5.myworkdayjobs.com/en-US/External"
 
 

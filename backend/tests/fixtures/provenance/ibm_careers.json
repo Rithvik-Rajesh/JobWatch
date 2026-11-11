@@ -1,0 +1,16 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://careers.ibm.com/careers/SearchJobs",
+  "params": null,
+  "json": null
+ },
+ "response": {
+  "status": 202,
+  "content_type": "text/html; charset=UTF-8",
+  "json": null,
+  "text": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title></title>\n    <style>\n        body {\n            font-family: \"Arial\";\n        }\n    </style>\n    <script type=\"text/javascript\">\n    window.awsWafCookieDomainList = [];\n    window.gokuProps = {\n\"key\":\"AQIDAHjcYu/GjX+QlghicBgQ/7bFaQZ+m5FKCMDnO+vTbNg96AEOpiIHWuCkDG883noISkeaAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMZIS5bhIf6i/cDUhVAgEQgDuYulDyvbeG7EfTRJvIEUG9Kv2kN59lVMPCtqtXm89eLdBGzxXNJuWRbK0m5tKKk1stunxzlyE0yP3LOA==\",\n          \"iv\":\"CgAFYTPVSAAAEvv/\",\n          \"context\":\"gj1+zioSNF798x5oSuDbXgR5OeRfiHDA86B++W/+I+OhHInCk1SD6cLKWZ3qwj383FZVg0n6JzASbaX52FiavPiyL2ZSc1acoLIoN4gUvyA41obnDBlozbBQyB/Vpn70ES1DA7jBquLSWIFtIXnZC9LQvhwF43ENSvvRSTq6GqmxCjKSs0wFO9gb/C/dIbHqD+1KU/8X+F8DdZ8yart0iJD9Z6MpLwbBX/F9RYYPFL5qwTHqYGuvetcjtYkdZ/ccfIWKwTMX0EVrwNdfPeJTLxo5dTlu/gZS0IQJWfaE0z4JxykUGNVzYx6wdfUuhfBiAB68n9Pi/2MjDxm3dxP8ByIa1wIkqMM0faF8xi1r+/Tb7shfHv82YVdO9nhJNw==\"\n};\n    </script>\n    <script src=\"https://7d6e0277a337.42c8209d.us-east-1.token.awswaf.com/7d6e0277a337/c836724ba209/cf569482d5b3/challenge.js\"></script>\n</head>\n<body>\n    <div id=\"challenge-container\"></div>\n    <script type=\"text/javascript\">\n        AwsWafIntegration.saveReferrer();\n        AwsWafIntegration.checkForceRefresh().then((forceRefresh) => {\n            if (forceRefresh) {\n                AwsWafIntegration.forceRefreshToken().then(() => {\n                    window.location.reload(true);\n                });\n            } else {\n                AwsWafIntegration.getToken().then(() => {\n                    window.location.reload(true);\n                });\n            }\n        });\n    </script>\n    <noscript>\n        <h1>JavaScript is disabled</h1>\n        In order to continue, we need to verify that you're not a robot.\n        This requires JavaScript. Enable JavaScript and then reload the page.\n    </noscript>\n</body>\n</html>"
+ },
+ "recorded_at": "2026-11-11T18:34:17.849271+00:00",
+ "user_agent": "Mozilla/5.0 (compatible; JobWatch/0.1; personal job tracker)"
+}

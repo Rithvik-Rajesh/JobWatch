@@ -1,0 +1,1313 @@
+{
+ "request": {
+  "method": "POST",
+  "url": "https://accenture.wd103.myworkdayjobs.com/wday/cxs/accenture/AccentureCareers/jobs",
+  "params": null,
+  "json": {
+   "appliedFacets": {
+    "locationCountry": [
+     "c4f78be1a8f14da0ab49ce1162348a5e"
+    ]
+   },
+   "limit": 20,
+   "offset": 0,
+   "searchText": ""
+  }
+ },
+ "response": {
+  "status": 200,
+  "content_type": "application/json",
+  "json": {
+   "total": 2000,
+   "jobPostings": [
+    {
+     "title": "Business Resiliency Associate Director",
+     "externalPath": "/job/Gurugram/Business-Resiliency-Associate-Director_R00367771",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "R00367771",
+      "Gurugram"
+     ]
+    },
+    {
+     "title": "Buyside Contracting Counsel Specialist",
+     "externalPath": "/job/Bengaluru/Buyside-Contracting-Counsel-Specialist_R00369210",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "R00369210",
+      "Bengaluru"
+     ]
+    },
+    {
+     "title": "Specialist",
+     "externalPath": "/job/Gurugram/Specialist_R00369212",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "R00369212",
+      "Gurugram"
+     ]
+    },
+    {
+     "title": "Contracting Counsel Associate Manager",
+     "externalPath": "/job/Bengaluru/Contracting-Counsel-Associate-Manager_R00367921-1",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "R00367921",
+      "Bengaluru"
+     ]
+    },
+    {
+     "title": "Contract Specialist",
+     "externalPath": "/job/Gurugram-DDC1/Contract-Specialist_R00343168",
+     "postedOn": "Posted 7 Days Ago",
+     "bulletFields": [
+      "R00343168",
+      "Gurugram, Ddc1"
+     ]
+    },
+    {
+     "title": "Strategic Growth Initiative Counsel Specialist",
+     "externalPath": "/job/Bengaluru/Strategic-Growth-Initiative-Counsel-Specialist_R00366922",
+     "postedOn": "Posted 7 Days Ago",
+     "bulletFields": [
+      "R00366922",
+      "Bengaluru"
+     ]
+    },
+    {
+     "title": "GN-I&E- Comms & Media - SAP",
+     "externalPath": "/job/Gurugram-DDC1A/GN-Comms---Media--Salesforce---Consultant_R00228785-100",
+     "postedOn": "Posted 15 Days Ago",
+     "bulletFields": [
+      "R00228785",
+      "Gurugram, Ddc1A"
+     ]
+    },
+    {
+     "title": "Buyside Contracting Counsel Associate Manager",
+     "externalPath": "/job/Bengaluru/Buyside-Contracting-Counsel-Associate-Manager_R00364041",
+     "postedOn": "Posted 19 Days Ago",
+     "bulletFields": [
+      "R00364041",
+      "Bengaluru"
+     ]
+    },
+    {
+     "title": "Intellectual Property Counsel",
+     "externalPath": "/job/Mumbai/Intellectual-Property-Counsel_R00363995",
+     "postedOn": "Posted 19 Days Ago",
+     "bulletFields": [
+      "R00363995",
+      "Mumbai"
+     ]
+    },
+    {
+     "title": "LearnVantage Associate Counsel",
+     "externalPath": "/job/Mumbai/LearnVantage-Associate-Counsel_R00363977",
+     "postedOn": "Posted 19 Days Ago",
+     "bulletFields": [
+      "R00363977",
+      "Mumbai"
+     ]
+    },
+    {
+     "title": "Product Counsel Data Strategy Legal",
+     "externalPath": "/job/Bengaluru/Product-Counsel-Data-Strategy-Legal_R00364646",
+     "postedOn": "Posted 19 Days Ago",
+     "bulletFields": [
+      "R00364646",
+      "Bengaluru"
+     ]
+    },
+    {
+     "title": "Buyside Contracting Counsel Associate Manager",
+     "externalPath": "/job/Bengaluru/Buyside-Contracting-Counsel-Associate-Manager_R00364613-1",
+     "postedOn": "Posted 19 Days Ago",
+     "bulletFields": [
+      "R00364613",
+      "Bengaluru"
+     ]
+    },
+    {
+     "title": "Intellectual Property Domain Management Specialist",
+     "externalPath": "/job/Mumbai/Intellectual-Property-Domain-Management-Specialist_R00364026",
+     "postedOn": "Posted 19 Days Ago",
+     "bulletFields": [
+      "R00364026",
+      "Mumbai"
+     ]
+    },
+    {
+     "title": "AI and Tech Strategy and Operations Manager",
+     "externalPath": "/job/Bengaluru/AI-and-Tech-Strategy-and-Operations-Manager_R00364065",
+     "postedOn": "Posted 19 Days Ago",
+     "bulletFields": [
+      "R00364065",
+      "Bengaluru"
+     ]
+    },
+    {
+     "title": "Buyside Contracting Counsel Associate Manager",
+     "externalPath": "/job/Bengaluru/Buyside-Contracting-Counsel-Associate-Manager_R00364634",
+     "postedOn": "Posted 19 Days Ago",
+     "bulletFields": [
+      "R00364634",
+      "Bengaluru"
+     ]
+    },
+    {
+     "title": "Responsible AI Consultant Center of Excellence",
+     "externalPath": "/job/Bengaluru/Responsible-AI-Consultant-Center-of-Excellence_R00346808-1",
+     "postedOn": "Posted 23 Days Ago",
+     "bulletFields": [
+      "R00346808",
+      "Bengaluru"
+     ]
+    },
+    {
+     "title": "S&C Global Network - AI - Hi Tech - Data Science Consultant",
+     "externalPath": "/job/Pune-PDC2C/S-C-Global-Network---AI---Hi-Tech---Data-Science-Consultant_R00218611",
+     "postedOn": "Posted 30 Days Ago",
+     "bulletFields": [
+      "R00218611",
+      "Pune, Pdc2C"
+     ]
+    },
+    {
+     "title": "#ACN S&C GN - SC&O – SC Digital Control Tower - Manager",
+     "externalPath": "/job/Mumbai/S-C-GN---SC-O---SC-Digital-Control-Tower---Manager_R00287130",
+     "postedOn": "Posted 30 Days Ago",
+     "bulletFields": [
+      "R00287130",
+      "Mumbai"
+     ]
+    },
+    {
+     "title": "#ACN S&C GN - SC&O – SC Digital Control Tower - Senior Manager",
+     "externalPath": "/job/Mumbai/S-C-GN---SC-O---SC-Digital-Control-Tower---Senior-Manager_R00287095",
+     "postedOn": "Posted 30 Days Ago",
+     "bulletFields": [
+      "R00287095",
+      "Mumbai"
+     ]
+    },
+    {
+     "title": "Security Operations Center Operator",
+     "externalPath": "/job/Pune/Security-Operations-Center-Operator_R00361261",
+     "postedOn": "Posted 30+ Days Ago",
+     "bulletFields": [
+      "R00361261",
+      "Pune"
+     ]
+    }
+   ],
+   "facets": [
+    {
+     "facetParameter": "jobFamilyGroup",
+     "descriptor": "Area of Work",
+     "values": [
+      {
+       "descriptor": "Software Engineering",
+       "id": "bb69a804fb120130e52200ed1301d275",
+       "count": 18200
+      },
+      {
+       "descriptor": "AI & Data",
+       "id": "99f04fef1b5710010b161504c3910000",
+       "count": 3752
+      },
+      {
+       "descriptor": "Business Process Delivery",
+       "id": "cadf25ad45ad10010b0ec600cf190000",
+       "count": 3191
+      },
+      {
+       "descriptor": "Service Delivery",
+       "id": "e4333d0d74de10010b0da7be668f0000",
+       "count": 1292
+      },
+      {
+       "descriptor": "Business & Technology Integration",
+       "id": "bb69a804fb1201a1606f05ed1301dc75",
+       "count": 998
+      },
+      {
+       "descriptor": "Consulting",
+       "id": "bb69a804fb1201f53c8f0eed1301e875",
+       "count": 940
+      },
+      {
+       "descriptor": "Information Technology Operations",
+       "id": "bb69a804fb1201712ed6f3ec1301bc75",
+       "count": 740
+      },
+      {
+       "descriptor": "Human Resources",
+       "id": "bb69a804fb1201d8a15ef0ec1301b475",
+       "count": 546
+      },
+      {
+       "descriptor": "Security",
+       "id": "bb69a804fb1201653003f3ec1301ba75",
+       "count": 465
+      },
+      {
+       "descriptor": "Technology & Information Architectures",
+       "id": "bb69a804fb1201f7535003ed1301d875",
+       "count": 400
+      },
+      {
+       "descriptor": "Finance",
+       "id": "bb69a804fb1201284a6eefec1301b275",
+       "count": 395
+      },
+      {
+       "descriptor": "Sales as a Service",
+       "id": "073ec53fbb1f015d98b6ea39b000b125",
+       "count": 354
+      },
+      {
+       "descriptor": "Customer Services",
+       "id": "afba16431ad510010b0ec4a87b960000",
+       "count": 332
+      },
+      {
+       "descriptor": "Sourcing & Procurement Services",
+       "id": "354c4302127610010b159acd6f9f0000",
+       "count": 252
+      },
+      {
+       "descriptor": "Sales Enablement",
+       "id": "bb69a804fb12011fd2effeec1301d075",
+       "count": 228
+      },
+      {
+       "descriptor": "Training & Development",
+       "id": "d40a4261d2a710010b0b8deb562b0000",
+       "count": 210
+      },
+      {
+       "descriptor": "Engineering & Networks",
+       "id": "bb69a804fb120147d2f209ed1301e275",
+       "count": 194
+      },
+      {
+       "descriptor": "Performance & Quality",
+       "id": "2a233480092910010b11a28caddf0000",
+       "count": 181
+      },
+      {
+       "descriptor": "Solution Architecture & Planning",
+       "id": "bb69a804fb1201f3415d01ed1301d475",
+       "count": 176
+      },
+      {
+       "descriptor": "Delivery Leadership",
+       "id": "b43b21406d0f1001262ce6d954ba0000",
+       "count": 168
+      },
+      {
+       "descriptor": "Program, Project & Service Management",
+       "id": "bb69a804fb1201d0cfcffbec1301ca75",
+       "count": 163
+      },
+      {
+       "descriptor": "Marketing & Communications",
+       "id": "bb69a804fb120170aceff7ec1301c275",
+       "count": 135
+      },
+      {
+       "descriptor": "Advisory & Architecture",
+       "id": "aaed90c3baf810021a6d06e3e2de0000",
+       "count": 92
+      },
+      {
+       "descriptor": "Creative",
+       "id": "ee24513a3f8c10010b0f38f613d20000",
+       "count": 83
+      },
+      {
+       "descriptor": "Risk & Compliance",
+       "id": "eac0a7fb863b10010b0b6e835e860000",
+       "count": 81
+      },
+      {
+       "descriptor": "Content",
+       "id": "7e063b45415a10010b114dea4e450000",
+       "count": 73
+      },
+      {
+       "descriptor": "Digital Design",
+       "id": "7d0f281a413910010b14ddd489360000",
+       "count": 58
+      },
+      {
+       "descriptor": "Analytics and Insights",
+       "id": "bb69a804fb1201d09a18f6ec1301c075",
+       "count": 56
+      },
+      {
+       "descriptor": "Strategy Services",
+       "id": "bb69a804fb1201c74c5a02ed1301d675",
+       "count": 48
+      },
+      {
+       "descriptor": "Product Development",
+       "id": "018e0541bc6a10010b0d16d426f10000",
+       "count": 31
+      },
+      {
+       "descriptor": "Infrastructure & Capital Projects",
+       "id": "8b1169bbcc9810018ef22ff71b150000",
+       "count": 29
+      },
+      {
+       "descriptor": "Sales",
+       "id": "bb69a804fb120126dceefdec1301ce75",
+       "count": 28
+      },
+      {
+       "descriptor": "Legal & Commercial Services",
+       "id": "bb69a804fb1201e28ce8f4ec1301be75",
+       "count": 28
+      },
+      {
+       "descriptor": "Account Leadership",
+       "id": "bb69a804fb1201b7ef97e9ec1301aa75",
+       "count": 27
+      },
+      {
+       "descriptor": "Workplace Management & Service Solutions",
+       "id": "bb69a804fb12013aea4f04ed1301da75",
+       "count": 12
+      },
+      {
+       "descriptor": "Research & Innovation",
+       "id": "bb69a804fb1201b31ad2fcec1301cc75",
+       "count": 9
+      },
+      {
+       "descriptor": "User Experience Design",
+       "id": "11a6f9a6256c10010b0ed36ef26d0000",
+       "count": 9
+      },
+      {
+       "descriptor": "Industry Solutions & Services",
+       "id": "bb69a804fb120154ac43f1ec1301b675",
+       "count": 8
+      },
+      {
+       "descriptor": "Administrative Services",
+       "id": "f6c1283df79610010b0e91702aab0000",
+       "count": 6
+      },
+      {
+       "descriptor": "Offerings Development",
+       "id": "db476340ab6a10010b167a5bce850000",
+       "count": 5
+      }
+     ]
+    },
+    {
+     "facetParameter": "workerSubType",
+     "descriptor": "Skills",
+     "values": [
+      {
+       "descriptor": "Java Full Stack Development",
+       "id": "c840b7e46c1f0101b54272217ca90000",
+       "count": 2569
+      },
+      {
+       "descriptor": "Release Management",
+       "id": "f1363cc3535f0101a3dcd6bf9fc00000",
+       "count": 2178
+      },
+      {
+       "descriptor": "Software Quality Assurance (SQA)",
+       "id": "4724752120890101a004a538df800000",
+       "count": 1465
+      },
+      {
+       "descriptor": "Application Lifecycle Management (ALM)",
+       "id": "31027b949a530101b6a4397d8cc50000",
+       "count": 1331
+      },
+      {
+       "descriptor": "Operations Management",
+       "id": "851d32045cad01019d3e5016678c0000",
+       "count": 1311
+      },
+      {
+       "descriptor": "Machine Learning (ML)",
+       "id": "7dd91fc5f26c1001841f2a60a01b0001",
+       "count": 1311
+      },
+      {
+       "descriptor": "Large Language Models (LLMs)",
+       "id": "bb7a25648c691012d420936cb8dc0000",
+       "count": 1285
+      },
+      {
+       "descriptor": "Operational Excellence",
+       "id": "fcc4da568b0501019fa18711b6830000",
+       "count": 1279
+      },
+      {
+       "descriptor": "Application Design",
+       "id": "1f604490320d10016e835a9a9fe50000",
+       "count": 1246
+      },
+      {
+       "descriptor": "Change Management",
+       "id": "378d31f968b601019e492684e5b10000",
+       "count": 1239
+      },
+      {
+       "descriptor": "Critical Thinking",
+       "id": "3e77c2d080cb01019dd52db05f2f0000",
+       "count": 1195
+      },
+      {
+       "descriptor": "Technical Documentation",
+       "id": "3aa622afe4ff016d762b46b05a018364",
+       "count": 1185
+      },
+      {
+       "descriptor": "System Defect Management",
+       "id": "2ea7fc30fd8201fcb9c9e6f05a01a376",
+       "count": 1184
+      },
+      {
+       "descriptor": "Python (Programming Language)",
+       "id": "1b919f60903101019d0d13a015bc0000",
+       "count": 1144
+      },
+      {
+       "descriptor": "Service Quality Management",
+       "id": "31027b949a5301020929883ef0110000",
+       "count": 1110
+      },
+      {
+       "descriptor": "Requirements Analysis",
+       "id": "3e77c2d080cb0101a0ec3da97c300000",
+       "count": 1041
+      },
+      {
+       "descriptor": "Accounting & Financial Reporting Standards",
+       "id": "31485366cd3f01ef5d2c7a035b01ea74",
+       "count": 1032
+      },
+      {
+       "descriptor": "Record To Report (R2R)",
+       "id": "5f5edecc817a01010d83585705970003",
+       "count": 1008
+      },
+      {
+       "descriptor": "Business Process Design",
+       "id": "f1363cc3535f0101a3dd7ea0ae970000",
+       "count": 1001
+      },
+      {
+       "descriptor": "Account Reconciliations",
+       "id": "92b9fb86123f01019ea83bae4c620000",
+       "count": 994
+      },
+      {
+       "descriptor": "Data Science",
+       "id": "3e77c2d080cb0101a0ec5834f9420000",
+       "count": 973
+      },
+      {
+       "descriptor": "Accenture Delivery Methods (ADM)",
+       "id": "31485366cd3f01fba8b09b295a01e173",
+       "count": 964
+      },
+      {
+       "descriptor": "Internal Audit Quality Assurance",
+       "id": "dd9b5ced9d0701015424888f02780000",
+       "count": 959
+      },
+      {
+       "descriptor": "Intercompany Account Reconciliation",
+       "id": "d27fcd96a4360184b4ae38ee5a01106a",
+       "count": 955
+      },
+      {
+       "descriptor": "Group Problem Solving",
+       "id": "030b0baaec1d1038ffa85cbf6faf0000",
+       "count": 923
+      },
+      {
+       "descriptor": "Customer Interaction Management",
+       "id": "4724752120890101fccd6275b02d0000",
+       "count": 907
+      },
+      {
+       "descriptor": "Build Management",
+       "id": "c5e249ff013e0101c21abd5a5e1b0000",
+       "count": 895
+      },
+      {
+       "descriptor": "Cost Accounting",
+       "id": "05e48e00477f0101a4f7e876f0e00000",
+       "count": 891
+      },
+      {
+       "descriptor": "Supply Chain - Demand Management",
+       "id": "7b2467ccd12901bec34278065b017aaf",
+       "count": 855
+      },
+      {
+       "descriptor": "Credit Management & Assessment",
+       "id": "a6f2d66127500169f1369e045b016d5d",
+       "count": 851
+      },
+      {
+       "descriptor": "Estimation and Planning",
+       "id": "3eea224f4fe310011cb5b2df75750000",
+       "count": 847
+      },
+      {
+       "descriptor": "Reporting Analytics",
+       "id": "d27fcd96a436012d25a007ed5a010e6a",
+       "count": 845
+      },
+      {
+       "descriptor": "Value Architecture & Realization",
+       "id": "10344f8718f6014732ba87125b01ba5d",
+       "count": 811
+      },
+      {
+       "descriptor": "Industry Insight",
+       "id": "bb307570ea970161e8c60e315a015056",
+       "count": 798
+      },
+      {
+       "descriptor": "Solution Architecture",
+       "id": "1a775c2261930101a229ff1842d90001",
+       "count": 796
+      },
+      {
+       "descriptor": "Collections Processing",
+       "id": "4652518479270101ff624af17b260000",
+       "count": 769
+      },
+      {
+       "descriptor": "Cash Application Process",
+       "id": "4e89b4b4467210016511874cae3d0002",
+       "count": 742
+      },
+      {
+       "descriptor": "Billing Processing",
+       "id": "b0cdeb19931201e31b7aac0d5b017760",
+       "count": 733
+      },
+      {
+       "descriptor": "Research Analysis and Interpretation",
+       "id": "2ea7fc30fd82019b93bebbeb5a019a76",
+       "count": 728
+      },
+      {
+       "descriptor": "Accounts Receivable Ledger Maintenance",
+       "id": "51889a8cc8a301fc5b4dc80d5b01824e",
+       "count": 725
+      },
+      {
+       "descriptor": "Generative AI",
+       "id": "32381e347d101021615b880744070001",
+       "count": 723
+      },
+      {
+       "descriptor": "Spring Boot",
+       "id": "378d31f968b601019f05e5251ee50000",
+       "count": 687
+      },
+      {
+       "descriptor": "Machine Learning Operations",
+       "id": "62af707e248510014781b42e50340000",
+       "count": 674
+      },
+      {
+       "descriptor": "Data Analysis & Interpretation",
+       "id": "be4c8e613f870197027d1ffe5a018f53",
+       "count": 644
+      },
+      {
+       "descriptor": "SAP ABAP Development for HANA",
+       "id": "d1e9c58d778110016b67c4af66670000",
+       "count": 626
+      },
+      {
+       "descriptor": "Financial Planning and Analysis (FP&A)",
+       "id": "4724752120890101f5026f177afc0000",
+       "count": 620
+      },
+      {
+       "descriptor": "Program Project Management",
+       "id": "82d75d0008e1101130c7612a53df0000",
+       "count": 615
+      },
+      {
+       "descriptor": "Regulatory Compliance",
+       "id": "fcc4da568b050101a0a82302dc200000",
+       "count": 603
+      },
+      {
+       "descriptor": "Service Change Management",
+       "id": "6809ef6936a710012473badc02e40000",
+       "count": 593
+      },
+      {
+       "descriptor": "Databricks Unified Data Analytics Platform",
+       "id": "10933d76b48f0101ed723d91c1490000",
+       "count": 555
+      },
+      {
+       "descriptor": "Stakeholder Management",
+       "id": "10933d76b48f01019e1e7f9140340000",
+       "count": 553
+      },
+      {
+       "descriptor": "Predictive Modeling and Analytics",
+       "id": "31485366cd3f01782b5557075b01ef74",
+       "count": 547
+      },
+      {
+       "descriptor": "AI Agents",
+       "id": "c6e1d85491d81002151aa821d3060000",
+       "count": 543
+      },
+      {
+       "descriptor": "Natural Language Processing (NLP)",
+       "id": "1a775c2261930101a3c8d9b23e910000",
+       "count": 521
+      },
+      {
+       "descriptor": "Deep Learning",
+       "id": "ec90d6a5b41701019de07333d7080000",
+       "count": 514
+      }
+     ]
+    },
+    {
+     "facetParameter": "timeType",
+     "descriptor": "Time Type",
+     "values": [
+      {
+       "descriptor": "Full time",
+       "id": "a31fc2f90d56014bd4fe0028f7145a00",
+       "count": 33991
+      },
+      {
+       "descriptor": "Part time",
+       "id": "a31fc2f90d5601ead3de0028f7145900",
+       "count": 4
+      }
+     ]
+    },
+    {
+     "facetParameter": "locationMainGroup",
+     "values": [
+      {
+       "facetParameter": "locationCountry",
+       "descriptor": "Country",
+       "values": [
+        {
+         "descriptor": "India",
+         "id": "c4f78be1a8f14da0ab49ce1162348a5e",
+         "count": 33995
+        },
+        {
+         "descriptor": "United States of America",
+         "id": "bc33aa3152ec42d4995f4791a106ed09",
+         "count": 883
+        },
+        {
+         "descriptor": "Philippines",
+         "id": "e56f1daf83e04bacae794ba5c5593560",
+         "count": 607
+        },
+        {
+         "descriptor": "United Kingdom",
+         "id": "29247e57dbaf46fb855b224e03170bc7",
+         "count": 339
+        },
+        {
+         "descriptor": "Japan",
+         "id": "8b705da2becf43cfaccc091da0988ab2",
+         "count": 316
+        },
+        {
+         "descriptor": "Australia",
+         "id": "d903bb3fedad45039383f6de334ad4db",
+         "count": 309
+        },
+        {
+         "descriptor": "Spain",
+         "id": "bd34c524a6a04ae6915f5d96fa086199",
+         "count": 308
+        },
+        {
+         "descriptor": "Germany",
+         "id": "dcc5b7608d8644b3a93716604e78e995",
+         "count": 303
+        },
+        {
+         "descriptor": "Malaysia",
+         "id": "972dc4ba8d454bc0b893ff84b1529077",
+         "count": 266
+        },
+        {
+         "descriptor": "Poland",
+         "id": "131d5ac7e3ee4d7b962bdc96e498e412",
+         "count": 228
+        },
+        {
+         "descriptor": "France",
+         "id": "54c5b6971ffb4bf0b116fe7651ec789a",
+         "count": 209
+        },
+        {
+         "descriptor": "Italy",
+         "id": "8cd04a563fd94da7b06857a79faaf815",
+         "count": 189
+        },
+        {
+         "descriptor": "Singapore",
+         "id": "80938777cac5440fab50d729f9634969",
+         "count": 177
+        },
+        {
+         "descriptor": "Mexico",
+         "id": "e2adff9272454660ac4fdb56fc70bb51",
+         "count": 176
+        },
+        {
+         "descriptor": "Brazil",
+         "id": "1a29bb1357b240ab99a2fa755cc87c0e",
+         "count": 167
+        },
+        {
+         "descriptor": "Canada",
+         "id": "a30a87ed25634629aa6c3958aa2b91ea",
+         "count": 147
+        },
+        {
+         "descriptor": "Argentina",
+         "id": "e42ad5eac46d4cc9b367ceaef42577c5",
+         "count": 139
+        },
+        {
+         "descriptor": "Netherlands",
+         "id": "9696868b09c64d52a62ee13b052383cc",
+         "count": 139
+        },
+        {
+         "descriptor": "Portugal",
+         "id": "2e8c5034deb045d49315417c347472ca",
+         "count": 128
+        },
+        {
+         "descriptor": "Indonesia",
+         "id": "b31234dbcdda4da9ba8fa073c5944e36",
+         "count": 121
+        },
+        {
+         "descriptor": "Thailand",
+         "id": "873d0f604e3b458c990cb4d83a5c0f14",
+         "count": 106
+        },
+        {
+         "descriptor": "Ireland",
+         "id": "04a05835925f45b3a59406a2a6b72c8a",
+         "count": 102
+        },
+        {
+         "descriptor": "Romania",
+         "id": "f2e609fe92974a55a05fc1cdc2852122",
+         "count": 93
+        },
+        {
+         "descriptor": "China/Mainland",
+         "id": "6cb77610a8a543aea2d6bc10457e35d4",
+         "count": 83
+        },
+        {
+         "descriptor": "Chile",
+         "id": "53fe09ef12b9408682a1d2439823f2e0",
+         "count": 79
+        },
+        {
+         "descriptor": "Colombia",
+         "id": "e8106cd6a3534f2dba6fdee2d41db89d",
+         "count": 77
+        },
+        {
+         "descriptor": "Belgium",
+         "id": "a04ea128f43a42e59b1e6a19e8f0b374",
+         "count": 77
+        },
+        {
+         "descriptor": "Czech Republic",
+         "id": "fc078443155c4ad294201ecf5a61a499",
+         "count": 69
+        },
+        {
+         "descriptor": "Greece",
+         "id": "566388c1eb974c42bd9e3da4c2f57d60",
+         "count": 58
+        },
+        {
+         "descriptor": "Costa Rica",
+         "id": "99abe7e6bb3f4c108aebebf01a369ec5",
+         "count": 56
+        },
+        {
+         "descriptor": "Austria",
+         "id": "d004c0d1a6c84511ab048669fcdf9fd7",
+         "count": 42
+        },
+        {
+         "descriptor": "Norway",
+         "id": "d07f8ca8625e4345b98a91d0558b872a",
+         "count": 40
+        },
+        {
+         "descriptor": "China/Hong Kong SAR",
+         "id": "d4afdeb461d446e4babd204bd102dba8",
+         "count": 39
+        },
+        {
+         "descriptor": "Sweden",
+         "id": "6a800a4736884df5826858d435650f45",
+         "count": 38
+        },
+        {
+         "descriptor": "New Zealand",
+         "id": "55273a1b49934d97ae15342ef51f6b95",
+         "count": 37
+        },
+        {
+         "descriptor": "Denmark",
+         "id": "49ab063f422741e2aef271de00efeac8",
+         "count": 30
+        },
+        {
+         "descriptor": "Finland",
+         "id": "0afb2fa656da42e8bfb6d47bd24a26fa",
+         "count": 28
+        },
+        {
+         "descriptor": "Hungary",
+         "id": "9db257f5937e4421b2fac64eec6832f8",
+         "count": 26
+        },
+        {
+         "descriptor": "South Africa",
+         "id": "4db3c26940b944919b83612cc1193eed",
+         "count": 25
+        },
+        {
+         "descriptor": "Slovakia",
+         "id": "d2f29df0c90f4cea9e7d17f2ed8a86ad",
+         "count": 25
+        },
+        {
+         "descriptor": "Mauritius",
+         "id": "a759018ba6ac489d9f16c086b914e1b6",
+         "count": 21
+        },
+        {
+         "descriptor": "Saudi Arabia",
+         "id": "50423b5190ad49bb89e94cd58dfaad69",
+         "count": 19
+        },
+        {
+         "descriptor": "Bulgaria",
+         "id": "25f4875dc598484dbeee857eb2d81652",
+         "count": 19
+        },
+        {
+         "descriptor": "Türkiye",
+         "id": "c2e3bac5bbbb47b29dfc6e8b56a1586e",
+         "count": 18
+        },
+        {
+         "descriptor": "Lithuania",
+         "id": "8a0328effd25491fb8e6a08801f08e94",
+         "count": 18
+        },
+        {
+         "descriptor": "Latvia",
+         "id": "1c026f3b1b8640d8bdfcb95466663e4d",
+         "count": 17
+        },
+        {
+         "descriptor": "Switzerland",
+         "id": "187134fccb084a0ea9b4b95f23890dbe",
+         "count": 13
+        },
+        {
+         "descriptor": "United Arab Emirates",
+         "id": "7b4fa1f369bd4604ba3692682fcbe345",
+         "count": 12
+        },
+        {
+         "descriptor": "Luxembourg",
+         "id": "328b82f597514643a7683a78fc67c3f1",
+         "count": 11
+        },
+        {
+         "descriptor": "Egypt",
+         "id": "d865e83093ad42319653b08e61f7db49",
+         "count": 7
+        },
+        {
+         "descriptor": "Vietnam",
+         "id": "db69e8c8446c11de98360015c5e6daf6",
+         "count": 7
+        },
+        {
+         "descriptor": "Kuwait",
+         "id": "eb2e6ec0f73c4b0e94c68396631332d6",
+         "count": 5
+        },
+        {
+         "descriptor": "Israel",
+         "id": "084562884af243748dad7c84c304d89a",
+         "count": 3
+        },
+        {
+         "descriptor": "Qatar",
+         "id": "f5ff182c7fab406bbb110cc1f7e99064",
+         "count": 2
+        },
+        {
+         "descriptor": "Puerto Rico",
+         "id": "0a076377c3d94bc1b4ed46b4e7d82a50",
+         "count": 1
+        }
+       ]
+      },
+      {
+       "facetParameter": "locations",
+       "descriptor": "City",
+       "values": [
+        {
+         "descriptor": "Bengaluru",
+         "id": "3666ef49a96a019a589ae377cf00b659",
+         "count": 13688
+        },
+        {
+         "descriptor": "Hyderabad",
+         "id": "3666ef49a96a01c10ff6dd77cf00a259",
+         "count": 6225
+        },
+        {
+         "descriptor": "Pune",
+         "id": "3666ef49a96a01d7329b6478cf007d5b",
+         "count": 4614
+        },
+        {
+         "descriptor": "Gurugram",
+         "id": "3666ef49a96a01a9c1ccdf77cf00a759",
+         "count": 4109
+        },
+        {
+         "descriptor": "Chennai",
+         "id": "3666ef49a96a01e7d062ea77cf00cf59",
+         "count": 3552
+        },
+        {
+         "descriptor": "Mumbai",
+         "id": "3666ef49a96a0107bae6eb77cf00d459",
+         "count": 2932
+        },
+        {
+         "descriptor": "Kolkata",
+         "id": "3666ef49a96a019761194e78cf00285b",
+         "count": 1076
+        },
+        {
+         "descriptor": "Navi Mumbai",
+         "id": "3666ef49a96a01ea87afed77cf00d959",
+         "count": 962
+        },
+        {
+         "descriptor": "Coimbatore",
+         "id": "4665e881825b0101d6fc0156c83b0000",
+         "count": 923
+        },
+        {
+         "descriptor": "Jaipur",
+         "id": "3a78992897d30101c64e1dc3e9bc0000",
+         "count": 788
+        },
+        {
+         "descriptor": "Bhubaneswar",
+         "id": "8030b874c5221000c2ef4a54bfc20000",
+         "count": 576
+        },
+        {
+         "descriptor": "Indore",
+         "id": "b1ab966e91460101d7ef8baf9f6b0000",
+         "count": 537
+        },
+        {
+         "descriptor": "Noida",
+         "id": "3666ef49a96a01ccae05ef77cf00de59",
+         "count": 487
+        },
+        {
+         "descriptor": "Bengaluru, BDC9A",
+         "id": "940562459a6f01a9f3abbe3ec3001126",
+         "count": 446
+        },
+        {
+         "descriptor": "Ahmedabad",
+         "id": "3666ef49a96a0169d9764378cf00005b",
+         "count": 390
+        },
+        {
+         "descriptor": "Nagpur",
+         "id": "58bce675bb4b1000971be10f36910000",
+         "count": 308
+        },
+        {
+         "descriptor": "New Delhi",
+         "id": "3666ef49a96a01a425d44c78cf00235b",
+         "count": 191
+        },
+        {
+         "descriptor": "Navi Mumbai, MDC5C",
+         "id": "940562459a6f01916d49f43ec300bb26",
+         "count": 108
+        },
+        {
+         "descriptor": "Kochi",
+         "id": "63e09671b47310010f9a8d398c660000",
+         "count": 93
+        },
+        {
+         "descriptor": "Bengaluru, BDC7C",
+         "id": "940562459a6f0141182dd83ec3005c26",
+         "count": 50
+        },
+        {
+         "descriptor": "Gurugram, DDC1A",
+         "id": "940562459a6f01c857421a3fc3001a27",
+         "count": 40
+        },
+        {
+         "descriptor": "Thiruvananthapuram",
+         "id": "43dc5353fe3010213e54d8caa00b0000",
+         "count": 38
+        },
+        {
+         "descriptor": "Tiruchirappalli",
+         "id": "63e09671b47310010f722ef5a6990000",
+         "count": 19
+        },
+        {
+         "descriptor": "Gurugram, DDC1A, NonSTPI",
+         "id": "940562459a6f01260de3303fc3006527",
+         "count": 18
+        },
+        {
+         "descriptor": "Bengaluru, BDC7A",
+         "id": "940562459a6f01b1d9e6d43ec3005226",
+         "count": 15
+        },
+        {
+         "descriptor": "Mumbai, MDC2B",
+         "id": "940562459a6f01469735eb3ec3009d26",
+         "count": 12
+        },
+        {
+         "descriptor": "Hyderabad, HDC5A",
+         "id": "d8f56faf44671000ee38abf282610000",
+         "count": 11
+        },
+        {
+         "descriptor": "Pune, PDC2C",
+         "id": "940562459a6f0146c84c633fc3000a28",
+         "count": 10
+        },
+        {
+         "descriptor": "Gurugram",
+         "id": "3666ef49a96a015735486a79cf00f25e",
+         "count": 8
+        },
+        {
+         "descriptor": "Pune, PDC3B",
+         "id": "940562459a6f016e22a4663fc3001428",
+         "count": 7
+        },
+        {
+         "descriptor": "Kolkata, KDC1A",
+         "id": "940562459a6f019c156c4c3fc300bf27",
+         "count": 7
+        },
+        {
+         "descriptor": "Hyderabad, HDC2A",
+         "id": "940562459a6f01016759323fc3006a27",
+         "count": 7
+        },
+        {
+         "descriptor": "Mumbai, MC1 Building, NonSTPI",
+         "id": "940562459a6f016a3504fa3ec300cf26",
+         "count": 7
+        },
+        {
+         "descriptor": "Bengaluru, BDC14A",
+         "id": "ac6d4ea6fd6b0149bc1401da9401929c",
+         "count": 6
+        },
+        {
+         "descriptor": "Chennai, CDC5B",
+         "id": "940562459a6f014c6596073fc300e326",
+         "count": 5
+        },
+        {
+         "descriptor": "Ahmedabad, AMDC1A",
+         "id": "26289940b8821000f9a71913438e0000",
+         "count": 4
+        },
+        {
+         "descriptor": "Gurugram, DDC1",
+         "id": "940562459a6f011001ae1e3fc3002927",
+         "count": 3
+        },
+        {
+         "descriptor": "Ahmedabad, AMDC1A, Consulting",
+         "id": "8cbd1d921b561001223cb58cf37c0000",
+         "count": 2
+        },
+        {
+         "descriptor": "Thane, MDC9A",
+         "id": "499402dd38da100173e8fb2dac030000",
+         "count": 2
+        },
+        {
+         "descriptor": "Noida, DDC4D",
+         "id": "a6dff15857301001241372613ea80000",
+         "count": 2
+        },
+        {
+         "descriptor": "Kolkata, KDC2A",
+         "id": "221b900137c3100173ceb374fa450000",
+         "count": 2
+        },
+        {
+         "descriptor": "Hyderabad, HDC8i",
+         "id": "70f7dd5eb3f410021273ca8277860000",
+         "count": 2
+        },
+        {
+         "descriptor": "Mumbai, MDC8A",
+         "id": "e33ccc58bb1d100210b32d91cc720000",
+         "count": 2
+        },
+        {
+         "descriptor": "Gandhinagar, AMDC2A",
+         "id": "39f519c156341001220522275e7b0000",
+         "count": 2
+        },
+        {
+         "descriptor": "Pune, PDC7A-SO",
+         "id": "a4f7656e3a991000f829dc4c98bf0000",
+         "count": 2
+        },
+        {
+         "descriptor": "Bhubaneswar, BBDC1A",
+         "id": "d926533497be1001e5b669e4ab3e0000",
+         "count": 2
+        },
+        {
+         "descriptor": "Kuala Lumpur",
+         "id": "3666ef49a96a015552c67577cf003c58",
+         "count": 2
+        },
+        {
+         "descriptor": "Hyderabad, HDC3B",
+         "id": "940562459a6f019b12fc3b3fc3008827",
+         "count": 2
+        },
+        {
+         "descriptor": "Mumbai, MDC2C",
+         "id": "940562459a6f015e3d8df83ec300ca26",
+         "count": 2
+        },
+        {
+         "descriptor": "Bengaluru, BDC4C",
+         "id": "940562459a6f0162f4cccb3ec3003926",
+         "count": 2
+        },
+        {
+         "descriptor": "Pune, PDC6A",
+         "id": "940562459a6f01bcce3f6b3fc3002328",
+         "count": 1
+        },
+        {
+         "descriptor": "Noida, DDC4A",
+         "id": "940562459a6f0107db15573fc300e227",
+         "count": 1
+        },
+        {
+         "descriptor": "Gurugram, DDC1A, Consulting",
+         "id": "940562459a6f0115351e203fc3002e27",
+         "count": 1
+        },
+        {
+         "descriptor": "Chennai, CDC5A",
+         "id": "940562459a6f0169136ffe3ec300de26",
+         "count": 1
+        },
+        {
+         "descriptor": "Bengaluru, BDC11A",
+         "id": "940562459a6f014efb74df3ec3007526",
+         "count": 1
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "facetParameter": "distance",
+     "descriptor": "Distance",
+     "values": [
+      {
+       "descriptor": "10 miles",
+       "id": "a538cdb60a631000078a2c60ed1700f3",
+       "count": 1
+      },
+      {
+       "descriptor": "25 miles",
+       "id": "a538cdb60a631000078a2c6a410300f4",
+       "count": 1
+      },
+      {
+       "descriptor": "50 miles",
+       "id": "a538cdb60a631000078a2c6eadd300f5",
+       "count": 1
+      },
+      {
+       "descriptor": "100 miles",
+       "id": "a538cdb60a631000078a2c71efcc00f6",
+       "count": 1
+      },
+      {
+       "descriptor": "Any Distance",
+       "id": "a538cdb60a631000078a2c74f73b00f7",
+       "count": 1
+      }
+     ]
+    }
+   ],
+   "userAuthenticated": false
+  },
+  "text": null
+ },
+ "recorded_at": "2026-11-11T18:35:43.032475+00:00",
+ "user_agent": "Mozilla/5.0 (compatible; JobWatch/0.1; personal job tracker)"
+}

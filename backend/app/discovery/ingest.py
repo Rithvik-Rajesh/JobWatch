@@ -18,7 +18,7 @@ from decimal import Decimal
 from typing import Any
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
-from sqlalchemy import func, or_, select
+from sqlalchemy import func, or_, select, update
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -48,6 +48,7 @@ from app.models.enums import (
     DuplicateState,
     EmploymentType,
     EventType,
+    ScopeMatch,
     WorkArrangement,
 )
 from app.salary.service import sync_employer_salary
@@ -278,6 +279,10 @@ def _utcnow() -> datetime:
     return datetime.now(UTC)
 
 
+def _gate_scope(data: PostingInput) -> tuple[ScopeMatch, str | None] | None:
+    return (data.scope, data.scope_reason) if data.scope is not None else None
+
+
 # ------------------------------------------------------------------------------- job view maintenance
 def _posting_rank(p: Posting, source_keys: dict[int, str]) -> tuple:
     return (
@@ -306,10 +311,15 @@ async def refresh_job(
     now: datetime,
     cfg: LocationScopeSettings | None = None,
     scope_only: bool = False,
+    scope: tuple[ScopeMatch, str | None] | None = None,
 ) -> dict[str, bool]:
     """Recompute the job's denormalized current view from its primary posting, plus availability, last_seen_at,
     scope and employer-salary flag. Never touches the application. Returns {'closed': bool, 'reopened': bool}
-    describing an availability transition of the job."""
+    describing an availability transition of the job.
+
+    Scope: an explicit `scope` (decided by the Phase 3 India gate) is stored with its reason. Without one, a job
+    that already carries a gate decision (`scope_reason` set) keeps it; otherwise (and always for `scope_only`,
+    used when a user override is cleared) it is derived from the job's country codes by the scope policy."""
     postings = list((await session.scalars(select(Posting).where(Posting.job_id == job.id).order_by(Posting.id))).all())
     transitions = {"closed": False, "reopened": False}
     if not postings:
@@ -346,8 +356,14 @@ async def refresh_job(
     job.last_seen_at = max(p.last_seen_at for p in postings)
 
     if not job.scope_overridden:
-        cfg = cfg or await get_setting(session, LocationScopeSettings)
-        job.location_scope = scope_policy.evaluate(job.country_codes, job.work_arrangement, cfg)
+        if scope is not None:
+            job.location_scope, job.scope_reason = scope
+        elif scope_only or job.scope_reason is None:
+            cfg = cfg or await get_setting(session, LocationScopeSettings)
+            job.location_scope = scope_policy.evaluate(job.country_codes, job.work_arrangement, cfg)
+            job.scope_reason = None
+    elif scope is not None:
+        job.scope_reason = scope[1]  # keep the user's forced scope; remember the gate evidence
 
     any_open = any(p.availability == Availability.open for p in postings)
     if any_open and job.availability != Availability.open:
@@ -421,6 +437,8 @@ class Ingest:
             posting.requisition_id = data.requisition_id
         if data.listing_fingerprint:
             posting.listing_fingerprint = data.listing_fingerprint
+        if data.career_site_id is not None:
+            posting.career_site_id = data.career_site_id
 
         new_version = False
         changed: list[str] = []
@@ -432,7 +450,7 @@ class Ingest:
 
         self._apply_posted_date(job, norm)
         was_primary = job.primary_posting_id == posting.id
-        transitions = await refresh_job(session, job, now=now, cfg=cfg)
+        transitions = await refresh_job(session, job, now=now, cfg=cfg, scope=_gate_scope(data))
         if new_version and changed and (was_primary or job.primary_posting_id == posting.id):
             job.last_changed_at = now
             await record_job_event(
@@ -503,6 +521,7 @@ class Ingest:
             job_id=job.id,
             source_id=source.id,
             company_id=data.company_id,
+            career_site_id=data.career_site_id,
             external_id=data.external_id,
             requisition_id=data.requisition_id,
             source_url=str(data.source_url),
@@ -531,7 +550,7 @@ class Ingest:
                 summary=f"Discovered via {source.name}",
                 payload=payload,
             )
-        await refresh_job(session, job, now=now, cfg=cfg)
+        await refresh_job(session, job, now=now, cfg=cfg, scope=_gate_scope(data))
         await update_company_open_count(session, job.company_id)
 
         suggestion_ids: list[int] = []
@@ -684,6 +703,7 @@ class Ingest:
         source_key: str,
         company_id: int,
         seen_external_ids: set[str],
+        career_site_id: int | None = None,
         run_complete: bool,
         run_trusted: bool,
         now: datetime | None = None,
@@ -700,6 +720,9 @@ class Ingest:
             Posting.company_id == company_id,
             Posting.availability == Availability.open,
         )
+        if career_site_id is not None:
+            # Misses are evaluated PER PORTAL: another portal of the same company is never touched.
+            query = query.where(Posting.career_site_id == career_site_id)
         if seen_external_ids:
             query = query.where(Posting.external_id.not_in(seen_external_ids))
         postings = list((await session.scalars(query.order_by(Posting.id))).all())
@@ -734,6 +757,30 @@ class Ingest:
         if affected_jobs:
             await update_company_open_count(session, company_id)
         return outcome
+
+
+async def mark_seen(
+    session: AsyncSession, posting_ids: list[int], *, now: datetime, career_site_id: int | None = None
+) -> None:
+    """Cheap 'still listed' touch for unchanged postings whose content need not be re-ingested: resets the miss
+    counters and refreshes last_seen_at on the postings and their jobs. Only touches OPEN postings (closed ones
+    must go through `ingest` so the job is reopened and the timeline is written)."""
+    if not posting_ids:
+        return
+    values: dict[str, Any] = {
+        "last_seen_at": func.greatest(Posting.last_seen_at, now),
+        "missing_since": None,
+        "consecutive_misses": 0,
+    }
+    if career_site_id is not None:
+        values["career_site_id"] = career_site_id
+    await session.execute(
+        update(Posting).where(Posting.id.in_(posting_ids), Posting.availability == Availability.open).values(**values)
+    )
+    job_ids = select(Posting.job_id).where(Posting.id.in_(posting_ids))
+    await session.execute(
+        update(Job).where(Job.id.in_(job_ids)).values(last_seen_at=func.greatest(Job.last_seen_at, now))
+    )
 
 
 ingest_service = Ingest()

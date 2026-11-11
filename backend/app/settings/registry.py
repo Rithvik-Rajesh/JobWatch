@@ -89,6 +89,8 @@ class SchedulerSettings(BaseModel):
     max_concurrent_sites: int = Field(default=6, ge=1, le=32)
     detail_concurrency: int = Field(default=4, ge=1, le=16)
     detail_refresh_days: int = Field(default=7, ge=1, le=60)
+    # Politeness: at most this many detail requests per site run; the rest are fetched on later runs.
+    max_details_per_run: int = Field(default=150, ge=1, le=2000)
 
 
 SETTINGS_MODELS: dict[str, type[BaseModel]] = {
