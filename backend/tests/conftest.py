@@ -20,7 +20,7 @@ from sqlalchemy.ext.asyncio import AsyncConnection, AsyncSession, async_sessionm
 ADMIN_BASE_URL = os.environ.get(
     "JOBWATCH_TEST_ADMIN_URL", "postgresql+asyncpg://jobwatch:jobwatch@127.0.0.1:5433/jobwatch"
 )
-TEST_DB = "jobwatch_test"
+TEST_DB = os.environ.get("JOBWATCH_TEST_DB", "jobwatch_test")  # agents running in parallel use distinct names
 TEST_URL = ADMIN_BASE_URL.rsplit("/", 1)[0] + f"/{TEST_DB}"
 TEST_PASSWORD = "test-password"
 

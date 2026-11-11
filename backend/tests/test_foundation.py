@@ -123,3 +123,13 @@ async def test_auth_required_and_csrf(anon_client, client):
 async def test_probes(anon_client):
     assert (await anon_client.get("/healthz")).json() == {"status": "ok"}
     assert (await anon_client.get("/readyz")).json() == {"status": "ready"}
+
+
+async def test_factories_build_consistent_rows(session):
+    from tests.factories import application_for, make_job, status_id
+
+    job = await make_job(session, title="Data Engineer")
+    app = await application_for(session, job)
+    assert app.status_id == await status_id(session, "new")
+    assert app.reviewed_at is None
+    assert job.location_scope == ScopeMatch.in_scope
