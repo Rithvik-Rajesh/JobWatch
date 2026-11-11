@@ -91,6 +91,9 @@ def job_conditions(
         if filters.include_unknown_experience:
             exp_ok = or_(exp_ok, Job.experience_min_years.is_(None))
         conds.append(or_(exp_ok, fresher_title))
+        if filters.max_experience_years <= 2:  # junior search: drop clearly senior titles
+            senior = r"\m(senior|sr|lead|principal|staff|manager|director|head|vp|vice president|architect|avp)\M"
+            conds.append(~Job.title.op("~*")(senior))
     if filters.employment_type and skip != "employment_type":
         conds.append(Job.employment_type.in_(filters.employment_type))
     if filters.work_arrangement and skip != "work_arrangement":
