@@ -36,6 +36,26 @@ the FastAPI app (`docs/api/openapi.json` snapshot).**
    rolled-back transaction, and the app's sessions join it through SAVEPOINTs. No mocked repositories.
    HTTP tests go through the full ASGI stack with real auth.
 
+## 2a. Decisions made during integration review
+
+1. **Duplicate suggestions are cross-source only.** Two different external ids on the *same* source
+   are distinct requisitions by definition, so similar titles on one career site ("Software Engineer"
+   vs "Software Engineer II") are never suggested. Without this rule, 100+ monitored companies would
+   flood the queue.
+2. **Merging copies timeline events instead of moving them.** The timeline is append-only at the DB
+   level, so the absorbed job's events are copied onto the survivor with their original
+   `occurred_at` and `payload.merged_from_job_id`. The originals remain on the tombstone. Notes,
+   contacts, interviews, reminders, salary records and tags are moved.
+3. **Primary posting** (drives the job's displayed fields): the first open posting, ranked by source:
+   career site, then job-board APIs, then capture, then manual.
+4. **Same-status change** is a no-op (no event, no version bump) but marks the job reviewed.
+   A status change resets the card's Kanban position (the old position belonged to the old column).
+5. **Auto follow-up** fires once, the first time a job enters the Applied category.
+6. **Company names and aliases share one case-insensitive namespace** (409 on collision).
+7. **Dashboard counts** apply the India scope and exclude merged jobs. "Upcoming" ignores the scope,
+   so a tracked out-of-scope job's interview still shows. Funnel stages count jobs that actually
+   reached each stage (not nested).
+
 ## 3. Requirements that cannot be fulfilled as originally intended
 
 | Requirement | Status |

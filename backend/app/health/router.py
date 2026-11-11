@@ -9,8 +9,8 @@ from sqlalchemy import text
 from app.companies.schemas import ScrapeRunOut
 from app.core.auth import CurrentUser
 from app.core.db import SessionDep
-from app.core.errors import todo
 from app.core.pagination import Page, PageDep
+from app.health import service
 from app.health.schemas import HealthOverview, NotificationOut
 from app.models.enums import RunStatus
 from app.salary.schemas import SalaryProviderOut
@@ -32,7 +32,7 @@ async def readyz(session: SessionDep) -> dict[str, str]:
 
 @router.get("/overview", response_model=HealthOverview)
 async def overview(session: SessionDep, user: CurrentUser):
-    raise todo()
+    return await service.overview(session)
 
 
 @router.get("/runs", response_model=Page[ScrapeRunOut])
@@ -43,14 +43,16 @@ async def runs(
     status: Annotated[list[RunStatus], Query()] = [],
     company_id: int | None = None,
 ):
-    raise todo()
+    items, total = await service.list_runs(session, paging, statuses=status, company_id=company_id)
+    return Page(items=items, page=paging.page, page_size=paging.page_size, total=total)
 
 
 @router.get("/notifications", response_model=Page[NotificationOut])
 async def notifications(session: SessionDep, user: CurrentUser, paging: PageDep, state: str | None = None):
-    raise todo()
+    items, total = await service.list_notifications(session, paging, state=state)
+    return Page(items=items, page=paging.page, page_size=paging.page_size, total=total)
 
 
 @router.get("/salary-providers", response_model=list[SalaryProviderOut])
 async def salary_providers(session: SessionDep, user: CurrentUser):
-    raise todo()
+    return await service.salary_providers(session)
