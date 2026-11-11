@@ -19,17 +19,45 @@ Notes on inputs:
 - The two e-mail addresses at the end of your second list (HCL, Infosys) are not career portals and were excluded. The companies themselves are covered.
 - **Process slip, disclosed:** for Morgan Stanley and Nike, the agent sent one API probe before reading `robots.txt`, which turned out to disallow the path. Both are classified as *not reliably scrapable*, and JobWatch will not fetch them.
 
-## Summary
+## Summary (reconciled: every company counted exactly once)
 
-| Classification | Portals | Companies | What happens |
+Companies are classified by their **best** portal (A > B > C > D), so a company with several portals is counted
+once. The per-company roll-up is [`data/company_coverage.csv`](../../data/company_coverage.csv), produced by the
+same script, which asserts that the categories sum to the company count.
+
+| Classification | Companies | Portals | What happens |
 |---|---|---|---|
-| **A. Automatic: shared platform adapter** | 45 | 42 | Monitored every 30 min by 6 platform adapters (config only, no per-company code) |
-| **B. Automatic: needs a company-specific adapter** | 13 | 13 | Feasible and policy-compliant; small bespoke adapter each (2 share a SuccessFactors adapter) |
-| **C. Cannot currently be scraped reliably** | 25 | 25 | Blocked, robots-disallowed, token-gated or partial → bookmarklet/manual |
-| **D. Manual entry / bookmarklet only** | 14 | 12 | No machine-readable listings exist |
+| **A. Automatic: shared platform adapter** | **42** | 45 | 6 platform adapters, configuration only |
+| **B. Automatic: company-specific adapter** | **13** | 13 | small bespoke adapter each (Wipro + HCLTech share one) |
+| **C. Cannot currently be scraped reliably** | **25** | 25 | bookmarklet / manual entry |
+| **D. Manual entry / bookmarklet only** | **11** | 14* | bookmarklet / manual entry |
+| **Total** | **91** | 97 | |
 
-Covered automatically (A + B): **55 of 91 companies**, with about **17,200 India-located openings** observed. That figure is a lower bound, because Accenture's count is capped at 2,000. Accenture, Wipro, Amazon and IBM account for about 11,800 of it, mostly IT-services and operations roles. See the decision on role filters in the architecture proposal.
-The other **36 companies** (C + D; Blinkit has a portal in each) are covered by the bookmarklet and manual entry.
+\* D has 14 portals but 11 companies. LTIMindtree and D. E. Shaw have two manual portals each, and Blinkit's group page
+is a manual portal while Blinkit itself is counted in C, through its blocked main portal.
+*The earlier draft counted Blinkit in both C and D, which is why it summed to 92 and 37.*
+
+**Bookmarklet / manual entry needed: 36 companies (C 25 + D 11).**
+
+### Endpoint access vs. India coverage
+
+Being able to reach a listings endpoint is not the same as having India jobs. A company counts as having **India
+coverage** only when its listings contain postings located in India, or remote postings that explicitly list
+India. Bare "Remote" was never counted.
+
+| Of the 55 automatable companies (A + B) | Companies |
+|---|---|
+| India coverage **confirmed** (≥ 1 India-eligible posting observed) | **53** |
+| India coverage **unverified** (endpoint works; listings don't establish India eligibility yet) | **1**: HCLTech |
+| **No India postings observed** (endpoint works; no India offices or roles) | **1**: Jane Street |
+
+India-eligible openings observed across the 53: about **17,200**, a lower bound since Accenture's count is capped at 2,000.
+Accenture, Wipro, Amazon and IBM account for about 11,800 of these, mostly IT-services and operations roles. The approved
+global title filters will narrow them.
+
+Per portal, `india_coverage` in `data/companies.csv` is one of confirmed, none_observed, unverified or not_applicable.
+Only `confirmed` portals are **monitored by default**. Salesforce's subsidiary sites (0 India), Visa's campus site
+(unverified), Jane Street and HCLTech start disabled.
 
 ## A. Automatic: shared platform adapters (45 portals)
 

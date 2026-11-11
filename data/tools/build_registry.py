@@ -107,7 +107,20 @@ AGENT_TO_FINAL = {
 COLUMNS = [
     "company", "site_label", "careers_url", "landing_url", "platform", "tenant", "site_id", "api_endpoint",
     "india_filter", "india_filter_detail", "india_jobs_observed", "total_jobs_observed", "robots", "robots_detail",
-    "access", "verification_status", "support", "support_reason", "monitor_by_default", "notes", "verified_at",
+    "access", "verification_status", "support", "support_reason", "india_coverage", "monitor_by_default",
+    "evidence_file", "notes", "verified_at",
+]
+
+# India coverage is about LISTINGS, not endpoint reachability:
+#   confirmed      - the probe returned >= 1 posting located in India (or remote with India explicitly listed)
+#   none_observed  - endpoint works but returned 0 India-eligible postings
+#   unverified     - India eligibility could not be established from the listings
+#   not_applicable - portal is not automatable (bookmarklet/manual)
+SUPPORT_RANK = {"auto": 0, "adapter": 1, "not_reliable": 2, "manual": 3}
+COVERAGE_RANK = {"confirmed": 0, "unverified": 1, "none_observed": 2, "not_applicable": 3}
+COMPANY_COLUMNS = [
+    "company", "category", "endpoint_accessible", "india_coverage", "india_jobs_observed", "portals",
+    "automatable_portals", "primary_portal_url", "primary_platform", "reason",
 ]
 
 CANONICAL_NAMES = {
@@ -141,12 +154,47 @@ def classify(row: dict) -> dict:
     if final == "auto" and row.get("platform") not in SHARED_PLATFORMS:
         final = "adapter"
     observed = row.get("india_jobs_observed")
+    if final not in {"auto", "adapter"}:
+        coverage = "not_applicable"
+    elif observed in (None, ""):
+        coverage = "unverified"
+    elif int(observed) > 0:
+        coverage = "confirmed"
+    else:
+        coverage = "none_observed"
+    out["india_coverage"] = coverage
     out["support"] = final
     out["support_reason"] = reason
     # Monitor by default only when automatable AND there is (or may be) India inventory.
-    out["monitor_by_default"] = str(final in {"auto", "adapter"} and observed not in (0,)).lower()
+    out["monitor_by_default"] = str(coverage == "confirmed").lower()
     out["verification_status"] = row.get("verification")
     out["verified_at"] = VERIFIED_AT
+    return out
+
+
+def rollup(portals: list[dict]) -> list[dict]:
+    """One row per company: category = best portal; India coverage judged on automatable portals only."""
+    by_company: dict[str, list[dict]] = {}
+    for p in portals:
+        by_company.setdefault(p["company"], []).append(p)
+    out = []
+    for company, ps in sorted(by_company.items(), key=lambda kv: kv[0].lower()):
+        best = min(ps, key=lambda p: (SUPPORT_RANK[p["support"]], COVERAGE_RANK[p["india_coverage"]]))
+        auto = [p for p in ps if p["support"] in {"auto", "adapter"}]
+        coverage = min((p["india_coverage"] for p in auto), key=COVERAGE_RANK.get) if auto else "not_applicable"
+        india = sum(int(p["india_jobs_observed"]) for p in auto if str(p.get("india_jobs_observed") or "").isdigit())
+        out.append({
+            "company": company,
+            "category": best["support"],
+            "endpoint_accessible": str(bool(auto)).lower(),
+            "india_coverage": coverage,
+            "india_jobs_observed": india if auto else "",
+            "portals": len(ps),
+            "automatable_portals": len(auto),
+            "primary_portal_url": best.get("careers_url") or "",
+            "primary_platform": best.get("platform") or "",
+            "reason": best["support_reason"],
+        })
     return out
 
 
@@ -154,7 +202,9 @@ def main(results_dir: str, out_path: str) -> None:
     rows = []
     for path in sorted(glob.glob(os.path.join(results_dir, "group_*.json"))):
         with open(path, encoding="utf-8") as fh:
-            rows.extend(json.load(fh))
+            for r in json.load(fh):
+                r["evidence_file"] = f"data/verification/{os.path.basename(path)}"
+                rows.append(r)
     final = sorted((classify(r) for r in rows), key=lambda r: (r["company"].lower(), r.get("site_label") or ""))
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w", newline="", encoding="utf-8") as fh:
@@ -162,11 +212,26 @@ def main(results_dir: str, out_path: str) -> None:
         writer.writeheader()
         for r in final:
             writer.writerow({k: ("" if r.get(k) is None else r.get(k)) for k in COLUMNS})
-    counts: dict[str, int] = {}
-    for r in final:
-        counts[r["support"]] = counts.get(r["support"], 0) + 1
-    print(f"{len(final)} portals, {len({r['company'] for r in final})} companies -> {out_path}")
-    print(counts)
+    companies = rollup(final)
+    company_path = os.path.join(os.path.dirname(out_path), "company_coverage.csv")
+    with open(company_path, "w", newline="", encoding="utf-8") as fh:
+        writer = csv.DictWriter(fh, fieldnames=COMPANY_COLUMNS)
+        writer.writeheader()
+        writer.writerows(companies)
+
+    def tally(items: list[dict], key: str) -> dict[str, int]:
+        t: dict[str, int] = {}
+        for it in items:
+            t[it[key]] = t.get(it[key], 0) + 1
+        return t
+
+    cat = tally(companies, "category")
+    assert sum(cat.values()) == len(companies), "every company must be in exactly one category"
+    print(f"{len(final)} portals -> {out_path}; portal support: {tally(final, 'support')}")
+    print(f"{len(companies)} companies -> {company_path}; category: {cat}")
+    auto = [c for c in companies if c["endpoint_accessible"] == "true"]
+    print(f"automatable companies: {len(auto)}; India coverage among them: {tally(auto, 'india_coverage')}")
+    print(f"bookmarklet/manual companies: {len(companies) - len(auto)}")
 
 
 if __name__ == "__main__":
