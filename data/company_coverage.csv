@@ -40,7 +40,6 @@ Harness,auto,true,confirmed,16,1,1,https://job-boards.greenhouse.io/harnessinc,g
 HCLTech,adapter,true,unverified,0,1,1,https://careers.hcltech.com/,successfactors,SuccessFactors; India isolation unresolved (no location in sitemap) -> needs detail-page parsing.
 Hewlett Packard Enterprise,auto,true,confirmed,400,1,1,https://hpe.wd5.myworkdayjobs.com/Jobsathpe,workday,Shared workday adapter; public data; India via location_text.
 IBM,not_reliable,false,not_applicable,,1,0,https://www.ibm.com/careers/search,custom_api,Provenance check NOT FOUND (2026-11-12): the inferred search API is not referenced by IBM's own careers pages; careers.ibm.com serves a WAF bot challenge. Bookmarklet only. See data/verification/provenance_ibm_rippling.md.
-Infosys,not_reliable,false,not_applicable,,1,0,https://career.infosys.com/,unknown,Honest User-Agent blocked (bot_protected); not circumvented.
 Intel,auto,true,confirmed,94,1,1,https://intel.wd1.myworkdayjobs.com/External,workday,Shared workday adapter; public data; India via source_filter.
 Intuit,adapter,true,confirmed,27,1,1,https://jobs.intuit.com/,custom_html,robots disallows /search-jobs/; only sitemap.xml + individual job pages (JSON-LD unverified).
 Jane Street,adapter,true,none_observed,0,1,1,https://www.janestreet.com/join-jane-street/open-roles/,custom_api,"Public main.json, but NO India offices (ATX/CHI/HKG/LDN/NYC/SGP). Monitoring yields nothing today."
@@ -75,7 +74,6 @@ Spotify,auto,true,confirmed,1,1,1,https://jobs.lever.co/spotify,lever,Shared lev
 Stripe,auto,true,confirmed,45,1,1,https://stripe.com/jobs/search,greenhouse,Shared greenhouse adapter; public data; India via location_text.
 Swiggy,not_reliable,false,not_applicable,,1,0,https://careers.swiggy.in/,smartrecruiters,SmartRecruiters public API host robots.txt disallows generic bots.
 Target,auto,true,confirmed,71,1,1,https://target.wd5.myworkdayjobs.com/targetcareers,workday,Shared workday adapter; public data; India via source_filter.
-Tata Consultancy Services,not_reliable,false,not_applicable,,1,0,https://www.tcs.com/careers,unknown,Honest User-Agent blocked (bot_protected); not circumvented.
 Tech Mahindra,manual,false,not_applicable,,1,0,https://careers.techmahindra.com/CurrentOpportunity.aspx,custom_html,No machine-readable listings found.
 Texas Instruments,auto,true,confirmed,126,1,1,https://careers.ti.com/en/sites/CX,oracle_hcm,Oracle HCM (site CX).
 Tower Research Capital,auto,true,confirmed,12,1,1,https://tower-research.com/open-positions/,greenhouse,Shared greenhouse adapter; public data; India via location_text.

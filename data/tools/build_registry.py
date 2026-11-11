@@ -201,6 +201,10 @@ def rollup(portals: list[dict]) -> list[dict]:
     return out
 
 
+# Companies the user removed from their list (2026-11-12).
+EXCLUDED_COMPANIES = {"Tata Consultancy Services", "Infosys"}
+
+
 def main(results_dir: str, out_path: str) -> None:
     rows = []
     for path in sorted(glob.glob(os.path.join(results_dir, "group_*.json"))):
@@ -208,7 +212,7 @@ def main(results_dir: str, out_path: str) -> None:
             for r in json.load(fh):
                 r["evidence_file"] = f"data/verification/{os.path.basename(path)}"
                 rows.append(r)
-    final = sorted((classify(r) for r in rows), key=lambda r: (r["company"].lower(), r.get("site_label") or ""))
+    final = sorted((c for c in (classify(r) for r in rows) if c["company"] not in EXCLUDED_COMPANIES), key=lambda r: (r["company"].lower(), r.get("site_label") or ""))
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w", newline="", encoding="utf-8") as fh:
         writer = csv.DictWriter(fh, fieldnames=COLUMNS, extrasaction="ignore")
