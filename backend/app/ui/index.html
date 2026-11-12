@@ -6,121 +6,127 @@
 <title>JobWatch</title>
 <style>
   :root {
-    --bg:#f5f6fb; --panel:#ffffff; --raised:#f0f2f8; --text:#141625; --muted:#6b7085; --line:#e4e6ef;
-    --accent:#6d5efc; --accent2:#ec4899; --soft:#efedff; --ok:#10b981; --warn:#f59e0b; --bad:#ef4444; --info:#0ea5e9;
-    --radius:14px; --shadow:0 1px 2px rgba(20,22,37,.06), 0 4px 16px rgba(20,22,37,.05);
+    --bg:#f4f5f7; --panel:#ffffff; --raised:#f7f8fa; --text:#1d2129; --muted:#5f6b7a; --line:#e3e6ea;
+    --accent:#0a66c2; --accent-hover:#004182; --soft:#e8f1fb; --ok:#057642; --warn:#b45309; --bad:#c62828;
+    --radius:10px; --shadow:0 1px 2px rgba(16,24,40,.05);
   }
-  @media (prefers-color-scheme: dark) { :root {
-    --bg:#0b0c14; --panel:#131522; --raised:#1a1d2e; --text:#eceefa; --muted:#9298b0; --line:#252941;
-    --accent:#8b7dff; --accent2:#f472b6; --soft:#22204a; --shadow:0 1px 2px rgba(0,0,0,.4);
-  } }
+  [data-theme="dark"] {
+    --bg:#0f1115; --panel:#171a21; --raised:#1d212a; --text:#e6e8eb; --muted:#9aa3ae; --line:#2a2f3a;
+    --accent:#4f9cf0; --accent-hover:#79b4f5; --soft:#18273a; --ok:#3fb27f; --warn:#e0a648; --bad:#ef6b6b;
+    --shadow:none;
+  }
   [hidden] { display:none !important; }
   * { box-sizing:border-box; }
-  body { margin:0; font:14px/1.5 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; background:var(--bg); color:var(--text); }
+  body { margin:0; font:14px/1.5 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background:var(--bg); color:var(--text); }
   button, input, select { font:inherit; color:inherit; }
-  button { cursor:pointer; border:1px solid var(--line); background:var(--panel); border-radius:10px; padding:7px 14px; }
-  button:hover { border-color:var(--accent); }
-  button.primary { background:linear-gradient(135deg,var(--accent),var(--accent2)); border:0; color:#fff; font-weight:600; }
+  button { cursor:pointer; border:1px solid var(--line); background:var(--panel); border-radius:8px; padding:7px 14px; font-weight:500; }
+  button:hover { background:var(--raised); }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:600; }
+  button.primary:hover { background:var(--accent-hover); border-color:var(--accent-hover); }
+  button.ghost { border-color:transparent; background:transparent; }
   button:disabled { opacity:.5; cursor:not-allowed; }
   input[type=text], input[type=password], input[type=search] { border:1px solid var(--line); background:var(--panel);
-    border-radius:10px; padding:8px 12px; outline:none; }
-  input:focus { border-color:var(--accent); }
+    border-radius:8px; padding:8px 12px; outline:none; }
+  input:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--soft); }
   .muted { color:var(--muted); } .small { font-size:12px; }
 
+  .brand { display:flex; align-items:center; gap:8px; font-weight:700; font-size:17px; letter-spacing:-.2px; color:var(--text); }
+  .brand svg { width:28px; height:28px; flex:none; }
   #login { min-height:100vh; display:grid; place-items:center; }
-  #login form { width:340px; display:grid; gap:12px; background:var(--panel); border:1px solid var(--line);
-    border-radius:var(--radius); padding:28px; box-shadow:var(--shadow); }
+  #login form { width:360px; display:grid; gap:14px; background:var(--panel); border:1px solid var(--line);
+    border-radius:12px; padding:32px; box-shadow:0 4px 24px rgba(16,24,40,.06); }
 
-  .top { display:flex; align-items:center; gap:14px; padding:12px 24px; background:var(--panel);
+  .top { display:flex; align-items:center; gap:12px; padding:10px 24px; background:var(--panel);
     border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
-  .brand { font-weight:800; font-size:18px; background:linear-gradient(135deg,var(--accent),var(--accent2));
-    -webkit-background-clip:text; background-clip:text; color:transparent; }
   .grow { flex:1; }
-  .wrap { max-width:1200px; margin:0 auto; padding:20px 24px 60px; }
+  .wrap { max-width:1080px; margin:0 auto; padding:24px 24px 60px; }
 
-  /* progress */
   .card { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px;
     margin-bottom:16px; box-shadow:var(--shadow); }
   .prog-head { display:flex; justify-content:space-between; align-items:center; gap:12px; }
-  .bar { height:8px; background:var(--raised); border-radius:99px; overflow:hidden; margin:12px 0; }
-  .bar div { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); width:0; transition:width .4s; }
-  .stats { display:flex; gap:28px; flex-wrap:wrap; }
-  .stat b { font-size:22px; display:block; line-height:1.1; }
+  .bar { height:6px; background:var(--raised); border-radius:99px; overflow:hidden; margin:12px 0; }
+  .bar div { height:100%; background:var(--accent); width:0; transition:width .4s; }
+  .stats { display:flex; gap:32px; flex-wrap:wrap; }
+  .stat b { font-size:20px; display:block; line-height:1.2; font-weight:700; }
   .chips { display:flex; gap:6px; flex-wrap:wrap; margin:8px 0; }
-  .chip { display:inline-flex; align-items:center; gap:6px; font-size:12px; padding:4px 10px; border-radius:99px;
+  .chip { display:inline-flex; align-items:center; gap:6px; font-size:12px; padding:3px 10px; border-radius:99px;
     background:var(--soft); color:var(--accent); }
   .chip.wait { background:transparent; border:1px solid var(--line); color:var(--muted); }
   .results { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:6px; margin-top:8px; }
-  .res { display:flex; gap:8px; align-items:center; font-size:13px; padding:6px 8px; border-radius:10px; background:var(--raised); }
+  .res { display:flex; gap:8px; align-items:center; font-size:13px; padding:6px 8px; border-radius:8px; background:var(--raised); }
   .res .n { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .dot { width:8px; height:8px; border-radius:50%; flex:none; background:var(--line); }
+  .dot { width:7px; height:7px; border-radius:50%; flex:none; background:var(--line); }
   .dot.ok { background:var(--ok); } .dot.bad { background:var(--bad); } .dot.part { background:var(--warn); }
   details summary { cursor:pointer; color:var(--muted); font-size:13px; margin-top:6px; }
 
-  /* search + filters */
   .searchbox { display:flex; flex-wrap:wrap; gap:6px; align-items:center; background:var(--panel); border:1px solid var(--line);
-    border-radius:var(--radius); padding:8px 10px; box-shadow:var(--shadow); }
-  .searchbox:focus-within { border-color:var(--accent); }
-  .searchbox input { border:0; flex:1; min-width:180px; padding:6px; background:transparent; }
-  .rchip { display:inline-flex; gap:6px; align-items:center; padding:4px 6px 4px 10px; border-radius:99px; font-size:13px;
-    color:#fff; background:linear-gradient(135deg,var(--accent),var(--accent2)); }
-  .rchip button { border:0; background:rgba(255,255,255,.25); color:#fff; border-radius:99px; padding:0 6px; line-height:18px; }
-  .presets { display:flex; gap:6px; flex-wrap:wrap; margin:8px 0 0; }
+    border-radius:var(--radius); padding:7px 10px; box-shadow:var(--shadow); }
+  .searchbox:focus-within { border-color:var(--accent); box-shadow:0 0 0 3px var(--soft); }
+  .searchbox input { border:0; flex:1; min-width:180px; padding:6px; background:transparent; box-shadow:none !important; }
+  .searchbox svg { width:18px; height:18px; color:var(--muted); }
+  .rchip { display:inline-flex; gap:4px; align-items:center; padding:3px 4px 3px 10px; border-radius:6px; font-size:13px;
+    color:var(--accent); background:var(--soft); font-weight:500; }
+  .rchip button { border:0; background:transparent; color:inherit; padding:0 5px; line-height:18px; font-size:15px; }
+  .presets { display:flex; gap:6px; flex-wrap:wrap; margin:10px 0 0; }
   .presets button { font-size:12px; padding:3px 10px; border-radius:99px; color:var(--muted); }
-  .toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:14px 0 10px; }
-  .toggle { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:99px; border:1px solid var(--line);
-    background:var(--panel); cursor:pointer; user-select:none; font-size:13px; }
+  .toolbar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:16px 0 12px; }
+  .toggle { display:inline-flex; align-items:center; gap:6px; padding:5px 12px; border-radius:99px; border:1px solid var(--line);
+    background:var(--panel); cursor:pointer; user-select:none; font-size:13px; color:var(--muted); font-weight:500; }
   .toggle input { display:none; }
-  .toggle.on { border-color:transparent; color:#fff; background:var(--t, var(--accent)); }
-  .tabs { display:flex; gap:4px; background:var(--raised); padding:4px; border-radius:12px; width:max-content; max-width:100%; overflow:auto; }
-  .tab { border:0; background:transparent; padding:7px 16px; border-radius:9px; color:var(--muted); font-weight:600; white-space:nowrap; }
-  .tab.on { background:var(--panel); color:var(--text); box-shadow:var(--shadow); }
-  .tab .c { font-size:11px; margin-left:6px; padding:1px 7px; border-radius:99px; background:var(--soft); color:var(--accent); }
+  .toggle.on { border-color:var(--accent); color:var(--accent); background:var(--soft); }
+  .tabs { display:flex; gap:24px; border-bottom:1px solid var(--line); overflow:auto; }
+  .tab { border:0; border-radius:0; background:transparent; padding:10px 2px; color:var(--muted); font-weight:600;
+    white-space:nowrap; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .tab:hover { background:transparent; color:var(--text); }
+  .tab.on { color:var(--accent); border-bottom-color:var(--accent); }
+  .tab .c { font-size:11px; margin-left:6px; padding:1px 7px; border-radius:99px; background:var(--raised); color:var(--muted); }
+  .tab.on .c { background:var(--soft); color:var(--accent); }
 
-  /* jobs */
   .jobs { display:grid; gap:10px; }
-  .job { display:grid; grid-template-columns:48px 1fr auto; gap:14px; align-items:center; background:var(--panel);
-    border:1px solid var(--line); border-left:4px solid var(--c, var(--accent)); border-radius:var(--radius); padding:14px 16px; box-shadow:var(--shadow); }
-  .logo { width:48px; height:48px; border-radius:12px; background:var(--c); display:grid; place-items:center; overflow:hidden;
-    color:#fff; font-weight:800; font-size:18px; }
-  .logo img { width:30px; height:30px; background:#fff; border-radius:6px; padding:2px; }
-  .job .title { font-weight:700; font-size:15px; color:var(--text); text-decoration:none; }
-  .job .title:hover { color:var(--accent); }
-  .meta { display:flex; gap:8px; flex-wrap:wrap; align-items:center; font-size:12.5px; color:var(--muted); margin-top:4px; }
-  .company { font-weight:600; color:var(--c); }
-  .badge { font-size:11.5px; font-weight:600; padding:2px 9px; border-radius:99px; background:var(--raised); color:var(--muted); }
-  .b-intern { background:#fde68a; color:#78350f; } .b-exp { background:#d1fae5; color:#065f46; }
-  .b-new { background:#dbeafe; color:#1e40af; } .b-st { background:var(--soft); color:var(--accent); }
-  @media (prefers-color-scheme: dark) { .b-intern { background:#4a3a0a; color:#fde68a; } .b-exp { background:#063d2e; color:#6ee7b7; }
-    .b-new { background:#14264d; color:#93c5fd; } }
+  .job { display:grid; grid-template-columns:48px 1fr auto; gap:16px; align-items:center; background:var(--panel);
+    border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px; box-shadow:var(--shadow); transition:border-color .15s; }
+  .job:hover { border-color:color-mix(in srgb, var(--accent) 40%, var(--line)); }
+  .logo { width:48px; height:48px; border-radius:8px; background:var(--panel); border:1px solid var(--line); display:grid;
+    place-items:center; overflow:hidden; color:var(--muted); font-weight:700; font-size:18px; }
+  .logo img { width:30px; height:30px; }
+  .job .title { font-weight:600; font-size:15.5px; color:var(--text); text-decoration:none; }
+  .job .title:hover { color:var(--accent); text-decoration:underline; }
+  .meta { display:flex; gap:6px 14px; flex-wrap:wrap; align-items:center; font-size:13px; color:var(--muted); margin-top:3px; }
+  .company { font-weight:500; color:var(--text); }
+  .badge { font-size:11.5px; font-weight:600; padding:2px 8px; border-radius:4px; background:var(--raised); color:var(--muted); }
+  .b-intern { background:var(--soft); color:var(--accent); }
+  .b-exp { background:color-mix(in srgb, var(--ok) 12%, transparent); color:var(--ok); }
+  .b-new { background:transparent; color:var(--accent); padding-left:0; }
+  .b-st { background:var(--raised); color:var(--text); }
   .actions { display:flex; gap:6px; }
-  .actions button { font-size:12.5px; padding:6px 10px; }
-  .actions .on { border-color:transparent; color:#fff; }
+  .actions button { font-size:13px; padding:6px 12px; }
+  .actions .on { color:#fff; border-color:transparent; }
   .a-int.on { background:var(--warn); } .a-app.on { background:var(--ok); } .a-no.on { background:var(--bad); }
   .empty { padding:48px; text-align:center; color:var(--muted); background:var(--panel); border-radius:var(--radius); border:1px dashed var(--line); }
   .pager { display:flex; justify-content:space-between; align-items:center; margin:16px 0; }
 
-  /* modal */
-  .backdrop { position:fixed; inset:0; background:rgba(10,10,20,.55); display:grid; place-items:center; z-index:50; padding:16px; }
-  .modal { background:var(--panel); border-radius:18px; width:min(860px,100%); max-height:88vh; display:flex; flex-direction:column;
-    box-shadow:0 20px 60px rgba(0,0,0,.35); }
-  .modal header { padding:18px 20px 10px; display:grid; gap:10px; border-bottom:1px solid var(--line); }
+  .backdrop { position:fixed; inset:0; background:rgba(15,17,21,.45); display:grid; place-items:center; z-index:50; padding:16px; }
+  .modal { background:var(--panel); border-radius:12px; width:min(860px,100%); max-height:88vh; display:flex; flex-direction:column;
+    box-shadow:0 20px 60px rgba(0,0,0,.25); border:1px solid var(--line); }
+  .modal header { padding:18px 20px 12px; display:grid; gap:10px; border-bottom:1px solid var(--line); }
   .modal header .row { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
   .modal h3 { margin:0; font-size:17px; }
   .cgrid { overflow:auto; padding:14px 20px; display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:8px; }
-  .ctile { display:flex; align-items:center; gap:10px; padding:8px 10px; border:1px solid var(--line); border-radius:12px; cursor:pointer; }
-  .ctile.on { border-color:var(--c); background:color-mix(in srgb, var(--c) 10%, transparent); }
-  .ctile .logo { width:32px; height:32px; border-radius:9px; font-size:13px; }
+  .ctile { display:flex; align-items:center; gap:10px; padding:8px 10px; border:1px solid var(--line); border-radius:8px; cursor:pointer; }
+  .ctile:hover { background:var(--raised); }
+  .ctile.on { border-color:var(--accent); background:var(--soft); }
+  .ctile .logo { width:32px; height:32px; border-radius:6px; font-size:13px; }
   .ctile .logo img { width:20px; height:20px; }
-  .ctile .n { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600; font-size:13px; }
+  .ctile .n { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:500; font-size:13px; }
   .modal footer { padding:14px 20px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; gap:10px; }
-  @media (max-width:760px) { .job { grid-template-columns:40px 1fr; } .actions { grid-column:1 / -1; } .logo { width:40px; height:40px; } }
+  @media (max-width:760px) { .job { grid-template-columns:40px 1fr; } .actions { grid-column:1 / -1; } .logo { width:40px; height:40px; }
+    .top { padding:10px 12px; } .wrap { padding:16px 12px; } }
 </style>
 </head>
 <body>
 <div id="login" hidden>
   <form id="loginForm">
-    <div class="brand" style="font-size:22px">JobWatch</div>
+    <div class="brand" style="font-size:20px"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><rect x="8" y="12" width="16" height="11" rx="2" fill="none" stroke="#fff" stroke-width="2"/><path d="M13 12V10a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 19 10v2" fill="none" stroke="#fff" stroke-width="2"/><circle cx="16" cy="17.5" r="1.8" fill="#fff"/></svg>JobWatch</div><span class="small muted">Sign in to track your job search</span>
     <input id="u" type="text" placeholder="Username" value="admin" autocomplete="username">
     <input id="p" type="password" placeholder="Password" autocomplete="current-password">
     <button class="primary">Sign in</button>
@@ -130,12 +136,13 @@
 
 <div id="app" hidden>
   <div class="top">
-    <span class="brand">JobWatch</span>
+    <span class="brand"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--accent)"/><rect x="8" y="12" width="16" height="11" rx="2" fill="none" stroke="#fff" stroke-width="2"/><path d="M13 12V10a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 19 10v2" fill="none" stroke="#fff" stroke-width="2"/><circle cx="16" cy="17.5" r="1.8" fill="#fff"/></svg>JobWatch</span>
     <span class="grow"></span>
     <span id="topStatus" class="small muted"></span>
-    <button id="openCompanies">🏢 Companies <span id="coCount" class="muted"></span></button>
-    <button id="fetchTop" class="primary">⟳ Fetch jobs</button>
-    <button id="logout">Sign out</button>
+    <button id="openCompanies">Companies <span id="coCount" class="muted"></span></button>
+    <button id="fetchTop" class="primary">Fetch jobs</button>
+    <button id="theme" class="ghost" title="Toggle dark mode">🌙</button>
+    <button id="logout" class="ghost">Sign out</button>
   </div>
 
   <div class="wrap">
@@ -145,8 +152,8 @@
       <div class="stats">
         <div class="stat"><b id="stDone">0</b><span class="small muted">sites done</span></div>
         <div class="stat"><b id="stIndia">0</b><span class="small muted">India jobs seen</span></div>
-        <div class="stat"><b id="stNew" style="color:var(--ok)">0</b><span class="small muted">new jobs</span></div>
-        <div class="stat"><b id="stFail" style="color:var(--bad)">0</b><span class="small muted">failed</span></div>
+        <div class="stat"><b id="stNew">0</b><span class="small muted">new jobs</span></div>
+        <div class="stat"><b id="stFail">0</b><span class="small muted">failed</span></div>
       </div>
       <div id="nowWrap"><span class="small muted">Scraping now</span><div id="now" class="chips"></div></div>
       <details id="waitWrap"><summary id="waitSummary"></summary><div id="wait" class="chips"></div></details>
@@ -154,17 +161,17 @@
     </div>
 
     <div class="searchbox" id="searchbox">
-      <span class="muted">🔎</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <span id="roleChips" class="chips" style="margin:0"></span>
       <input id="roleInput" type="text" placeholder="Add role keywords: type “software” and press Enter…">
     </div>
     <div class="presets" id="presets"></div>
 
     <div class="toolbar">
-      <label class="toggle" style="--t:#6d5efc"><input type="checkbox" id="techOnly" checked>🛠 Engineering only</label>
-      <label class="toggle" style="--t:#10b981"><input type="checkbox" id="fresher" checked>🎓 Freshers (0–1 yrs)</label>
-      <label class="toggle" style="--t:#0ea5e9"><input type="checkbox" id="unknownExp">❔ incl. experience not stated</label>
-      <label class="toggle" style="--t:#f59e0b"><input type="checkbox" id="internOnly">⭐ Internships only</label>
+      <label class="toggle" ><input type="checkbox" id="techOnly" checked>Engineering only</label>
+      <label class="toggle" ><input type="checkbox" id="fresher" checked>Freshers (0–1 yrs)</label>
+      <label class="toggle" ><input type="checkbox" id="unknownExp">Include unstated experience</label>
+      <label class="toggle" ><input type="checkbox" id="internOnly">Internships only</label>
       <span class="grow"></span>
       <span id="count" class="small muted"></span>
     </div>
@@ -188,7 +195,7 @@
     <div id="cgrid" class="cgrid"></div>
     <footer>
       <button id="mClose">Done</button>
-      <button id="fetch" class="primary">⟳ Fetch selected</button>
+      <button id="fetch" class="primary">Fetch selected</button>
     </footer>
   </div>
 </div>
@@ -214,7 +221,7 @@ function hue(name) { let h = 0; for (const ch of name) h = (h * 31 + ch.charCode
 function logo(name) {
   const d = DOMAINS[name];
   const img = d ? `<img src="https://www.google.com/s2/favicons?domain=${d}&sz=64" alt="" loading="lazy" onerror="this.replaceWith(document.createTextNode('${esc(name[0])}'))">` : esc(name[0] || "?");
-  return `<div class="logo" style="--c:${hue(name)}">${img}</div>`;
+  return `<div class="logo" >${img}</div>`;
 }
 
 let companies = [], selected = new Set(store.get("selected", [])), roles = store.get("roles", ["software", "data", "machine learning", "AI"]);
@@ -278,13 +285,13 @@ async function loadCompanies() {
 function renderCompanies() {
   const f = $("coFilter").value.trim().toLowerCase();
   $("cgrid").innerHTML = companies.filter(c => !f || c.name.toLowerCase().includes(f)).map(c => `
-    <label class="ctile ${selected.has(c.id) ? "on" : ""}" style="--c:${hue(c.name)}" title="${c.last_success_at ? "Last fetched " + new Date(c.last_success_at).toLocaleString() : "Not fetched yet"}">
+    <label class="ctile ${selected.has(c.id) ? "on" : ""}"  title="${c.last_success_at ? "Last fetched " + new Date(c.last_success_at).toLocaleString() : "Not fetched yet"}">
       <input type="checkbox" data-id="${c.id}" ${selected.has(c.id) ? "checked" : ""} hidden>
       ${logo(c.name)}<span class="n">${esc(c.name)}</span><span class="small muted">${c.jobs || ""}</span></label>`).join("");
   const n = selected.size, all = companies.length;
   $("mSel").textContent = `${n} of ${all} selected`;
   $("coCount").textContent = n === all ? "· all" : `· ${n}/${all}`;
-  $("fetch").textContent = `⟳ Fetch ${n === all ? "all" : n} ${n === 1 ? "company" : "companies"}`;
+  $("fetch").textContent = `Fetch ${n === all ? "all" : n} ${n === 1 ? "company" : "companies"}`;
   $("fetch").disabled = $("fetchTop").disabled = !n || running;
   store.set("selected", [...selected]);
 }
@@ -320,7 +327,7 @@ async function poll() {
   $("progBar").style.width = `${s.total ? 100 * s.done / s.total : 0}%`;
   $("stDone").textContent = `${s.done}/${s.total}`; $("stIndia").textContent = s.india_jobs; $("stNew").textContent = s.new_jobs; $("stFail").textContent = failed;
   $("nowWrap").hidden = !s.current.length;
-  $("now").innerHTML = s.current.map(l => `<span class="chip">⏳ ${esc(l)}</span>`).join("");
+  $("now").innerHTML = s.current.map(l => `<span class="chip">${esc(l)}</span>`).join("");
   $("waitWrap").hidden = !s.pending.length; $("waitSummary").textContent = `Waiting (${s.pending.length})`;
   $("wait").innerHTML = s.pending.map(l => `<span class="chip wait">${esc(l)}</span>`).join("");
   $("doneSummary").textContent = `Completed (${s.sites.length})`; $("doneWrap").open = !s.running;
@@ -363,13 +370,13 @@ function renderJobs(data) {
   $("prev").disabled = page <= 1; $("next").disabled = page >= pages;
   $("jobs").innerHTML = data.items.map(j => {
     const intern = /\b(intern|internship)\b/i.test(j.title), k = j.status.key;
-    return `<div class="job" data-id="${j.id}" style="--c:${hue(j.company.name)}">
+    return `<div class="job" data-id="${j.id}" >
       ${logo(j.company.name)}
       <div>
         <a class="title" href="${esc(j.apply_url || "#")}" target="_blank" rel="noopener">${esc(j.title)}</a>
         <div class="meta">
-          <span class="company">${esc(j.company.name)}</span><span>📍 ${esc(j.location_text || "India")}</span>
-          ${intern ? '<span class="badge b-intern">⭐ Internship</span>' : ""}${exp(j)}
+          <span class="company">${esc(j.company.name)}</span><span>${esc(j.location_text || "India")}</span>
+          ${intern ? '<span class="badge b-intern">Internship</span>' : ""}${exp(j)}
           ${j.is_new ? '<span class="badge b-new">new</span>' : ""}
           ${k !== "new" ? `<span class="badge b-st">${esc(j.status.label)}</span>` : ""}
           <span>found ${new Date(j.first_seen_at).toLocaleDateString()}</span>
@@ -391,6 +398,9 @@ $("jobs").onclick = async e => {
 $("prev").onclick = () => { page--; loadJobs(); window.scrollTo(0, 0); };
 $("next").onclick = () => { page++; loadJobs(); window.scrollTo(0, 0); };
 
+const applyTheme = t => { document.documentElement.dataset.theme = t; $("theme").textContent = t === "dark" ? "☀️" : "🌙"; store.set("theme", t); };
+applyTheme(store.get("theme", "light"));
+$("theme").onclick = () => applyTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
 async function init() { renderRoles(); renderTabs(); await loadCompanies(); await poll(); }
 api("/auth/me").then(showApp).catch(() => {});
 </script>
