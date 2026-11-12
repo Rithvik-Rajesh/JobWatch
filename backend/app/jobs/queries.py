@@ -5,7 +5,7 @@ from collections.abc import Sequence
 from datetime import UTC, datetime, timedelta
 from zoneinfo import ZoneInfo
 
-from sqlalchemy import case, exists, func, not_, or_, select
+from sqlalchemy import and_, case, exists, func, not_, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.pagination import Page, PageParams
@@ -30,7 +30,7 @@ from app.models import (
     Status,
     Tag,
 )
-from app.models.enums import SalaryProvenance
+from app.models.enums import SalaryProvenance, StatusCategory
 from app.salary.schemas import SalarySummary
 from app.settings.registry import LocationScopeSettings, TimezoneSettings, get_setting
 
@@ -85,15 +85,47 @@ def job_conditions(
     if filters.location:
         conds.append(Job.location_text.ilike(f"%{filters.location}%"))
     if filters.max_experience_years is not None:
-        fresher_words = r"\m(intern|internship|graduate|grad|fresher|entry[- ]level|trainee|apprentice)\M"
-        fresher_title = Job.title.op("~*")(fresher_words)
-        exp_ok = Job.experience_min_years <= filters.max_experience_years
+        x = filters.max_experience_years
+        # "0-1 yrs" means a fresher can apply: min is 0, or the whole range is within x (1-3, 1-6, 1+ excluded)
+        exp_ok = or_(
+            Job.experience_min_years == 0,
+            Job.experience_max_years <= x,
+            and_(Job.experience_min_years <= x, Job.experience_max_years.is_(None), Job.experience_min_years < 1),
+        )
         if filters.include_unknown_experience:
             exp_ok = or_(exp_ok, Job.experience_min_years.is_(None))
-        conds.append(or_(exp_ok, fresher_title))
-        if filters.max_experience_years <= 2:  # junior search: drop clearly senior titles
-            senior = r"\m(senior|sr|lead|principal|staff|manager|director|head|vp|vice president|architect|avp)\M"
-            conds.append(~Job.title.op("~*")(senior))
+        conds.append(or_(exp_ok, Job.title.op("~*")(FRESHER_TITLE)))
+        if x <= 2:  # junior search: drop clearly senior titles
+            conds.append(~Job.title.op("~*")(SENIOR_TITLE))
+    if filters.role:
+        conds.append(or_(*[Job.title.ilike(f"%{r.strip()}%") for r in filters.role if r.strip()]))
+    if filters.internships_only:
+        conds.append(Job.title.op("~*")(INTERN_TITLE))
+    if filters.tech_only:
+        desc = func.coalesce(Job.description_text, "")
+        conds.append(
+            and_(
+                ~Job.title.op("~*")(NON_TECH_TITLE),
+                or_(Job.title.op("~*")(TECH_TITLE), and_(~Job.title.op("~*")(HARDWARE_TITLE), desc.op("~*")(TECH_JD))),
+                ~and_(Job.title.op("~*")(HARDWARE_TITLE), ~Job.title.op("~*")(TECH_TITLE)),
+            )
+        )
+    if filters.tab and filters.tab != "all":
+        cats = {
+            "not_applied": [StatusCategory.inbox, StatusCategory.considering],
+            "applied": [
+                StatusCategory.applied,
+                StatusCategory.in_process,
+                StatusCategory.offer,
+                StatusCategory.closed_negative,
+                StatusCategory.closed_neutral,
+            ],
+            "not_interested": [StatusCategory.archived],
+        }
+        if filters.tab == "interested":
+            conds.append(Status.key.in_(["interested", "shortlisted"]))
+        else:
+            conds.append(Status.category.in_(cats[filters.tab]))
     if filters.employment_type and skip != "employment_type":
         conds.append(Job.employment_type.in_(filters.employment_type))
     if filters.work_arrangement and skip != "work_arrangement":
@@ -130,9 +162,26 @@ def job_conditions(
     return conds
 
 
+FRESHER_TITLE = r"\m(intern|internship|graduate|grad|fresher|entry[- ]level|trainee|apprentice|new grad)\M"
+INTERN_TITLE = r"\m(intern|internship|interns)\M"
+SENIOR_TITLE = r"\m(senior|sr|lead|principal|staff|manager|director|head|vp|vice president|architect|avp|pmts|smts|lmts|distinguished|fellow)\M"
+SOFTWARE_TITLE = r"(software|developer|\msde\M|\mswe\M|programmer|full[ -]?stack|back[ -]?end|front[ -]?end|devops|\msre\M|cloud|mobile|android|\mios\M|web)"
+TECH_TITLE = (
+    SOFTWARE_TITLE[:-1]
+    + r"|data (engineer|scien)|big data|analytics engineer|machine learning|\mml\M|\mai\M|artificial intelligence"
+    r"|deep learning|\mnlp\M|computer vision|\mllm|genai|applied scien|research (engineer|scien)|platform engineer"
+    r"|site reliability|security engineer|security research|qa engineer|test engineer|sdet|automation engineer|member of technical staff)"
+)
+HARDWARE_TITLE = r"(silicon|asic|\msoc\M|\mrtl\M|vlsi|analog|\mpcb\M|mechanical|electrical|hardware|layout|package design|physical design|verification|validation|circuit|chip|semiconductor|manufacturing|process engineer|aero|structur|thermal|stress|propulsion|avionic|aerospace|civil|chemical|materials|mechatronic|cabin|flight|airworthiness|maintenance|technical data|rf |wireless|antenna|optical|photonic|power electronics|embedded hardware)"
+NON_TECH_TITLE = r"\m(sales|account executive|account manager|marketing|recruit|recruiter|talent|sourcer|\mhr\M|human resources|finance|accountant|legal|counsel|content|writer|editor|customer|support specialist|business development|operations|procurement|payroll|audit|compliance|relationship manager|banker|teller|graphic|designer|product manag|product design|program manag|project manag|patent|business analyst|consultant|scrum)\M"
+TECH_JD = r"\m(python|java|golang|c\+\+|typescript|javascript|kubernetes|docker|microservices|pytorch|tensorflow|spark|sql|react|node\.?js|distributed systems|data pipelines|machine learning)\M"
+
+
 def _order_by(filters: JobFilters):
     sort = filters.sort
     tiebreak = Job.id.desc()
+    if sort == "internship_first":
+        return [case((Job.title.op("~*")(INTERN_TITLE), 0), else_=1), Job.first_seen_at.desc(), Job.id.desc()]
     if sort == "discovered_asc":
         return [Job.first_seen_at.asc(), Job.id.asc()]
     if sort == "posted_desc":

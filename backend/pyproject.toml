@@ -53,7 +53,8 @@ select = ["E", "F", "I", "B", "UP", "ASYNC", "SIM", "RUF"]
 ignore = ["B008", "B006", "RUF012"]  # FastAPI dependency / Query list defaults are safe
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["F811"]  # pytest fixtures imported from other test modules are re-bound as parameters
+"tests/**" = ["F811"]
+"app/jobs/queries.py" = ["E501"]  # keyword regexes  # pytest fixtures imported from other test modules are re-bound as parameters
 
 [tool.mypy]
 python_version = "3.12"

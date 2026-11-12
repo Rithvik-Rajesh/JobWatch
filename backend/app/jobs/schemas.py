@@ -25,6 +25,7 @@ JobSort = Literal[
     "title_asc",
     "status",
     "relevance",
+    "internship_first",
     "updated_desc",
 ]
 
@@ -60,6 +61,10 @@ class JobFilters(APIModel):
     # unless include_unknown_experience=false; titles like intern/graduate/fresher always match.
     max_experience_years: Decimal | None = None
     include_unknown_experience: bool = True
+    role: list[str] = Field(default_factory=list)  # title must contain ANY of these words (e.g. "software")
+    tech_only: bool = False  # software / data / AI-ML engineering roles only (keyword rules on title + JD)
+    internships_only: bool = False
+    tab: Literal["not_applied", "interested", "applied", "not_interested", "all"] | None = None
     sort: JobSort = "discovered_desc"
 
 

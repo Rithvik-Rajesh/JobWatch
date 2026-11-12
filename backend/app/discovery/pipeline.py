@@ -144,6 +144,10 @@ def _request_count(fetcher: Any) -> int:
 
 
 def _classify_error(exc: Exception) -> tuple[str, bool]:
+    if isinstance(exc, RobotsDisallowed) and any(
+        m in str(exc) for m in ("unavailable", "fetch failed", "returned HTTP 5", "unreachable")
+    ):
+        return "network", False  # robots.txt temporarily unreachable: fail this run, never pause the site
     if isinstance(exc, AdapterError):
         return exc.error_class, isinstance(exc, PortalBlocked | RobotsDisallowed)
     return "internal", False
@@ -337,6 +341,8 @@ async def run_site(
         outcome.robots_status = robots
         if robots == "disallowed":
             raise RobotsDisallowed("robots.txt disallows this portal for our User-Agent")
+        if robots == "unavailable":
+            raise RobotsDisallowed("robots.txt unavailable (temporary); skipping this run")
 
         list_cfg = cfg
         if dry_run and hasattr(cfg, "max_pages"):

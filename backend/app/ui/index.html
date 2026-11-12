@@ -6,105 +6,121 @@
 <title>JobWatch</title>
 <style>
   :root {
-    --bg:#f6f7f9; --panel:#fff; --raised:#f1f3f6; --text:#111827; --muted:#6b7280; --line:#e5e7eb;
-    --accent:#4f46e5; --accent-soft:#eef2ff; --ok:#16a34a; --warn:#d97706; --bad:#dc2626; --radius:12px;
+    --bg:#f5f6fb; --panel:#ffffff; --raised:#f0f2f8; --text:#141625; --muted:#6b7085; --line:#e4e6ef;
+    --accent:#6d5efc; --accent2:#ec4899; --soft:#efedff; --ok:#10b981; --warn:#f59e0b; --bad:#ef4444; --info:#0ea5e9;
+    --radius:14px; --shadow:0 1px 2px rgba(20,22,37,.06), 0 4px 16px rgba(20,22,37,.05);
   }
   @media (prefers-color-scheme: dark) { :root {
-    --bg:#0c0d10; --panel:#14161b; --raised:#1b1e25; --text:#e8eaef; --muted:#9097a3; --line:#262a33;
-    --accent:#8b8cf8; --accent-soft:#23244a; --ok:#4ade80; --warn:#fbbf24; --bad:#f87171;
+    --bg:#0b0c14; --panel:#131522; --raised:#1a1d2e; --text:#eceefa; --muted:#9298b0; --line:#252941;
+    --accent:#8b7dff; --accent2:#f472b6; --soft:#22204a; --shadow:0 1px 2px rgba(0,0,0,.4);
   } }
   [hidden] { display:none !important; }
   * { box-sizing:border-box; }
   body { margin:0; font:14px/1.5 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; background:var(--bg); color:var(--text); }
   button, input, select { font:inherit; color:inherit; }
-  button { cursor:pointer; border:1px solid var(--line); background:var(--panel); border-radius:8px; padding:6px 12px; }
-  button:hover { border-color:var(--muted); }
-  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:600; }
+  button { cursor:pointer; border:1px solid var(--line); background:var(--panel); border-radius:10px; padding:7px 14px; }
+  button:hover { border-color:var(--accent); }
+  button.primary { background:linear-gradient(135deg,var(--accent),var(--accent2)); border:0; color:#fff; font-weight:600; }
   button:disabled { opacity:.5; cursor:not-allowed; }
-  input[type=search], input[type=text], input[type=password], select {
-    border:1px solid var(--line); background:var(--panel); border-radius:8px; padding:7px 10px; outline:none; }
-  input:focus, select:focus { border-color:var(--accent); }
+  input[type=text], input[type=password], input[type=search] { border:1px solid var(--line); background:var(--panel);
+    border-radius:10px; padding:8px 12px; outline:none; }
+  input:focus { border-color:var(--accent); }
   .muted { color:var(--muted); } .small { font-size:12px; }
 
-  /* login */
   #login { min-height:100vh; display:grid; place-items:center; }
-  #login form { width:320px; display:grid; gap:12px; background:var(--panel); border:1px solid var(--line);
-    border-radius:var(--radius); padding:24px; }
-  #login h2 { margin:0 0 4px; font-size:18px; }
+  #login form { width:340px; display:grid; gap:12px; background:var(--panel); border:1px solid var(--line);
+    border-radius:var(--radius); padding:28px; box-shadow:var(--shadow); }
 
-  /* layout */
-  .top { height:56px; display:flex; align-items:center; gap:16px; padding:0 20px; border-bottom:1px solid var(--line);
-    background:var(--panel); position:sticky; top:0; z-index:5; }
-  .brand { font-weight:700; font-size:16px; display:flex; gap:8px; align-items:center; }
-  .brand i { width:10px; height:10px; border-radius:3px; background:var(--accent); display:inline-block; }
-  .top .grow { flex:1; }
-  .layout { display:grid; grid-template-columns:300px 1fr; min-height:calc(100vh - 56px); }
-  aside { border-right:1px solid var(--line); background:var(--panel); display:flex; flex-direction:column;
-    height:calc(100vh - 56px); position:sticky; top:56px; }
-  aside .head { padding:16px 16px 8px; display:grid; gap:8px; }
-  aside .head .row { display:flex; justify-content:space-between; align-items:center; }
-  aside .list { overflow:auto; flex:1; padding:0 8px; }
-  .co { display:flex; align-items:center; gap:10px; padding:7px 8px; border-radius:8px; cursor:pointer; }
-  .co:hover { background:var(--raised); }
-  .co input { accent-color:var(--accent); }
-  .co .name { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .dot { width:8px; height:8px; border-radius:50%; background:var(--line); flex:none; }
-  .dot.ok { background:var(--ok); } .dot.bad { background:var(--bad); } .dot.run { background:var(--accent); animation:pulse 1s infinite; }
-  @keyframes pulse { 50% { opacity:.3; } }
-  .count { font-size:12px; color:var(--muted); min-width:24px; text-align:right; }
-  aside .foot { padding:12px 16px; border-top:1px solid var(--line); }
-  aside .foot button { width:100%; padding:10px; }
-  main { padding:20px; min-width:0; }
+  .top { display:flex; align-items:center; gap:14px; padding:12px 24px; background:var(--panel);
+    border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+  .brand { font-weight:800; font-size:18px; background:linear-gradient(135deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .grow { flex:1; }
+  .wrap { max-width:1200px; margin:0 auto; padding:20px 24px 60px; }
 
   /* progress */
-  .card { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:16px; margin-bottom:16px; }
-  .prog-head { display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; }
-  .prog-head strong { font-size:15px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px;
+    margin-bottom:16px; box-shadow:var(--shadow); }
+  .prog-head { display:flex; justify-content:space-between; align-items:center; gap:12px; }
   .bar { height:8px; background:var(--raised); border-radius:99px; overflow:hidden; margin:12px 0; }
-  .bar div { height:100%; background:var(--accent); width:0; transition:width .4s; }
-  .stats { display:flex; gap:24px; flex-wrap:wrap; margin-bottom:8px; }
-  .stat b { font-size:20px; display:block; }
+  .bar div { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); width:0; transition:width .4s; }
+  .stats { display:flex; gap:28px; flex-wrap:wrap; }
+  .stat b { font-size:22px; display:block; line-height:1.1; }
   .chips { display:flex; gap:6px; flex-wrap:wrap; margin:8px 0; }
-  .chip { font-size:12px; padding:3px 10px; border-radius:99px; background:var(--accent-soft); color:var(--accent); border:1px solid transparent; }
-  .chip.wait { background:transparent; border-color:var(--line); color:var(--muted); }
-  .results { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:6px; margin-top:8px; }
-  .res { display:flex; gap:8px; align-items:center; font-size:13px; padding:6px 8px; border-radius:8px; background:var(--raised); }
-  .res .name { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  details summary { cursor:pointer; color:var(--muted); font-size:13px; }
+  .chip { display:inline-flex; align-items:center; gap:6px; font-size:12px; padding:4px 10px; border-radius:99px;
+    background:var(--soft); color:var(--accent); }
+  .chip.wait { background:transparent; border:1px solid var(--line); color:var(--muted); }
+  .results { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:6px; margin-top:8px; }
+  .res { display:flex; gap:8px; align-items:center; font-size:13px; padding:6px 8px; border-radius:10px; background:var(--raised); }
+  .res .n { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .dot { width:8px; height:8px; border-radius:50%; flex:none; background:var(--line); }
+  .dot.ok { background:var(--ok); } .dot.bad { background:var(--bad); } .dot.part { background:var(--warn); }
+  details summary { cursor:pointer; color:var(--muted); font-size:13px; margin-top:6px; }
 
-  /* filters + jobs */
-  .filters { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
-  .filters label { display:flex; gap:6px; align-items:center; color:var(--muted); }
-  .filters input[type=checkbox] { accent-color:var(--accent); }
-  .jobs { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
-  .job { display:grid; grid-template-columns:36px 1fr auto; gap:12px; padding:12px 16px; border-bottom:1px solid var(--line); align-items:center; }
-  .job:last-child { border-bottom:0; }
-  .job:hover { background:var(--raised); }
-  .avatar { width:36px; height:36px; border-radius:8px; background:var(--accent-soft); color:var(--accent);
-    display:grid; place-items:center; font-weight:700; }
-  .job .title { font-weight:600; color:var(--text); text-decoration:none; }
+  /* search + filters */
+  .searchbox { display:flex; flex-wrap:wrap; gap:6px; align-items:center; background:var(--panel); border:1px solid var(--line);
+    border-radius:var(--radius); padding:8px 10px; box-shadow:var(--shadow); }
+  .searchbox:focus-within { border-color:var(--accent); }
+  .searchbox input { border:0; flex:1; min-width:180px; padding:6px; background:transparent; }
+  .rchip { display:inline-flex; gap:6px; align-items:center; padding:4px 6px 4px 10px; border-radius:99px; font-size:13px;
+    color:#fff; background:linear-gradient(135deg,var(--accent),var(--accent2)); }
+  .rchip button { border:0; background:rgba(255,255,255,.25); color:#fff; border-radius:99px; padding:0 6px; line-height:18px; }
+  .presets { display:flex; gap:6px; flex-wrap:wrap; margin:8px 0 0; }
+  .presets button { font-size:12px; padding:3px 10px; border-radius:99px; color:var(--muted); }
+  .toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:14px 0 10px; }
+  .toggle { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:99px; border:1px solid var(--line);
+    background:var(--panel); cursor:pointer; user-select:none; font-size:13px; }
+  .toggle input { display:none; }
+  .toggle.on { border-color:transparent; color:#fff; background:var(--t, var(--accent)); }
+  .tabs { display:flex; gap:4px; background:var(--raised); padding:4px; border-radius:12px; width:max-content; max-width:100%; overflow:auto; }
+  .tab { border:0; background:transparent; padding:7px 16px; border-radius:9px; color:var(--muted); font-weight:600; white-space:nowrap; }
+  .tab.on { background:var(--panel); color:var(--text); box-shadow:var(--shadow); }
+  .tab .c { font-size:11px; margin-left:6px; padding:1px 7px; border-radius:99px; background:var(--soft); color:var(--accent); }
+
+  /* jobs */
+  .jobs { display:grid; gap:10px; }
+  .job { display:grid; grid-template-columns:48px 1fr auto; gap:14px; align-items:center; background:var(--panel);
+    border:1px solid var(--line); border-left:4px solid var(--c, var(--accent)); border-radius:var(--radius); padding:14px 16px; box-shadow:var(--shadow); }
+  .logo { width:48px; height:48px; border-radius:12px; background:var(--c); display:grid; place-items:center; overflow:hidden;
+    color:#fff; font-weight:800; font-size:18px; }
+  .logo img { width:30px; height:30px; background:#fff; border-radius:6px; padding:2px; }
+  .job .title { font-weight:700; font-size:15px; color:var(--text); text-decoration:none; }
   .job .title:hover { color:var(--accent); }
-  .meta { display:flex; gap:10px; flex-wrap:wrap; font-size:12px; color:var(--muted); margin-top:2px; }
-  .badge { font-size:11px; padding:1px 8px; border-radius:99px; border:1px solid var(--line); color:var(--muted); }
-  .badge.new { border-color:var(--accent); color:var(--accent); }
-  .badge.exp { color:var(--text); }
-  .badge.st-interested { border-color:var(--warn); color:var(--warn); }
-  .badge.st-applied { border-color:var(--ok); color:var(--ok); }
+  .meta { display:flex; gap:8px; flex-wrap:wrap; align-items:center; font-size:12.5px; color:var(--muted); margin-top:4px; }
+  .company { font-weight:600; color:var(--c); }
+  .badge { font-size:11.5px; font-weight:600; padding:2px 9px; border-radius:99px; background:var(--raised); color:var(--muted); }
+  .b-intern { background:#fde68a; color:#78350f; } .b-exp { background:#d1fae5; color:#065f46; }
+  .b-new { background:#dbeafe; color:#1e40af; } .b-st { background:var(--soft); color:var(--accent); }
+  @media (prefers-color-scheme: dark) { .b-intern { background:#4a3a0a; color:#fde68a; } .b-exp { background:#063d2e; color:#6ee7b7; }
+    .b-new { background:#14264d; color:#93c5fd; } }
   .actions { display:flex; gap:6px; }
-  .actions button { padding:4px 10px; font-size:12px; }
-  .empty { padding:40px; text-align:center; color:var(--muted); }
-  .pager { display:flex; gap:8px; justify-content:space-between; align-items:center; margin:12px 0; }
-  @media (max-width: 860px) {
-    .layout { grid-template-columns:1fr; }
-    aside { position:static; height:auto; max-height:50vh; border-right:0; border-bottom:1px solid var(--line); }
-    .job { grid-template-columns:1fr; } .avatar { display:none; }
-  }
+  .actions button { font-size:12.5px; padding:6px 10px; }
+  .actions .on { border-color:transparent; color:#fff; }
+  .a-int.on { background:var(--warn); } .a-app.on { background:var(--ok); } .a-no.on { background:var(--bad); }
+  .empty { padding:48px; text-align:center; color:var(--muted); background:var(--panel); border-radius:var(--radius); border:1px dashed var(--line); }
+  .pager { display:flex; justify-content:space-between; align-items:center; margin:16px 0; }
+
+  /* modal */
+  .backdrop { position:fixed; inset:0; background:rgba(10,10,20,.55); display:grid; place-items:center; z-index:50; padding:16px; }
+  .modal { background:var(--panel); border-radius:18px; width:min(860px,100%); max-height:88vh; display:flex; flex-direction:column;
+    box-shadow:0 20px 60px rgba(0,0,0,.35); }
+  .modal header { padding:18px 20px 10px; display:grid; gap:10px; border-bottom:1px solid var(--line); }
+  .modal header .row { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+  .modal h3 { margin:0; font-size:17px; }
+  .cgrid { overflow:auto; padding:14px 20px; display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:8px; }
+  .ctile { display:flex; align-items:center; gap:10px; padding:8px 10px; border:1px solid var(--line); border-radius:12px; cursor:pointer; }
+  .ctile.on { border-color:var(--c); background:color-mix(in srgb, var(--c) 10%, transparent); }
+  .ctile .logo { width:32px; height:32px; border-radius:9px; font-size:13px; }
+  .ctile .logo img { width:20px; height:20px; }
+  .ctile .n { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600; font-size:13px; }
+  .modal footer { padding:14px 20px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  @media (max-width:760px) { .job { grid-template-columns:40px 1fr; } .actions { grid-column:1 / -1; } .logo { width:40px; height:40px; } }
 </style>
 </head>
 <body>
 <div id="login" hidden>
   <form id="loginForm">
-    <h2>Sign in to JobWatch</h2>
+    <div class="brand" style="font-size:22px">JobWatch</div>
     <input id="u" type="text" placeholder="Username" value="admin" autocomplete="username">
     <input id="p" type="password" placeholder="Password" autocomplete="current-password">
     <button class="primary">Sign in</button>
@@ -114,58 +130,66 @@
 
 <div id="app" hidden>
   <div class="top">
-    <div class="brand"><i></i>JobWatch</div>
-    <input id="q" type="search" placeholder="Search roles, companies, skills…" style="width:min(420px,40vw)">
+    <span class="brand">JobWatch</span>
     <span class="grow"></span>
     <span id="topStatus" class="small muted"></span>
+    <button id="openCompanies">🏢 Companies <span id="coCount" class="muted"></span></button>
+    <button id="fetchTop" class="primary">⟳ Fetch jobs</button>
     <button id="logout">Sign out</button>
   </div>
-  <div class="layout">
-    <aside>
-      <div class="head">
-        <div class="row"><strong>Companies</strong><span id="selCount" class="small muted"></span></div>
-        <input id="coFilter" type="search" placeholder="Filter companies…">
-        <div class="row small">
-          <span><button id="selAll" class="small">Select all</button> <button id="selNone" class="small">Clear</button></span>
-          <span class="muted">jobs</span>
-        </div>
-      </div>
-      <div id="coList" class="list"></div>
-      <div class="foot"><button id="fetch" class="primary">Fetch selected</button></div>
-    </aside>
 
-    <main>
-      <div id="progress" class="card" hidden>
-        <div class="prog-head">
-          <strong id="progTitle">Fetching…</strong>
-          <span id="progTime" class="small muted"></span>
-        </div>
-        <div class="bar"><div id="progBar"></div></div>
-        <div class="stats">
-          <div class="stat"><b id="stDone">0</b><span class="small muted">sites done</span></div>
-          <div class="stat"><b id="stIndia">0</b><span class="small muted">India jobs seen</span></div>
-          <div class="stat"><b id="stNew">0</b><span class="small muted">new jobs</span></div>
-          <div class="stat"><b id="stFail">0</b><span class="small muted">failed</span></div>
-        </div>
-        <div id="nowWrap"><span class="small muted">Scraping now</span><div id="now" class="chips"></div></div>
-        <details id="waitWrap"><summary id="waitSummary">Waiting</summary><div id="wait" class="chips"></div></details>
-        <details open><summary>Completed</summary><div id="results" class="results"></div></details>
+  <div class="wrap">
+    <div id="progress" class="card" hidden>
+      <div class="prog-head"><strong id="progTitle"></strong><span id="progTime" class="small muted"></span></div>
+      <div class="bar"><div id="progBar"></div></div>
+      <div class="stats">
+        <div class="stat"><b id="stDone">0</b><span class="small muted">sites done</span></div>
+        <div class="stat"><b id="stIndia">0</b><span class="small muted">India jobs seen</span></div>
+        <div class="stat"><b id="stNew" style="color:var(--ok)">0</b><span class="small muted">new jobs</span></div>
+        <div class="stat"><b id="stFail" style="color:var(--bad)">0</b><span class="small muted">failed</span></div>
       </div>
+      <div id="nowWrap"><span class="small muted">Scraping now</span><div id="now" class="chips"></div></div>
+      <details id="waitWrap"><summary id="waitSummary"></summary><div id="wait" class="chips"></div></details>
+      <details id="doneWrap"><summary id="doneSummary"></summary><div id="results" class="results"></div></details>
+    </div>
 
-      <div class="filters">
-        <label><input type="checkbox" id="fresher" checked> Freshers (0–1 yrs)</label>
-        <label><input type="checkbox" id="unknownExp" checked> include “experience not stated”</label>
-        <label><input type="checkbox" id="onlySel"> only selected companies</label>
-        <select id="status">
-          <option value="">Active (all but Not interested)</option><option value="new">New</option>
-          <option value="interested">Interested</option><option value="applied">Applied</option>
-          <option value="not_interested">Not interested</option>
-        </select>
-        <span id="count" class="small muted"></span>
+    <div class="searchbox" id="searchbox">
+      <span class="muted">🔎</span>
+      <span id="roleChips" class="chips" style="margin:0"></span>
+      <input id="roleInput" type="text" placeholder="Add role keywords: type “software” and press Enter…">
+    </div>
+    <div class="presets" id="presets"></div>
+
+    <div class="toolbar">
+      <label class="toggle" style="--t:#6d5efc"><input type="checkbox" id="techOnly" checked>🛠 Engineering only</label>
+      <label class="toggle" style="--t:#10b981"><input type="checkbox" id="fresher" checked>🎓 Freshers (0–1 yrs)</label>
+      <label class="toggle" style="--t:#0ea5e9"><input type="checkbox" id="unknownExp">❔ incl. experience not stated</label>
+      <label class="toggle" style="--t:#f59e0b"><input type="checkbox" id="internOnly">⭐ Internships only</label>
+      <span class="grow"></span>
+      <span id="count" class="small muted"></span>
+    </div>
+    <div class="tabs" id="tabs"></div>
+    <div style="height:12px"></div>
+    <div id="jobs" class="jobs"></div>
+    <div class="pager"><button id="prev">← Previous</button><span id="pageInfo" class="small muted"></span><button id="next">Next →</button></div>
+  </div>
+</div>
+
+<div id="modal" class="backdrop" hidden>
+  <div class="modal">
+    <header>
+      <div class="row"><h3>Companies</h3><span id="mSel" class="small muted"></span></div>
+      <div class="row">
+        <input id="coFilter" type="search" placeholder="Search companies…" style="flex:1">
+        <button id="selAll">Select all</button><button id="selNone">Clear</button>
       </div>
-      <div id="jobs" class="jobs"></div>
-      <div class="pager"><button id="prev">← Previous</button><span id="pageInfo" class="small muted"></span><button id="next">Next →</button></div>
-    </main>
+      <label class="small muted"><input type="checkbox" id="onlySel"> Show jobs only from selected companies</label>
+    </header>
+    <div id="cgrid" class="cgrid"></div>
+    <footer>
+      <button id="mClose">Done</button>
+      <button id="fetch" class="primary">⟳ Fetch selected</button>
+    </footer>
   </div>
 </div>
 
@@ -173,9 +197,29 @@
 const API = "/api/v1", H = {"Content-Type": "application/json", "X-JobWatch-Client": "web"};
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const SEL_KEY = "jobwatch.selected";
-let companies = [], selected = new Set(), page = 1, lastRunning = false, pollTimer = null;
-const pageSize = 50;
+const store = { get(k, d) { try { const v = localStorage.getItem("jw." + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+                set(k, v) { try { localStorage.setItem("jw." + k, JSON.stringify(v)); } catch {} } };
+const DOMAINS = { "Accenture":"accenture.com","Adobe":"adobe.com","Airbnb":"airbnb.com","Airbus":"airbus.com","Autodesk":"autodesk.com",
+  "Barclays":"barclays.com","BlackRock":"blackrock.com","Boeing":"boeing.com","BrowserStack":"browserstack.com","CRED":"cred.club",
+  "Coinbase":"coinbase.com","Databricks":"databricks.com","Datadog":"datadoghq.com","Dell Technologies":"dell.com","Eightfold AI":"eightfold.ai",
+  "Groww":"groww.in","Harness":"harness.io","Hewlett Packard Enterprise":"hpe.com","Intel":"intel.com","JPMorgan Chase":"jpmorganchase.com",
+  "Mastercard":"mastercard.com","Meesho":"meesho.com","Microsoft":"microsoft.com","NetApp":"netapp.com","Nvidia":"nvidia.com",
+  "Oracle":"oracle.com","Qualcomm":"qualcomm.com","Razorpay":"razorpay.com","Red Hat":"redhat.com","Rubrik":"rubrik.com",
+  "Salesforce":"salesforce.com","Samsung":"samsung.com","Snowflake":"snowflake.com","Spotify":"spotify.com","Stripe":"stripe.com",
+  "Target":"target.com","Texas Instruments":"ti.com","Tower Research Capital":"tower-research.com","Twilio":"twilio.com","Visa":"visa.com",
+  "Workday":"workday.com","Zscaler":"zscaler.com" };
+const PRESETS = ["software", "developer", "SDE", "data", "machine learning", "AI", "backend", "frontend", "full stack", "intern"];
+const TABS = [["not_applied","Not applied"],["interested","Interested"],["applied","Applied"],["not_interested","Not interested"],["all","All"]];
+function hue(name) { let h = 0; for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) % 360; return `hsl(${h} 70% 52%)`; }
+function logo(name) {
+  const d = DOMAINS[name];
+  const img = d ? `<img src="https://www.google.com/s2/favicons?domain=${d}&sz=64" alt="" loading="lazy" onerror="this.replaceWith(document.createTextNode('${esc(name[0])}'))">` : esc(name[0] || "?");
+  return `<div class="logo" style="--c:${hue(name)}">${img}</div>`;
+}
+
+let companies = [], selected = new Set(store.get("selected", [])), roles = store.get("roles", ["software", "data", "machine learning", "AI"]);
+let tab = store.get("tab", "not_applied"), page = 1, running = false, pollTimer = null;
+const pageSize = 40;
 
 async function api(path, opts = {}) {
   const r = await fetch(API + path, {credentials: "same-origin", headers: H, ...opts});
@@ -185,135 +229,169 @@ async function api(path, opts = {}) {
 }
 function showLogin() { $("app").hidden = true; $("login").hidden = false; }
 function showApp() { $("login").hidden = true; $("app").hidden = false; init(); }
-
 $("loginForm").onsubmit = async e => {
   e.preventDefault();
   const r = await fetch(API + "/auth/login", {method: "POST", headers: H, credentials: "same-origin",
     body: JSON.stringify({username: $("u").value, password: $("p").value})});
-  if (r.ok) showApp(); else $("loginErr").textContent = "Invalid username or password";
+  r.ok ? showApp() : ($("loginErr").textContent = "Invalid username or password");
 };
 $("logout").onclick = async () => { await api("/auth/logout", {method: "POST"}).catch(() => {}); showLogin(); };
 
-/* ---------- companies ---------- */
-function saveSel() { try { localStorage.setItem(SEL_KEY, JSON.stringify([...selected])); } catch {} }
+/* ---------- toggles ---------- */
+const TOGGLES = ["techOnly", "fresher", "unknownExp", "internOnly"];
+TOGGLES.forEach(id => {
+  const el = $(id); el.checked = store.get(id, el.checked);
+  const paint = () => el.parentElement.classList.toggle("on", el.checked);
+  paint(); el.onchange = () => { paint(); store.set(id, el.checked); page = 1; loadJobs(); };
+});
+
+/* ---------- role chips ---------- */
+function renderRoles() {
+  $("roleChips").innerHTML = roles.map((r, i) => `<span class="rchip">${esc(r)}<button data-i="${i}" title="Remove">×</button></span>`).join("");
+  $("presets").innerHTML = PRESETS.filter(p => !roles.some(r => r.toLowerCase() === p.toLowerCase()))
+    .map(p => `<button data-p="${esc(p)}">+ ${esc(p)}</button>`).join("") + (roles.length ? `<button data-clear="1">clear keywords</button>` : "");
+  store.set("roles", roles);
+}
+function addRole(r) { r = r.trim(); if (r && !roles.some(x => x.toLowerCase() === r.toLowerCase())) { roles.push(r); renderRoles(); page = 1; loadJobs(); } }
+$("roleInput").onkeydown = e => {
+  if (e.key === "Enter" || e.key === ",") { e.preventDefault(); addRole(e.target.value); e.target.value = ""; }
+  else if (e.key === "Backspace" && !e.target.value && roles.length) { roles.pop(); renderRoles(); loadJobs(); }
+};
+$("roleChips").onclick = e => { const b = e.target.closest("button[data-i]"); if (b) { roles.splice(+b.dataset.i, 1); renderRoles(); page = 1; loadJobs(); } };
+$("presets").onclick = e => { const b = e.target.closest("button"); if (!b) return;
+  if (b.dataset.clear) { roles = []; renderRoles(); page = 1; loadJobs(); } else addRole(b.dataset.p); };
+$("searchbox").onclick = () => $("roleInput").focus();
+
+/* ---------- tabs ---------- */
+function renderTabs(counts = {}) {
+  $("tabs").innerHTML = TABS.map(([k, label]) => `<button class="tab ${k === tab ? "on" : ""}" data-t="${k}">${label}${counts[k] != null ? `<span class="c">${counts[k]}</span>` : ""}</button>`).join("");
+}
+$("tabs").onclick = e => { const b = e.target.closest("button[data-t]"); if (!b) return; tab = b.dataset.t; store.set("tab", tab); page = 1; renderTabs(); loadJobs(); };
+
+/* ---------- companies modal ---------- */
 async function loadCompanies() {
   companies = await api("/fetch/companies");
-  let saved = null; try { saved = JSON.parse(localStorage.getItem(SEL_KEY)); } catch {}
-  selected = new Set((saved || companies.map(c => c.id)).filter(id => companies.some(c => c.id === id)));
+  if (!store.get("selected", null)) selected = new Set(companies.map(c => c.id));
+  selected = new Set([...selected].filter(id => companies.some(c => c.id === id)));
   renderCompanies();
 }
-function renderCompanies(status) {
+function renderCompanies() {
   const f = $("coFilter").value.trim().toLowerCase();
-  const running = new Set(status?.current || []), done = {};
-  (status?.sites || []).forEach(s => done[s.company] = s.status);
-  $("coList").innerHTML = companies.filter(c => !f || c.name.toLowerCase().includes(f)).map(c => {
-    const isRun = [...running].some(l => l === c.name || l.startsWith(c.name + " ·"));
-    const st = done[c.name] || (c.last_error ? "failed" : c.last_success_at ? "succeeded" : "");
-    const dot = isRun ? "run" : st === "succeeded" ? "ok" : st === "failed" ? "bad" : "";
-    const tip = c.last_success_at ? `Last fetched ${new Date(c.last_success_at).toLocaleString()}` : "Not fetched yet";
-    return `<label class="co" title="${esc(tip)} · ${esc(c.platform)}">
-      <input type="checkbox" data-id="${c.id}" ${selected.has(c.id) ? "checked" : ""}>
-      <span class="dot ${dot}"></span><span class="name">${esc(c.name)}</span><span class="count">${c.jobs || ""}</span></label>`;
-  }).join("");
-  $("selCount").textContent = `${selected.size} of ${companies.length} selected`;
-  $("fetch").textContent = `Fetch ${selected.size === companies.length ? "all" : selected.size} ${selected.size === 1 ? "company" : "companies"}`;
-  $("fetch").disabled = !selected.size || lastRunning;
+  $("cgrid").innerHTML = companies.filter(c => !f || c.name.toLowerCase().includes(f)).map(c => `
+    <label class="ctile ${selected.has(c.id) ? "on" : ""}" style="--c:${hue(c.name)}" title="${c.last_success_at ? "Last fetched " + new Date(c.last_success_at).toLocaleString() : "Not fetched yet"}">
+      <input type="checkbox" data-id="${c.id}" ${selected.has(c.id) ? "checked" : ""} hidden>
+      ${logo(c.name)}<span class="n">${esc(c.name)}</span><span class="small muted">${c.jobs || ""}</span></label>`).join("");
+  const n = selected.size, all = companies.length;
+  $("mSel").textContent = `${n} of ${all} selected`;
+  $("coCount").textContent = n === all ? "· all" : `· ${n}/${all}`;
+  $("fetch").textContent = `⟳ Fetch ${n === all ? "all" : n} ${n === 1 ? "company" : "companies"}`;
+  $("fetch").disabled = $("fetchTop").disabled = !n || running;
+  store.set("selected", [...selected]);
 }
-$("coList").onchange = e => {
-  const id = Number(e.target.dataset.id); if (!id) return;
-  e.target.checked ? selected.add(id) : selected.delete(id); saveSel(); renderCompanies();
-  if ($("onlySel").checked) { page = 1; loadJobs(); }
-};
-$("coFilter").oninput = () => renderCompanies();
-$("selAll").onclick = () => { companies.forEach(c => selected.add(c.id)); saveSel(); renderCompanies(); };
-$("selNone").onclick = () => { selected.clear(); saveSel(); renderCompanies(); };
+$("cgrid").onchange = e => { const id = +e.target.dataset.id; if (!id) return; e.target.checked ? selected.add(id) : selected.delete(id); renderCompanies(); if ($("onlySel").checked) loadJobs(); };
+$("coFilter").oninput = renderCompanies;
+$("selAll").onclick = () => { companies.forEach(c => selected.add(c.id)); renderCompanies(); };
+$("selNone").onclick = () => { selected.clear(); renderCompanies(); };
+$("openCompanies").onclick = () => { $("modal").hidden = false; $("coFilter").focus(); };
+$("mClose").onclick = () => { $("modal").hidden = true; loadJobs(); };
+$("modal").onclick = e => { if (e.target === $("modal")) { $("modal").hidden = true; loadJobs(); } };
+$("onlySel").checked = store.get("onlySel", false);
+$("onlySel").onchange = () => { store.set("onlySel", $("onlySel").checked); page = 1; loadJobs(); };
 
 /* ---------- fetch progress ---------- */
-$("fetch").onclick = async () => {
+async function startFetch() {
   try {
     const ids = selected.size === companies.length ? null : [...selected];
     await api("/fetch-all", {method: "POST", body: JSON.stringify({company_ids: ids})});
-    poll();
+    $("modal").hidden = true; poll();
   } catch (e) { alert(e.message); }
-};
-function fmtDur(ms) { const s = Math.round(ms / 1000); return s < 60 ? `${s}s` : `${Math.floor(s / 60)}m ${s % 60}s`; }
+}
+$("fetch").onclick = startFetch; $("fetchTop").onclick = startFetch;
+const dur = ms => { const s = Math.round(ms / 1000); return s < 60 ? `${s}s` : `${Math.floor(s / 60)}m ${s % 60}s`; };
 async function poll() {
   clearTimeout(pollTimer);
   const s = await api("/fetch-all");
-  lastRunning = s.running;
-  if (!s.started_at) { $("progress").hidden = true; renderCompanies(s); return; }
+  running = s.running; renderCompanies();
+  if (!s.started_at) { $("progress").hidden = true; return; }
   $("progress").hidden = false;
   const failed = s.sites.filter(x => x.status === "failed").length;
-  $("progTitle").textContent = s.running ? `Fetching ${s.done} of ${s.total} sites…` : `Last fetch: ${s.done} of ${s.total} sites`;
-  const end = s.finished_at ? new Date(s.finished_at) : new Date();
-  $("progTime").textContent = `${s.running ? "running" : "finished"} · ${fmtDur(end - new Date(s.started_at))}`;
-  $("progBar").style.width = `${s.total ? (100 * s.done / s.total) : 0}%`;
-  $("stDone").textContent = `${s.done}/${s.total}`; $("stIndia").textContent = s.india_jobs;
-  $("stNew").textContent = s.new_jobs; $("stFail").textContent = failed;
+  $("progTitle").textContent = s.running ? `Fetching ${s.done} of ${s.total} sites…` : `Last fetch · ${s.done} of ${s.total} sites`;
+  $("progTime").textContent = `${s.running ? "running" : "finished"} · ${dur((s.finished_at ? new Date(s.finished_at) : new Date()) - new Date(s.started_at))}`;
+  $("progBar").style.width = `${s.total ? 100 * s.done / s.total : 0}%`;
+  $("stDone").textContent = `${s.done}/${s.total}`; $("stIndia").textContent = s.india_jobs; $("stNew").textContent = s.new_jobs; $("stFail").textContent = failed;
   $("nowWrap").hidden = !s.current.length;
-  $("now").innerHTML = s.current.map(l => `<span class="chip">${esc(l)}</span>`).join("");
-  $("waitWrap").hidden = !s.pending.length;
-  $("waitSummary").textContent = `Waiting (${s.pending.length})`;
+  $("now").innerHTML = s.current.map(l => `<span class="chip">⏳ ${esc(l)}</span>`).join("");
+  $("waitWrap").hidden = !s.pending.length; $("waitSummary").textContent = `Waiting (${s.pending.length})`;
   $("wait").innerHTML = s.pending.map(l => `<span class="chip wait">${esc(l)}</span>`).join("");
-  const icon = st => st === "succeeded" ? `<span class="dot ok"></span>` : st === "failed" ? `<span class="dot bad"></span>` : `<span class="dot" style="background:var(--warn)"></span>`;
-  $("results").innerHTML = s.sites.map(x => `<div class="res" title="${esc(x.error || x.status)}">${icon(x.status)}
-    <span class="name">${esc(x.site)}</span><span class="small muted">${x.status === "failed" ? "failed" : `${x.in_scope} · +${x.new}`}</span></div>`).join("");
+  $("doneSummary").textContent = `Completed (${s.sites.length})`; $("doneWrap").open = !s.running;
+  const dot = st => st === "succeeded" ? "ok" : st === "failed" ? "bad" : "part";
+  $("results").innerHTML = s.sites.map(x => `<div class="res" title="${esc(x.error || x.status)}"><span class="dot ${dot(x.status)}"></span>
+    <span class="n">${esc(x.site)}</span><span class="small muted">${x.status === "failed" ? "failed" : `${x.in_scope} · +${x.new}`}</span></div>`).join("");
   $("topStatus").textContent = s.running ? `Fetching ${s.done}/${s.total}…` : "";
-  renderCompanies(s);
-  if (s.running) { pollTimer = setTimeout(poll, 2000); loadJobs(); }
-  else { loadCompanies(); loadJobs(); }
+  if (s.running) { pollTimer = setTimeout(poll, 2500); loadJobs(); } else { loadCompanies(); loadJobs(); }
 }
 
 /* ---------- jobs ---------- */
+function params(forTab) {
+  const p = new URLSearchParams({page, page_size: pageSize, sort: "internship_first", tab: forTab});
+  roles.forEach(r => p.append("role", r));
+  if ($("techOnly").checked) p.set("tech_only", "true");
+  if ($("internOnly").checked) p.set("internships_only", "true");
+  if ($("fresher").checked) { p.set("max_experience_years", "1"); p.set("include_unknown_experience", $("unknownExp").checked); }
+  if ($("onlySel").checked) selected.forEach(id => p.append("company_id", id));
+  return p;
+}
 function exp(j) {
   if (j.experience_min_years == null) return "";
-  const a = Number(j.experience_min_years), b = j.experience_max_years != null ? Number(j.experience_max_years) : null;
-  return `<span class="badge exp">${b != null && b !== a ? `${a}–${b} yrs` : `${a}+ yrs`}</span>`;
+  const a = +j.experience_min_years, b = j.experience_max_years != null ? +j.experience_max_years : null;
+  return `<span class="badge b-exp">${b != null && b !== a ? `${a}–${b} yrs` : `${a}+ yrs`}</span>`;
 }
+let loadSeq = 0;
 async function loadJobs() {
-  const p = new URLSearchParams({page, page_size: pageSize, sort: "discovered_desc"});
-  const q = $("q").value.trim();
-  if (q) { p.set("q", q); p.set("sort", "relevance"); }
-  if ($("fresher").checked) { p.set("max_experience_years", "1"); p.set("include_unknown_experience", $("unknownExp").checked); }
-  if ($("status").value) p.set("status", $("status").value);
-  else ["inbox", "considering", "applied", "in_process", "offer"].forEach(c => p.append("status_category", c));
-  if ($("onlySel").checked) { if (!selected.size) { renderJobs({items: [], total: 0, page: 1}); return; } selected.forEach(id => p.append("company_id", id)); }
-  renderJobs(await api("/jobs?" + p));
+  const seq = ++loadSeq;
+  if ($("onlySel").checked && !selected.size) { renderJobs({items: [], total: 0, page: 1}); return; }
+  const [data, ...counts] = await Promise.all([api("/jobs?" + params(tab)),
+    ...TABS.map(([k]) => { const p = params(k); p.set("page_size", 1); p.set("page", 1); return api("/jobs?" + p).then(d => d.total); })]);
+  if (seq !== loadSeq) return;
+  renderTabs(Object.fromEntries(TABS.map(([k], i) => [k, counts[i]])));
+  renderJobs(data);
 }
 function renderJobs(data) {
   const pages = Math.max(1, Math.ceil(data.total / pageSize));
-  $("count").textContent = `${data.total} job${data.total === 1 ? "" : "s"}`;
+  $("count").textContent = `${data.total} matching job${data.total === 1 ? "" : "s"}`;
   $("pageInfo").textContent = `Page ${data.page} of ${pages}`;
   $("prev").disabled = page <= 1; $("next").disabled = page >= pages;
-  $("jobs").innerHTML = data.items.map(j => `
-    <div class="job" data-id="${j.id}">
-      <div class="avatar">${esc(j.company.name[0] || "?")}</div>
+  $("jobs").innerHTML = data.items.map(j => {
+    const intern = /\b(intern|internship)\b/i.test(j.title), k = j.status.key;
+    return `<div class="job" data-id="${j.id}" style="--c:${hue(j.company.name)}">
+      ${logo(j.company.name)}
       <div>
         <a class="title" href="${esc(j.apply_url || "#")}" target="_blank" rel="noopener">${esc(j.title)}</a>
         <div class="meta">
-          <span>${esc(j.company.name)}</span><span>${esc(j.location_text || "")}</span>
-          ${exp(j)}${j.is_new ? '<span class="badge new">new</span>' : ""}
-          <span class="badge st-${esc(j.status.key)}">${esc(j.status.label)}</span>
+          <span class="company">${esc(j.company.name)}</span><span>📍 ${esc(j.location_text || "India")}</span>
+          ${intern ? '<span class="badge b-intern">⭐ Internship</span>' : ""}${exp(j)}
+          ${j.is_new ? '<span class="badge b-new">new</span>' : ""}
+          ${k !== "new" ? `<span class="badge b-st">${esc(j.status.label)}</span>` : ""}
           <span>found ${new Date(j.first_seen_at).toLocaleDateString()}</span>
         </div>
       </div>
       <div class="actions">
-        <button data-s="interested">★ Interested</button>
-        <button data-s="applied">✓ Applied</button>
-        <button data-s="not_interested" title="Not interested">✕</button>
-      </div>
-    </div>`).join("") || `<div class="empty">No matching jobs yet. Select companies on the left and click “Fetch”.</div>`;
+        <button class="a-int ${k === "interested" ? "on" : ""}" data-s="interested">★ Interested</button>
+        <button class="a-app ${["applied","assessment","interviewing","offer"].includes(k) ? "on" : ""}" data-s="applied">✓ Applied</button>
+        <button class="a-no ${k === "not_interested" ? "on" : ""}" data-s="not_interested" title="Not interested">✕</button>
+      </div></div>`;
+  }).join("") || `<div class="empty">No matching jobs. Try removing a keyword, turning on “incl. experience not stated”, or fetching jobs.</div>`;
 }
 $("jobs").onclick = async e => {
   const b = e.target.closest("button[data-s]"); if (!b) return;
-  await api(`/jobs/${b.closest(".job").dataset.id}/status`, {method: "PUT", body: JSON.stringify({status: b.dataset.s})});
+  const job = b.closest(".job"), cur = b.classList.contains("on");
+  await api(`/jobs/${job.dataset.id}/status`, {method: "PUT", body: JSON.stringify({status: cur ? "new" : b.dataset.s})});
   loadJobs();
 };
-let t; $("q").oninput = () => { clearTimeout(t); t = setTimeout(() => { page = 1; loadJobs(); }, 300); };
-["fresher", "unknownExp", "status", "onlySel"].forEach(id => $(id).onchange = () => { page = 1; loadJobs(); });
-$("prev").onclick = () => { page--; loadJobs(); }; $("next").onclick = () => { page++; loadJobs(); };
+$("prev").onclick = () => { page--; loadJobs(); window.scrollTo(0, 0); };
+$("next").onclick = () => { page++; loadJobs(); window.scrollTo(0, 0); };
 
-async function init() { await loadCompanies(); await poll(); }
+async function init() { renderRoles(); renderTabs(); await loadCompanies(); await poll(); }
 api("/auth/me").then(showApp).catch(() => {});
 </script>
 </body>
