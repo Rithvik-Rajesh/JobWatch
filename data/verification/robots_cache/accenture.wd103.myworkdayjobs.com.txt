@@ -1,0 +1,11 @@
+Sitemap: https://accenture.wd103.myworkdayjobs.com/AccentureCareers/siteMap.xml
+Sitemap: https://accenture.wd103.myworkdayjobs.com/AccentureLeadershipCareers/siteMap.xml
+Sitemap: https://accenture.wd103.myworkdayjobs.com/AvanadeCareers/siteMap.xml
+Sitemap: https://accenture.wd103.myworkdayjobs.com/AvanadeLeadershipCareers/siteMap.xml
+
+User-agent: *
+Allow: /AccentureCareers/
+Allow: /AccentureLeadershipCareers/
+Allow: /AvanadeCareers/
+Allow: /AvanadeLeadershipCareers/
+Disallow: /refreshFacet/

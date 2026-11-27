@@ -65,13 +65,16 @@ OVERRIDES: list[tuple[str, str | None, dict]] = [
     # --- bespoke adapters ------------------------------------------------------------------------
     ("Amazon", None, {"support": "adapter", "support_reason":
         "amazon.jobs search.json (normalized_country_code[]=IND); robots allows. ~2100 India jobs."}),
-    ("IBM", None, {"support": "adapter", "support_reason":
-        "IBM search API (POST); endpoint not visible in page source -> verify provenance before enabling."}),
+    ("IBM", None, {"support": "not_reliable", "support_reason":
+        "Provenance check NOT FOUND (2026-11-12): the inferred search API is not referenced by IBM's own careers "
+        "pages; careers.ibm.com serves a WAF bot challenge. Bookmarklet only. "
+        "See data/verification/provenance_ibm_rippling.md."}),
     ("AMD", None, {"support": "adapter", "support_reason": "iCIMS/Jibe /api/jobs; robots crawl-delay 5 s must be honoured."}),
     ("Cisco", None, {"support": "adapter", "support_reason": "Phenom: job data embedded in search pages; robots allows search."}),
     ("Atlassian", None, {"support": "adapter", "support_reason": "Public listings JSON used by the careers page."}),
-    ("Rippling", None, {"support": "adapter", "support_reason":
-        "Rippling ATS board JSON; endpoint inferred from platform pattern, robots unavailable -> verify first."}),
+    ("Rippling", None, {"support": "not_reliable", "support_reason":
+        "Provenance check NOT FOUND (2026-11-12): the careers page lists jobs via Algolia, not the inferred ATS "
+        "endpoint. Bookmarklet only. See data/verification/provenance_ibm_rippling.md."}),
     ("Intuit", None, {"support": "adapter", "support_reason":
         "robots disallows /search-jobs/; only sitemap.xml + individual job pages (JSON-LD unverified)."}),
     ("Capgemini", None, {"support": "adapter", "support_reason": "Public job-stream API used by the search page (India filter)."}),
@@ -198,6 +201,10 @@ def rollup(portals: list[dict]) -> list[dict]:
     return out
 
 
+# Companies the user removed from their list (2026-11-12).
+EXCLUDED_COMPANIES = {"Tata Consultancy Services", "Infosys"}
+
+
 def main(results_dir: str, out_path: str) -> None:
     rows = []
     for path in sorted(glob.glob(os.path.join(results_dir, "group_*.json"))):
@@ -205,7 +212,7 @@ def main(results_dir: str, out_path: str) -> None:
             for r in json.load(fh):
                 r["evidence_file"] = f"data/verification/{os.path.basename(path)}"
                 rows.append(r)
-    final = sorted((classify(r) for r in rows), key=lambda r: (r["company"].lower(), r.get("site_label") or ""))
+    final = sorted((c for c in (classify(r) for r in rows) if c["company"] not in EXCLUDED_COMPANIES), key=lambda r: (r["company"].lower(), r.get("site_label") or ""))
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w", newline="", encoding="utf-8") as fh:
         writer = csv.DictWriter(fh, fieldnames=COLUMNS, extrasaction="ignore")

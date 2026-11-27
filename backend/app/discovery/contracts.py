@@ -155,3 +155,5 @@ class RunSummary:
     error_class: str | None = None
     error_message: str | None = None
     samples: list[dict[str, Any]] = field(default_factory=list)  # dry-run: [{title, location, scope, reason}]
+    # dry-run only: field completeness, detail probe, source totals, warnings, requests used
+    diagnostics: dict[str, Any] = field(default_factory=dict)

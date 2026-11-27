@@ -1,0 +1,170 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://eeho.fa.us2.oraclecloud.com/hcmRestApi/resources/latest/recruitingCEJobRequisitionDetails",
+  "params": {
+   "expand": "all",
+   "onlyData": "true",
+   "finder": "ById;Id=\"346194\",siteNumber=CX_45001"
+  },
+  "json": null
+ },
+ "response": {
+  "status": 200,
+  "content_type": "application/json",
+  "json": {
+   "items": [
+    {
+     "Id": "346194",
+     "Title": "Credit & Collections Analyst 2-Fin",
+     "Category": "Finance",
+     "RequisitionType": "Professional",
+     "JobGrade": null,
+     "RequisitionId": 302969877730314,
+     "ExternalPostedStartDate": "2026-11-11T09:20:38+00:00",
+     "JobLevel": null,
+     "JobSchedule": null,
+     "JobShift": null,
+     "StudyLevel": null,
+     "InternationalTravelRequired": null,
+     "ExternalContactName": null,
+     "ExternalContactEmail": null,
+     "ContractType": null,
+     "ExternalPostedEndDate": null,
+     "JobFamilyId": 300000001917342,
+     "GeographyId": 300001842985425,
+     "GeographyNodeId": 100879842726781,
+     "ExternalDescriptionStr": "<p><span><span><strong>Job Summary</strong></span></span></p>\n<p><span><span>We are seeking a <strong>Portuguese-speaking Senior Analyst (IC1)</strong> to support global Accounts Receivable <strong>Cash Applications</strong> operations for LAD countries.</span></span></p>\n<p><span><span>The role is primarily responsible for accurately and timely processing customer-payment transactions, applying and reconciling receipts against customer invoices, resolving routine payment-application issues, and maintaining accurate customer accounts. The role operates within established procedures, internal controls, compliance requirements, and service-level agreements, with non-standard or policy-sensitive matters appropriately escalated.</span></span></p>",
+     "CorporateDescriptionStr": "<p style=\"margin-bottom:12pt\">Only Oracle brings together the data, infrastructure, applications, and expertise to power everything from industry innovations to life-saving care. And with AI embedded across our products and services, we help customers turn that promise into a better future for all. Discover your potential at a company leading the way in AI and cloud solutions that impact billions of lives.</p>\n<p style=\"margin-bottom:12pt\">True innovation starts when everyone is empowered to contribute. That’s why we’re committed to growing a workforce that promotes opportunities for all with competitive benefits that support our people with flexible medical, life insurance, and retirement options. We also encourage employees to give back to their communities through our volunteer programs.</p>\n<p style=\"margin-bottom:12pt\">We’re committed to including people with disabilities at all stages of the employment process. If you require accessibility assistance or accommodation for a disability at any point, let us know by emailing <u><a href=\"mailto:accommodation-request_mb@oracle.com\" target=\"_blank\" rel=\"nofollow\">accommodation-request_mb@oracle.com</a></u> or by calling 1-888-404-2494 in the United States.</p>\n<p style=\"margin-bottom:12pt\">Oracle is an Equal Employment Opportunity Employer. All qualified applicants will receive consideration for employment without regard to race, color, religion, sex, national origin, sexual orientation, gender identity, disability and protected veterans’ status, or any other characteristic protected by law. Oracle will consider for employment qualified applicants with arrest and conviction records pursuant to applicable law.</p>",
+     "OrganizationDescriptionStr": "",
+     "ShortDescriptionStr": "About the Company/Team\nThe Global Finance Information Center (GFIC) supports centralized finance operations. Within Accounts Receivable, the Cash Applications function manages customer-payment activities and helps ensure receipts are accurately identified, applied, reconciled, and reflected against the appropriate customer invoices.\nThis position supports LAD countries and works closely with customers, Collections, Accounts Receivable, Sales, and other internal teams to resolve payment-application issues and maintain accurate customer accounts.\n",
+     "ContentLocale": "en",
+     "PrimaryLocation": "BENGALURU, KARNATAKA, India",
+     "PrimaryLocationCountry": "IN",
+     "ObjectVerNumberProfile": "1",
+     "ApplyWhenNotPostedFlag": true,
+     "ExternalQualificationsStr": "",
+     "InternalQualificationsStr": "",
+     "InternalResponsibilitiesStr": "<p><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\"><strong>Key Responsibilities</strong></span></span></p><ul style=\"list-style-type: disc;\"><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Apply and allocate customer payments accurately against the appropriate invoices and customer accounts, following established procedures and controls.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Investigate unapplied or misapplied payments, identify routine discrepancies, and coordinate with relevant teams to resolve payment-application issues.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Perform customer-account and payment reconciliations, ensuring receipts and outstanding balances are accurately reflected and supported by appropriate documentation.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Process routine payment-related activities, including refunds, chargebacks, and other approved adjustments, in accordance with defined procedures and approvals.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Respond to routine customer and internal stakeholder queries related to payments, invoice application, account balances, and payment status.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Partner with Collections, Accounts Receivable, Sales, and other regional or internal Finance teams to resolve standard cash-application issues.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Identify transaction errors, recurring issues, process gaps, and system-related problems; escalate complex or non-standard matters to the appropriate Manager or functional team.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Maintain accurate records and operational reporting while consistently meeting SLA, control, compliance, and process requirements.</span></span></li></ul><p><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\"><strong>Qualifications &amp; Skills</strong></span></span></p><p><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\"><strong>Mandatory</strong></span></span></p><ul style=\"list-style-type: disc;\"><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\"><strong>Portuguese language proficiency</strong> sufficient for the role's required customer and stakeholder interactions.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Relevant experience in <strong>Accounts Receivable, Cash Applications, Order-to-Cash, or related finance operations</strong>.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Hands-on experience processing and applying customer payments and resolving routine payment discrepancies.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Experience performing <strong>account/payment reconciliations</strong> and investigating variances.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Strong attention to detail and demonstrated ability to process transactions accurately within defined SLAs.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Ability to work effectively within established <strong>SOPs, internal controls, approval workflows, and compliance requirements</strong>.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Ability to identify routine versus complex issues and escalate appropriately.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Strong collaboration and communication skills for working with customers and cross-functional Finance teams.</span></span></li></ul><p><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\"><strong>Good-to-Have</strong></span></span></p><ul style=\"list-style-type: disc;\"><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Experience supporting <strong>LAD/Latin America</strong> customers or Finance operations.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Experience in a <strong>global shared-services, GFIC, GBS, or captive Finance environment</strong>.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Experience with <strong>Oracle ERP or other ERP/cash-application systems</strong>.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Experience handling refunds, chargebacks, payment-on-account, unapplied cash, or complex payment matching.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Experience supporting process improvement, operational reporting, or automation initiatives.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Experience working with multinational customers and geographically distributed Finance teams.</span></span></li></ul><p><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\"><strong>Self-Assessment Questions</strong></span></span></p><ul style=\"list-style-type: disc;\"><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Do I have hands-on experience in Accounts Receivable, Cash Applications, Order-to-Cash, or a related finance-operations environment?</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Am I proficient in Portuguese at the level needed for the role's customer and stakeholder interactions?</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Have I independently applied customer payments, investigated discrepancies, and resolved routine cash-application issues?</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Am I confident performing payment/account reconciliations and maintaining accurate supporting documentation?</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Have I consistently delivered accurate transactional work within defined SLAs, controls, and procedures?</span></span></li></ul>",
+     "ExternalResponsibilitiesStr": "<p><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\"><strong>Key Responsibilities</strong></span></span></p><ul style=\"list-style-type: disc;\"><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Apply and allocate customer payments accurately against the appropriate invoices and customer accounts, following established procedures and controls.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Investigate unapplied or misapplied payments, identify routine discrepancies, and coordinate with relevant teams to resolve payment-application issues.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Perform customer-account and payment reconciliations, ensuring receipts and outstanding balances are accurately reflected and supported by appropriate documentation.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Process routine payment-related activities, including refunds, chargebacks, and other approved adjustments, in accordance with defined procedures and approvals.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Respond to routine customer and internal stakeholder queries related to payments, invoice application, account balances, and payment status.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Partner with Collections, Accounts Receivable, Sales, and other regional or internal Finance teams to resolve standard cash-application issues.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Identify transaction errors, recurring issues, process gaps, and system-related problems; escalate complex or non-standard matters to the appropriate Manager or functional team.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Maintain accurate records and operational reporting while consistently meeting SLA, control, compliance, and process requirements.</span></span></li></ul><p><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\"><strong>Qualifications &amp; Skills</strong></span></span></p><p><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\"><strong>Mandatory</strong></span></span></p><ul style=\"list-style-type: disc;\"><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\"><strong>Portuguese language proficiency</strong> sufficient for the role's required customer and stakeholder interactions.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Relevant experience in <strong>Accounts Receivable, Cash Applications, Order-to-Cash, or related finance operations</strong>.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Hands-on experience processing and applying customer payments and resolving routine payment discrepancies.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Experience performing <strong>account/payment reconciliations</strong> and investigating variances.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Strong attention to detail and demonstrated ability to process transactions accurately within defined SLAs.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Ability to work effectively within established <strong>SOPs, internal controls, approval workflows, and compliance requirements</strong>.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Ability to identify routine versus complex issues and escalate appropriately.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Strong collaboration and communication skills for working with customers and cross-functional Finance teams.</span></span></li></ul><p><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\"><strong>Good-to-Have</strong></span></span></p><ul style=\"list-style-type: disc;\"><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Experience supporting <strong>LAD/Latin America</strong> customers or Finance operations.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Experience in a <strong>global shared-services, GFIC, GBS, or captive Finance environment</strong>.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Experience with <strong>Oracle ERP or other ERP/cash-application systems</strong>.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Experience handling refunds, chargebacks, payment-on-account, unapplied cash, or complex payment matching.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Experience supporting process improvement, operational reporting, or automation initiatives.</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Experience working with multinational customers and geographically distributed Finance teams.</span></span></li></ul><p><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\"><strong>Self-Assessment Questions</strong></span></span></p><ul style=\"list-style-type: disc;\"><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Do I have hands-on experience in Accounts Receivable, Cash Applications, Order-to-Cash, or a related finance-operations environment?</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Am I proficient in Portuguese at the level needed for the role's customer and stakeholder interactions?</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Have I independently applied customer payments, investigated discrepancies, and resolved routine cash-application issues?</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Am I confident performing payment/account reconciliations and maintaining accurate supporting documentation?</span></span></li><li><span style=\"font-family: &quot;Oracle Sans&quot;, sans-serif;\"><span style=\"font-size: 9pt; line-height: 107%;\">Have I consistently delivered accurate transactional work within defined SLAs, controls, and procedures?</span></span></li></ul>",
+     "JobFunctionCode": "FINANCE-CREDITCOL",
+     "HotJobFlag": false,
+     "TrendingFlag": true,
+     "BeFirstToApplyFlag": false,
+     "WorkplaceTypeCode": null,
+     "WorkplaceType": "",
+     "OtherRequisitionTitle": null,
+     "NumberOfOpenings": null,
+     "HiringManager": null,
+     "Organization": null,
+     "BusinessUnitId": 300001096514498,
+     "LegalEmployerId": 300000000814110,
+     "OrganizationId": 300001902541887,
+     "WorkerType": null,
+     "JobType": null,
+     "WorkMonths": null,
+     "WorkYears": null,
+     "WorkHours": null,
+     "WorkDays": null,
+     "LegalEmployer": null,
+     "BusinessUnit": null,
+     "Department": null,
+     "DomesticTravelRequired": null,
+     "JobFunction": "FINANCE-CREDITCOL",
+     "secondaryLocations": [],
+     "media": [],
+     "workLocation": [],
+     "otherWorkLocations": [],
+     "requisitionFlexFields": [
+      {
+       "Prompt": "Role",
+       "Value": "Individual Contributor",
+       "ControlType": "SingleChoiceList",
+       "SequenceNumber": 4
+      },
+      {
+       "Prompt": "Job Type",
+       "Value": "Regular Employee",
+       "ControlType": "SingleChoiceList",
+       "SequenceNumber": 5
+      },
+      {
+       "Prompt": "Does this position require a security clearance?",
+       "Value": "No",
+       "ControlType": "SingleChoiceList",
+       "SequenceNumber": 12
+      },
+      {
+       "Prompt": "Years",
+       "Value": "3 to 5+ years",
+       "ControlType": "SingleChoiceList",
+       "SequenceNumber": 13
+      },
+      {
+       "Prompt": "Additional Info",
+       "Value": "Visa / work permit sponsorship is not available for this position",
+       "ControlType": "SingleChoiceList",
+       "SequenceNumber": 45
+      },
+      {
+       "Prompt": "Applicants are required to read, write, and speak the following languages",
+       "Value": "English,Portuguese",
+       "ControlType": "TextArea",
+       "SequenceNumber": 46
+      }
+     ],
+     "primaryLocationCoordinates": [
+      {
+       "GeographyNodeId": 100879842726781,
+       "GeographyId": 300001842985425,
+       "Latitude": "12.99838",
+       "Longitude": "77.73981",
+       "CountryCode": "IN"
+      }
+     ],
+     "skills": [
+      {
+       "SectionName": "Skills",
+       "Skill": "Bank Payments",
+       "SkillType": null,
+       "SkillId": "302969877710716",
+       "SectionId": "300699536645979",
+       "ContentItemId": null
+      },
+      {
+       "SectionName": "Skills",
+       "Skill": "Cash Reconciliation",
+       "SkillType": null,
+       "SkillId": "302969877710715",
+       "SectionId": "300699536645979",
+       "ContentItemId": null
+      },
+      {
+       "SectionName": "Skills",
+       "Skill": "Cash Transaction Processing",
+       "SkillType": null,
+       "SkillId": "302969877710714",
+       "SectionId": "300699536645979",
+       "ContentItemId": null
+      }
+     ]
+    }
+   ],
+   "count": 1,
+   "hasMore": false,
+   "limit": 499,
+   "offset": 0,
+   "links": [
+    {
+     "rel": "self",
+     "href": "https://eeho.fa.us2.oraclecloud.com:443/hcmRestApi/resources/11.13.18.05/recruitingCEJobRequisitionDetails",
+     "name": "recruitingCEJobRequisitionDetails",
+     "kind": "collection"
+    }
+   ]
+  },
+  "text": null
+ },
+ "recorded_at": "2026-11-11T18:35:03.605845+00:00",
+ "user_agent": "Mozilla/5.0 (compatible; JobWatch/0.1; personal job tracker)"
+}

@@ -1,0 +1,99 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://ag.wd3.myworkdayjobs.com/wday/cxs/ag/Airbus/job/Bangalore-Area/Software-Engineer_JR10455480",
+  "params": null,
+  "json": null
+ },
+ "response": {
+  "status": 200,
+  "content_type": "application/json",
+  "json": {
+   "jobPostingInfo": {
+    "id": "2299a019eccc104a9fa35a33f21a0000",
+    "title": "Software Engineer",
+    "jobDescription": "<p style=\"text-align:left\"><span><b><b>Job Description:</b></b></span></p><p><span style=\"color:#202124\"><span><u>Job Description</u></span> </span></p><p><span style=\"color:#202124\"><span>Role : Software Engineer - Full Stack Developer</span> </span></p><p><span style=\"color:#202124\"><span>Number of position : 1</span> </span></p><p><span style=\"color:#202124\"><span><b>Description:</b></span><b> </b></span></p><p><span style=\"color:#202124\"><span>A position of Full Stack Developer has just been opened within Airbus India. Your mission is to</span> <span>implement</span> <span>technical development of user stories in the context of Automated and Optimized</span> <span>Production Planning.</span> <span>You will contribute to build and operate a core business product aiming at</span> <span>automatizing and optimizing</span> <span>aircraft planning.</span> </span></p><p><span style=\"color:#202124\"><span>Within the Airbus Commercial Information Management (IM) organisation, the jobholder will</span> <span>contribute to</span> <span>the success of one IM core product. The overall management of the production</span> <span>planning of A/C from</span> <span>customer offer, contract signature to aircraft delivery in coordination with</span> <span>Sales, Engineering, Operations</span> <span>and Delivery Center functions. The proposed job is at the</span> <span>crossroads of this very challenging strategy and</span> <span>the digital transformation of Airbus as a whole.</span> </span></p><p><span style=\"color:#000000\"><b>Roles and responsibilities: </b></span></p><p><span style=\"color:#202124\"><span>-Should have 4 to 7 years of experience as a full stack developer in Agile environment.</span></span></p><p><span style=\"color:#202124\"><span>- Assemble and edit source code repositories to develop a software stack for the product needs. - Respects the standards and structure of the given solution and the environment. - Develops design specifications and parameters that are in compliance with products’ architectural blueprints. </span></span></p><p><span style=\"color:#202124\"><span>- Participates in all phases of product development lifecycle, from the analysis, design over test and integration to operation of products. </span></span></p><p><span style=\"color:#202124\"><span>- Researches, evaluates, and develops new tools to improve product development efficiency. - Deploys, tests and/or integrates highly available, scalable, maintainable, monitored systems and services. </span></span></p><p><span style=\"color:#202124\"><span>- May assist in development of product user manuals. </span></span></p><p><span style=\"color:#202124\"><span>- Coordinates the functional and technical integration. </span></span></p><p><span style=\"color:#202124\"><span>- Defines the test strategy, scripts, scenarios and monitors test execution. </span></span></p><p><span style=\"color:#202124\"><span>- Determines how existing applications, legacy systems, databases, web interfaces and/or hardware logic, which may be currently operating on multiple platforms, work together to meet the new and emerging enterprise requirements. </span></span></p><p><span style=\"color:#494949\"><b>Technical Skills: </b></span></p><p><span style=\"color:#202124\"><span>● Proficiency in Javascript, Python, </span></span></p><p><span style=\"color:#202124\"><span>● Experience with Angular, Node.js, HapiJs, TypeScript </span></span></p><p><span style=\"color:#202124\"><span>● Database experience, including knowledge of SQL and NoSQL </span></span></p><p><span style=\"color:#202124\"><span>● Experience with version control systems (e.g., GitHub, GitLab). </span></span></p><p><span style=\"color:#202124\"><span>● Experience with AWS services ( EC2, RDS, Lambda , Load balancer , Domain configuration - Route 53 , Storage types, Networking , API gateway , monitoring services, etc..) ● Experience with CI/CD pipelines, DevOps and DevSecOps practices. </span></span></p><p><span style=\"color:#202124\"><span>● Experience with Agile/Scrum development methodologies.</span></span></p><br /><p style=\"text-align:inherit\"></p><p style=\"text-align:left\">This job requires an awareness of any potential compliance risks and a commitment to act with integrity, as the foundation for the Company’s success, reputation and sustainable growth.</p><p style=\"text-align:inherit\"></p><p style=\"text-align:left\"><span><b><b><b><b>Company:</b></b></b></b></span></p>Airbus India Private Limited<p style=\"text-align:inherit\"></p><p style=\"text-align:left\"><b>Employment Type:</b></p>Permanent<p style=\"text-align:inherit\">-------</p><p style=\"text-align:inherit\"></p><p style=\"text-align:left\"><b>Experience Level:</b></p>Professional<p style=\"text-align:inherit\"></p><p style=\"text-align:left\"><b>Job Family:</b></p>Digital &lt;JF-IM-DI&gt;<p style=\"text-align:inherit\"></p><p style=\"text-align:inherit\"></p><p style=\"text-align:inherit\"></p><div><div><div><div><p style=\"text-align:left\">By submitting your CV or application you are consenting to Airbus using and storing information about you for monitoring purposes relating to your application or future employment. This information will only be used by Airbus.<br />Airbus is committed to achieving workforce diversity and creating an inclusive working environment. We welcome all applications irrespective of social and cultural background, age, gender, disability, sexual orientation or religious belief.</p><p style=\"text-align:left\"><span>Airbus is, and always has been, committed to equal opportunities for all. As such, we will never ask for any type of monetary exchange in the frame of a recruitment process. Any impersonation of Airbus to do so should be reported to </span><span><a target=\"_blank\" href=\"mailto:emsom&#64;airbus.com\">emsom&#64;airbus.com</a>.</span></p></div></div></div></div><p style=\"text-align:inherit\"></p><p style=\"text-align:left\"><span>At Airbus, we support you to work, connect and collaborate more easily and flexibly. Wherever possible, we foster flexible working arrangements to stimulate innovative thinking.</span></p>",
+    "location": "Bangalore Area",
+    "postedOn": "Posted 6 Days Ago",
+    "startDate": "2026-11-05",
+    "timeType": "Full time",
+    "jobReqId": "JR10455480",
+    "jobPostingId": "Software-Engineer_JR10455480",
+    "jobPostingSiteId": "Airbus",
+    "country": {
+     "descriptor": "India",
+     "id": "c4f78be1a8f14da0ab49ce1162348a5e"
+    },
+    "logoImage": {
+     "src": "/wday/cxs/ag/Airbus/sidebarimage/36b29cc7f6f71000ecd3796df5460000",
+     "alt": "Logo"
+    },
+    "canApply": true,
+    "posted": true,
+    "includeResumeParsing": true,
+    "jobRequisitionLocation": {
+     "descriptor": "Bangalore (Airbus)",
+     "country": {
+      "descriptor": "India",
+      "id": "c4f78be1a8f14da0ab49ce1162348a5e",
+      "alpha2Code": "IN"
+     }
+    },
+    "externalUrl": "https://ag.wd3.myworkdayjobs.com/Airbus/job/Bangalore-Area/Software-Engineer_JR10455480",
+    "questionnaireId": "51b19c6ad3e71000e9aaebe1541a0000"
+   },
+   "hiringOrganization": {
+    "name": "1127 Airbus India Private Limited",
+    "url": ""
+   },
+   "similarJobs": [
+    {
+     "title": "Software engineer- Devops",
+     "externalPath": "/job/Bangalore-Area/Software-engineer--Devops_JR10448752",
+     "timeType": "Full time",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 27 Days Ago",
+     "startDate": "2026-10-15"
+    },
+    {
+     "title": "Software Engineer",
+     "externalPath": "/job/Bangalore-Area/Software-Engineer_JR10449816",
+     "timeType": "Full time",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 29 Days Ago",
+     "startDate": "2026-10-13"
+    },
+    {
+     "title": "Software Engineer",
+     "externalPath": "/job/Bangalore-Area/Software-Engineer_JR10454552",
+     "timeType": "Full time",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 9 Days Ago",
+     "startDate": "2026-11-02"
+    },
+    {
+     "title": "Software Technical Lead (FullStack, Java & Cloud) - Digital for Mass Properties & Structure testing",
+     "externalPath": "/job/Bangalore-Area/Software-Technical-Lead--FullStack--Java---Cloud----Digital-for-Mass-Properties---Structure-testing_JR10429284",
+     "timeType": "Full time",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 30+ Days Ago",
+     "startDate": "2026-07-17"
+    },
+    {
+     "title": "Lead Software Engineer - Big Data",
+     "externalPath": "/job/Bangalore-Area/Lead-Software-Engineer---Big-Data_JR10434774",
+     "timeType": "Full time",
+     "locationsText": "Bangalore Area",
+     "postedOn": "Posted 26 Days Ago",
+     "startDate": "2026-10-16",
+     "timeLeftToApply": "2 days left to apply",
+     "jobPostingEndDateAsText": "End Date: November 15, 2026"
+    }
+   ],
+   "userAuthenticated": false
+  },
+  "text": null
+ },
+ "recorded_at": "2026-11-11T18:35:36.571511+00:00",
+ "user_agent": "Mozilla/5.0 (compatible; JobWatch/0.1; personal job tracker)"
+}

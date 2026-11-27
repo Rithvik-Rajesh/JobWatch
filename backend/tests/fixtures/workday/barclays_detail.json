@@ -1,0 +1,58 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://barclays.wd3.myworkdayjobs.com/wday/cxs/barclays/External_Career_Site_Barclays/job/Dublin-Molesworth-Street/Barclays-Europe--Risk--Finance-and-Treasury_JR-0000087621",
+  "params": null,
+  "json": null
+ },
+ "response": {
+  "status": 200,
+  "content_type": "application/json",
+  "json": {
+   "jobPostingInfo": {
+    "id": "3632e29ede5a1000ff58beaf62360000",
+    "title": "Audit Director – Head of Audit Ireland",
+    "jobDescription": "<h1><b>Job Description</b></h1><p style=\"text-align:inherit\"></p><p></p><p></p><p><b>Purpose of the role</b></p><p>To support the development of audits aligned to the bank’s standards and objectives by working collaboratively with colleagues, providing accurate information and recommendations, and complying with policies and procedures.</p><p></p><p><b>Accountabilities</b></p><ul><li>Audit development and delivery support, including financial statements, accounting practices, operational processes, IT systems and risk management.</li><li>Identification of operational risks to support the delivery of the Barclays Internal Audit (BIA) Audit Plan through risk assessments.</li><li>Assessment of internal control effectiveness and their capability to identify and mitigate risk aligned to regulatory requirements.</li><li>Communication of key findings and recommendations to stakeholders, including the Audit Owner, senior managers and directors.</li><li>Identification of regulatory news and industry trends/developments to provide timely insight and recommendations for best practice.</li></ul><p></p><p><b>Director Expectations</b></p><ul><li>To manage a business function, providing significant input to function wide strategic initiatives. Contribute to and influence policy and procedures for the function and plan, manage and consult on multiple complex and critical strategic projects, which may be business wide..</li><li>They manage the direction of a large team or sub-function, leading other people managers and embedding a performance culture aligned to the values of the business. Or for an individual contributor, they lead organisation wide projects and act as deep technical expert and thought leader, identifying new ways of working and collaborating cross functionally. They will train, guide and coach less experienced specialists and provide information affecting long term profits, organisational risks and strategic decisions..</li><li>Provide expert advice to senior functional management and committees to influence decisions made outside of own function, offering significant input to function wide strategic initiatives.</li><li>Manage, coordinate and enable resourcing, budgeting and policy creation for a significant sub-function.</li><li>Escalates breaches of policies / procedure appropriately.</li><li>Foster and guide compliance, ensure regulations are observed that relevant processes in place to facilitate adherence.</li><li>Focus on the external environment, regulators, or advocacy groups to both monitor and influence on behalf of Barclays, when appropriate.</li><li>Demonstrate extensive knowledge of how the function integrates with the business division / Group to achieve the overall business objectives.</li><li>Maintain broad and comprehensive knowledge of industry theories and practices within own discipline alongside up-to-date relevant sector / functional knowledge, and insight into external market developments / initiatives.</li><li>Use interpretative thinking and advanced analytical skills to solve problems and design solutions in often complex/ sensitive situations.</li><li>Exercise management authority to make significant decisions and certain strategic decisions or recommendations within own area.</li><li>Negotiate with and influence stakeholders at a senior level both internally and externally.</li><li>Act as principal contact point for key clients and counterparts in other functions/ businesses divisions.</li><li>Mandated as a spokesperson for the function and business division.</li></ul><p></p><p>All Senior Leaders are expected to demonstrate a clear set of leadership behaviours to create an environment for colleagues to thrive and deliver to a consistently excellent standard. The four LEAD behaviours are: L – Listen and be authentic, E – Energise and inspire, A – Align across the enterprise, D – Develop others.</p><p></p><p>All colleagues will be expected to demonstrate the Barclays Values of Respect, Integrity, Service, Excellence and Stewardship – our moral compass, helping us do what we believe is right. They will also be expected to demonstrate the Barclays Mindset – to Empower, Challenge and Drive – the operating manual for how we behave.</p><p></p><p></p><p> </p><p><b>You will lead BIA’s Risk and Finance Audit team for Barclays Europe to deliver an independent programme of risk-based audit work. This will involve working collaboratively with the Risk and Finance functions to develop strong stakeholder relationships which demonstrate BIA’s credibility as a respected voice. You will</b> develop, drive and lead delivery of the Risk and Finance audit plan ensuring it is completed in accordance with BIA methodology and achieves quality standards. You will contribute to the delivery of the BIA Audit Plan and provide assurance on the Control Environment to key stakeholders. <b>The role will be based in one of Barclays Europe’s hubs, preferably in Dublin, Ireland or alternatively in Paris, France. In either case the role will provide leadership support to the BE Chief Internal Auditor to manage and develop the Barclays Europe audit team.</b></p><p> </p><p><b>Person Specification</b></p><ul><li><ul><li>Deep and extensive knowledge of Risk and Finance <b>in Financial Services</b></li><li>Past experience in the area of risk and controls – preferably including that within a <b>regulated </b>audit environment.</li><li>Past experience of regulatory management <b>in Financial Services</b></li><li>Excellent communication skills, ability to communicate effectively to senior SMEs. </li><li>Strong understanding of the evolving regulatory environment as it relates to Risk and Finance.</li><li>Proven track record of building and developing SME teams.</li><li>Ability to work across risk disciplines, with a strong understanding of end-to-end risk management.</li><li>Proven track record of senior stakeholder management.</li></ul></li></ul><p> </p><p><b>Essential Skills/Basic Qualifications:</b></p><ul><li><ul><li>Finance, Treasury/Capital/Liquidity or Risk qualification.</li><li>Strong risk and control understanding.</li><li><b>Track record of successfully developing a strategy to define and achieve success for an internal audit or similar risk and controls function.</b></li><li>Experience of leading others during audit assignments.</li><li>Willingness and initiative to learn and share knowledge.</li><li>Proven ability to oversee the timely delivery of high quality analytical work, working autonomously.</li></ul></li></ul><p> </p><p><b>Desirable skills/Preferred Qualifications:</b></p><ul><li><ul><li>Proven experience in audit</li><li>Experience working within a global customer-centric, matrix environment.</li><li>Track record of successfully delivering audits or similar risk and controls reports and providing independent advisory services to stakeholders and clients.</li><li>Particular experience in working with the UK, European and US regulators and auditing against their requirements.</li></ul></li></ul><p style=\"text-align:inherit\"></p><p style=\"text-align:inherit\"></p>",
+    "location": "Dublin, Molesworth Street",
+    "additionalLocations": [
+     "Paris, 52 avenue Hoche"
+    ],
+    "postedOn": "Posted Today",
+    "startDate": "2026-11-11",
+    "timeType": "Full time",
+    "jobReqId": "JR-0000087621",
+    "jobPostingId": "Barclays-Europe--Risk--Finance-and-Treasury_JR-0000087621",
+    "jobPostingSiteId": "External_Career_Site_Barclays",
+    "country": {
+     "descriptor": "Ireland",
+     "id": "04a05835925f45b3a59406a2a6b72c8a"
+    },
+    "canApply": true,
+    "posted": true,
+    "includeResumeParsing": true,
+    "jobRequisitionLocation": {
+     "descriptor": "Dublin, Molesworth Street",
+     "country": {
+      "descriptor": "Ireland",
+      "id": "04a05835925f45b3a59406a2a6b72c8a",
+      "alpha2Code": "IE"
+     }
+    },
+    "externalUrl": "https://barclays.wd3.myworkdayjobs.com/External_Career_Site_Barclays/job/Dublin-Molesworth-Street/Barclays-Europe--Risk--Finance-and-Treasury_JR-0000087621",
+    "questionnaireId": "f2ac51bd547c1001e26a02dae5b20000",
+    "timeLeftToApply": "13 days left to apply",
+    "endDate": "2026-11-25",
+    "jobPostingEndDateAsText": "End Date: November 25, 2026"
+   },
+   "hiringOrganization": {
+    "name": "2350 Barclays Bank Ireland Head Office",
+    "url": ""
+   },
+   "similarJobs": [],
+   "userAuthenticated": false
+  },
+  "text": null
+ },
+ "recorded_at": "2026-11-11T18:35:13.024355+00:00",
+ "user_agent": "Mozilla/5.0 (compatible; JobWatch/0.1; personal job tracker)"
+}

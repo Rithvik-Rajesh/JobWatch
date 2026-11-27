@@ -75,6 +75,12 @@ class Job(IdMixin, TimestampMixin, Base):
     skills: Mapped[list[str]] = mapped_column(TEXT_ARRAY, server_default=text("'{}'"))
     description_text: Mapped[str | None] = mapped_column(Text)  # current plain text, for search
 
+    # One-time LLM assessment made when a career-site listing is first discovered.
+    is_fresher_role: Mapped[bool | None] = mapped_column(Boolean)
+    fresher_reason: Mapped[str | None] = mapped_column(Text)
+    classified_by: Mapped[str | None] = mapped_column(Text)
+    classified_at: Mapped[datetime | None]
+
     # Posting date as published by the source. Absolute dates are preserved and never overwritten
     # by an estimate; `first_seen_at` is independent (when JobWatch discovered it).
     posted_at: Mapped[datetime | None]
@@ -104,6 +110,7 @@ class Job(IdMixin, TimestampMixin, Base):
         Index("ix_jobs_posted_at", text("posted_at desc nulls last")),
         Index("ix_jobs_availability", "availability"),
         Index("ix_jobs_location_scope", "location_scope"),
+        Index("ix_jobs_is_fresher_role", "is_fresher_role"),
         Index("ix_jobs_country_codes", "country_codes", postgresql_using="gin"),
         Index("ix_jobs_skills", "skills", postgresql_using="gin"),
         Index("ix_jobs_search_vector", "search_vector", postgresql_using="gin"),

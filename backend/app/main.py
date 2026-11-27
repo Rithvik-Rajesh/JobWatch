@@ -16,6 +16,7 @@ from app.health.router import router as health_router
 from app.jobs.router import router as jobs_router
 from app.reminders.router import router as reminders_router
 from app.settings.router import router as settings_router
+from app.sites.fetch_all import router as fetch_router
 from app.sites.router import router as sites_router
 from app.sources.router import router as sources_router
 from app.statuses.router import router as statuses_router
@@ -49,6 +50,7 @@ def create_app() -> FastAPI:
         reminders_router,
         companies_router,
         sites_router,
+        fetch_router,
         statuses_router,
         settings_router,
         sources_router,
@@ -58,6 +60,17 @@ def create_app() -> FastAPI:
         api.include_router(r)
     app.include_router(api)
     app.include_router(probe_router)
+
+    from pathlib import Path
+
+    from fastapi.responses import FileResponse
+
+    ui = Path(__file__).parent / "ui" / "index.html"
+
+    @app.get("/", include_in_schema=False)
+    async def index() -> FileResponse:
+        return FileResponse(ui)
+
     return app
 
 

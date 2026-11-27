@@ -1,0 +1,327 @@
+"""On-demand fetch (simple mode): scrape the selected companies' automatable career sites once, in the API process.
+
+Each site is a normal pipeline run, so robots.txt, rate limits, the India gate and the "failed runs never close
+jobs" rules all apply. Sites classified not_reliable/manual, blocked, archived or without an adapter are skipped.
+"""
+
+import asyncio
+from datetime import UTC, datetime
+from typing import Any
+
+from fastapi import APIRouter
+from pydantic import BaseModel
+from sqlalchemy import func, select
+
+from app.core.auth import CurrentUser
+from app.core.db import SessionDep, get_sessionmaker
+from app.core.errors import Conflict, ValidationFailed
+from app.core.logging import get_logger
+from app.discovery.classifier import FresherClassifierSettings, JobClassifier, rule_classification
+from app.models import CareerSite, Company, Job
+from app.models.enums import Availability, HealthStatus, SupportClass
+from app.settings.registry import get_setting
+
+log = get_logger(__name__)
+router = APIRouter(tags=["fetch"])
+PARALLEL_SITES = 6
+
+
+def _fresh_state() -> dict[str, Any]:
+    return {
+        "running": False,
+        "started_at": None,
+        "finished_at": None,
+        "total": 0,  # sites in this fetch
+        "done": 0,
+        "new_jobs": 0,
+        "jobs_found": 0,
+        "jobs_classified": 0,
+        "ai_checked": 0,
+        "rules_checked": 0,
+        "stored_jobs": 0,
+        "classifier_running": False,
+        "llm_done": 0,
+        "india_jobs": 0,
+        "current": [],  # sites being scraped right now
+        "pending": [],  # sites waiting
+        "sites": [],  # finished: {site, company, status, in_scope, new, error}
+        "activity": [],  # most recent per-job pipeline events for the live UI
+        "jobs": [],  # newly stored jobs in this interactive review session
+    }
+
+
+_state: dict[str, Any] = _fresh_state()
+_task: asyncio.Task | None = None
+_classifier_task: asyncio.Task | None = None
+
+
+def _record_progress(site: str, event: dict[str, Any]) -> None:
+    stage = event.get("stage")
+    if stage == "listed":
+        _state["jobs_found"] += int(event.get("count") or 0)
+    elif stage in {"classified", "llm_classified"}:
+        _state["jobs_classified"] += 1
+        provider = str(event.get("provider") or "")
+        if provider.startswith("rules:"):
+            _state["rules_checked"] += 1
+        elif provider.startswith(("ollama:", "gemini:")):
+            _state["ai_checked"] += 1
+    elif stage == "stored":
+        _state["stored_jobs"] += 1
+        if event.get("job_id"):
+            _state["jobs"].append(
+                {
+                    "job_id": event["job_id"],
+                    "title": event.get("title"),
+                    "company": event.get("company") or site,
+                    "location": event.get("location"),
+                    "description": (event.get("description") or "")[:30_000],
+                    "preliminary": None,
+                    "llm": None,
+                    "llm_status": "pending",
+                }
+            )
+
+    if stage in {"fetching_jd", "classifying", "classified", "stored", "llm_classifying", "llm_classified"}:
+        item = {"site": site, "at": datetime.now(UTC).isoformat(), **event}
+        item.pop("description", None)
+        _state["activity"].append(item)
+        _state["activity"] = _state["activity"][-40:]
+
+
+async def _eligible(company_ids: list[int] | None = None) -> list[dict[str, Any]]:
+    from app.sites.service import adapter_available
+
+    conds = [
+        CareerSite.archived_at.is_(None),
+        Company.archived_at.is_(None),
+        CareerSite.support_class.in_([SupportClass.auto, SupportClass.adapter]),
+        CareerSite.health != HealthStatus.blocked,
+    ]
+    if company_ids:
+        conds.append(Company.id.in_(company_ids))
+    async with get_sessionmaker()() as s:
+        rows = (
+            await s.execute(
+                select(CareerSite, Company.id, Company.name)
+                .join(Company, Company.id == CareerSite.company_id)
+                .where(*conds)
+                .order_by(Company.name, CareerSite.label)
+            )
+        ).all()
+    return [
+        {
+            "site_id": site.id,
+            "company_id": cid,
+            "company": name,
+            "label": name if site.label == "main" else f"{name} · {site.label}",
+            "platform": site.platform.value,
+            "last_success_at": site.last_success_at,
+            "last_error": site.last_error,
+        }
+        for site, cid, name in rows
+        if adapter_available(site.platform, site.config)
+    ]
+
+
+async def _run(sites: list[dict[str, Any]]) -> None:
+    from app.discovery.http import PoliteClient
+    from app.discovery.pipeline import run_site
+
+    sem = asyncio.Semaphore(PARALLEL_SITES)
+    async with PoliteClient() as client:
+
+        async def one(site: dict[str, Any]) -> None:
+            async with sem:
+                label = site["label"]
+                _state["pending"].remove(label)
+                _state["current"].append(label)
+                try:
+                    r = await run_site(
+                        site["site_id"],
+                        trigger="manual",
+                        fetcher=client,
+                        progress=lambda event: _record_progress(label, event),
+                        classify_new=False,
+                    )
+                    entry = {
+                        "status": r.status,
+                        "in_scope": r.postings_in_scope,
+                        "new": r.postings_new,
+                        "error": r.error_message,
+                    }
+                except Exception as e:  # never let one site stop the batch
+                    log.exception("fetch_site_failed", site_id=site["site_id"])
+                    entry = {"status": "failed", "in_scope": 0, "new": 0, "error": str(e)[:200]}
+                _state["current"].remove(label)
+                _state["sites"].append({"site": label, "company": site["company"], **entry})
+                _state["done"] += 1
+                _state["new_jobs"] += entry["new"]
+                _state["india_jobs"] += entry["in_scope"]
+
+        await asyncio.gather(*(one(s) for s in sites))
+
+
+async def _runner(sites: list[dict[str, Any]]) -> None:
+    try:
+        await _run(sites)
+    finally:
+        _state.update(running=False, current=[], pending=[], finished_at=datetime.now(UTC).isoformat())
+
+
+class FetchRequest(BaseModel):
+    company_ids: list[int] | None = None  # None/empty = all scrapable companies
+
+
+@router.get("/fetch/companies")
+async def scrapable_companies(user: CurrentUser) -> list[dict[str, Any]]:
+    """Companies that can be scraped automatically, with open India job counts and last fetch info."""
+    sites = await _eligible()
+    async with get_sessionmaker()() as s:
+        counts = dict(
+            (
+                await s.execute(
+                    select(Job.company_id, func.count())
+                    .where(Job.merged_into_job_id.is_(None), Job.availability == Availability.open)
+                    .group_by(Job.company_id)
+                )
+            ).all()
+        )
+    out: dict[int, dict[str, Any]] = {}
+    for site in sites:
+        c = out.setdefault(
+            site["company_id"],
+            {
+                "id": site["company_id"],
+                "name": site["company"],
+                "platform": site["platform"],
+                "sites": 0,
+                "jobs": counts.get(site["company_id"], 0),
+                "last_success_at": None,
+                "last_error": None,
+            },
+        )
+        c["sites"] += 1
+        if site["last_success_at"] and (not c["last_success_at"] or site["last_success_at"] > c["last_success_at"]):
+            c["last_success_at"] = site["last_success_at"]
+        c["last_error"] = c["last_error"] or site["last_error"]
+    return sorted(out.values(), key=lambda c: c["name"].lower())
+
+
+@router.post("/fetch-all", status_code=202)
+async def start_fetch(user: CurrentUser, body: FetchRequest | None = None) -> dict[str, Any]:
+    global _task, _state
+    if _state["running"]:
+        raise Conflict("A fetch is already running")
+    sites = await _eligible((body.company_ids if body else None) or None)
+    if not sites:
+        raise ValidationFailed("No scrapable sites for the selected companies")
+    _state = _fresh_state()
+    _state.update(
+        running=True, started_at=datetime.now(UTC).isoformat(), total=len(sites), pending=[s["label"] for s in sites]
+    )
+    _task = asyncio.create_task(_runner(sites))
+    return _state
+
+
+@router.get("/fetch-all")
+async def fetch_status(user: CurrentUser) -> dict[str, Any]:
+    return _state
+
+
+@router.post("/fetch-all/preliminary")
+async def run_preliminary(user: CurrentUser, session: SessionDep) -> dict[str, Any]:
+    """Apply editable deterministic rules to every new job in the current review session."""
+    if _state["running"] or _state["classifier_running"]:
+        raise Conflict("Wait for the current fetch or model run to finish")
+    rules = await get_setting(session, FresherClassifierSettings)
+    _state["rules_checked"] = 0
+    _state["jobs_classified"] = _state["llm_done"]
+    ids = [item["job_id"] for item in _state["jobs"]]
+    jobs = {job.id: job for job in (await session.scalars(select(Job).where(Job.id.in_(ids)))).all()} if ids else {}
+    now = datetime.now(UTC)
+    for item in _state["jobs"]:
+        job = jobs.get(item["job_id"])
+        if job is None:
+            continue
+        result = rule_classification(job.title, job.description_text, rules)
+        item["llm"] = None
+        item["llm_status"] = "pending"
+        if result is None:
+            item["preliminary"] = None
+            job.is_fresher_role = None
+            job.fresher_reason = None
+            job.classified_by = None
+            job.classified_at = None
+            continue
+        item["preliminary"] = {
+            "verdict": result.is_fresher,
+            "reason": result.reason,
+            "provider": result.provider,
+        }
+        _state["rules_checked"] += 1
+        _state["jobs_classified"] += 1
+        job.is_fresher_role = result.is_fresher
+        job.fresher_reason = result.reason
+        job.classified_by = result.provider
+        job.classified_at = now
+    await session.flush()
+    return _state
+
+
+def _review_item(job_id: int) -> dict[str, Any] | None:
+    return next((item for item in _state["jobs"] if item["job_id"] == job_id), None)
+
+
+async def _run_llm(job_ids: list[int]) -> None:
+    try:
+        async with get_sessionmaker()() as session:
+            rules = await get_setting(session, FresherClassifierSettings)
+            classifier = JobClassifier(classifier_settings=rules)
+            for job_id in job_ids:
+                item = _review_item(job_id)
+                job = await session.get(Job, job_id)
+                if item is None or job is None:
+                    continue
+                item["llm_status"] = "running"
+                _record_progress(item["company"], {"stage": "llm_classifying", "job_id": job_id, "title": job.title})
+                result = await classifier.classify_with_model(job.title, job.description_text)
+                job.is_fresher_role = result.is_fresher
+                job.fresher_reason = result.reason
+                job.classified_by = result.provider
+                job.classified_at = datetime.now(UTC)
+                item["llm"] = {
+                    "verdict": result.is_fresher,
+                    "reason": result.reason,
+                    "provider": result.provider,
+                }
+                item["llm_status"] = "done"
+                _state["llm_done"] += 1
+                _record_progress(
+                    item["company"],
+                    {
+                        "stage": "llm_classified",
+                        "job_id": job_id,
+                        "title": job.title,
+                        "verdict": result.is_fresher,
+                        "provider": result.provider,
+                        "reason": result.reason,
+                    },
+                )
+                await session.commit()
+    finally:
+        _state["classifier_running"] = False
+
+
+@router.post("/fetch-all/classify", status_code=202)
+async def start_llm_review(user: CurrentUser) -> dict[str, Any]:
+    global _classifier_task
+    if _state["running"]:
+        raise Conflict("Wait for fetching to finish")
+    if _state["classifier_running"]:
+        raise Conflict("The model is already checking jobs")
+    targets = [item["job_id"] for item in _state["jobs"] if item["preliminary"] is None]
+    _state["classifier_running"] = True
+    _state["llm_done"] = 0
+    _classifier_task = asyncio.create_task(_run_llm(targets))
+    return _state

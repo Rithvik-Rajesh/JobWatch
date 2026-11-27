@@ -1,0 +1,126 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://enterpriseplatform.dell.com/hcmRestApi/resources/latest/recruitingCEJobRequisitionDetails",
+  "params": {
+   "expand": "all",
+   "onlyData": "true",
+   "finder": "ById;Id=\"R270616\",siteNumber=CX_1001"
+  },
+  "json": null
+ },
+ "response": {
+  "status": 200,
+  "content_type": "application/json",
+  "json": {
+   "items": [
+    {
+     "Id": "R270616",
+     "Title": "Analyst, Financial Analysis",
+     "Category": "Financial Analysis",
+     "RequisitionType": "Campus",
+     "JobGrade": null,
+     "RequisitionId": 300001113816363,
+     "ExternalPostedStartDate": "2026-11-11T12:09:40+00:00",
+     "JobLevel": null,
+     "JobSchedule": "Full time",
+     "JobShift": "Day",
+     "StudyLevel": null,
+     "InternationalTravelRequired": null,
+     "ExternalContactName": null,
+     "ExternalContactEmail": null,
+     "ContractType": null,
+     "ExternalPostedEndDate": null,
+     "JobFamilyId": 300000036347029,
+     "GeographyId": 100000068656125,
+     "GeographyNodeId": 100000192472751,
+     "ExternalDescriptionStr": "<strong>Analyst, Financial Analysis</strong>\n<p></p>\n<p>World-leading approaches in finance are fundamental to our success. Our Financial Analysis team has a broad and important responsibility. We rely on our analysts to develop, interpret,&nbsp;and implement financial concepts for planning and control. Their technical analysis of present and future financial performance informs all kinds of management decisions and strategies. And their research has an impact on everything from acquisitions and investments to customer deals, working capital requirements and forecasting.</p>\n<p><strong>What&nbsp;you’ll&nbsp;achieve:</strong></p>\n<p>As an Analyst, you will support data preparation, reconciliations and reporting for planning and performance reviews, building experience across FP&amp;A workflows.&nbsp;You’ll&nbsp;assist&nbsp;with templates and documentation that keep cycles on track. This role offers broad exposure and growth in corporate finance.</p>\n<p>Join us to do the best work of your career and make a profound social impact as an&nbsp;<strong>Analyst</strong>&nbsp;on our&nbsp;<strong>Financial Analysis</strong>&nbsp;team.</p>",
+     "CorporateDescriptionStr": "<b>Who We Are</b>\n<p></p>\n<p>We believe that each of us has the power to make an impact. That’s why we put our team members at the center of everything we do. If you’re looking for an opportunity to grow your career with some of the best minds and most advanced tech in the industry, we’re looking for you.</p>\n<p>Dell Technologies is a unique family of businesses that helps individuals and organizations transform how they work, live and play. Join us to build a future that works for everyone because Progress Takes All of Us.<br><br>\n  Dell Technologies is committed to the principle of equal employment opportunity for all employees and to providing employees with a work environment free of discrimination and harassment. <b><a href=\"https://iawmqy.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/careers/pages/equal-employment-opportunity-policy-statement\" target=\"_blank\" rel=\"nofollow\">Read the full Equal Employment Opportunity Policy</a></b>.</p>\n<p>Visit our <a href=\"https://jobs.dell.com/en/how-we-work-and-lead\" target=\"_blank\" rel=\"nofollow\"><b><i>Culture Code</i></b></a>&nbsp;page to learn more about how we work and lead.</p>",
+     "OrganizationDescriptionStr": "",
+     "ShortDescriptionStr": "",
+     "ContentLocale": "en",
+     "PrimaryLocation": "Bengaluru, Karnataka, India",
+     "PrimaryLocationCountry": "IN",
+     "ObjectVerNumberProfile": null,
+     "ApplyWhenNotPostedFlag": true,
+     "ExternalQualificationsStr": "<p><strong>Take the first step towards your dream career</strong></p><p>&nbsp;</p><p>Every Dell Technologies team member brings something unique to the table.&nbsp;Here’s&nbsp;what we are looking for with this role:</p><p><strong>Essential Requirements</strong></p><ul><li><span lang=\"EN-US\">Chartered accountant qualified in 2026 only as finance development program is for entry level candidates</span></li><li><span lang=\"EN-US\">Adaptability and Resilience:&nbsp; With regular rotations as part of structure, adaptability, resilience to quickly learn and contribute back is critical</span></li><li><span lang=\"EN-US\">Finance Acumen: Ability to function as a Finance partner to stakeholder</span></li><li><span lang=\"EN-US\">Analytical Skills: The ability to interpret financial data, identify trends, and draw meaningful conclusions from the data&nbsp;</span></li><li><span lang=\"EN-US\">Communication Skills: Strong written and verbal communication skills are essential for interacting with colleagues, clients, and vendors &nbsp;</span></li><li><span lang=\"EN-US\">Problem-Solving: The ability to identify financial issues, suggest solutions, and make data-driven recommendations&nbsp;</span></li><li><span style=\"font-family: Aptos, sans-serif;\"><span lang=\"EN-US\" style=\"font-size: 12pt;\">Excel and other Advanced Data analysis Skills: Proficiency in Microsoft Excel, Power BI and other AI tools</span></span></li></ul><p>&nbsp;</p><p><strong>Desirable Requirements</strong></p><ul><li><span lang=\"EN-US\">Qualified Chartered Accountant 2026 Pass out only</span></li></ul>",
+     "InternalQualificationsStr": "",
+     "InternalResponsibilitiesStr": "",
+     "ExternalResponsibilitiesStr": "<p><strong>You will:</strong></p><p><span lang=\"EN-US\">• Get an opportunity to launch you career while gaining insight and experience in a variety of financial, operational, and analytical areas&nbsp;</span></p><p><span lang=\"EN-US\">• Ensure that the internal financial reporting requirements of the company are met&nbsp;</span></p><p><span lang=\"EN-US\">• Help develop and maintain financial models and reports&nbsp;</span></p><p><span lang=\"EN-US\">• Experience international rotations for top performers while networking with senior leaders and executives&nbsp;</span></p><p><span style=\"font-family: Aptos, sans-serif;\"><span lang=\"EN-US\" style=\"font-size: 12pt;\">• Gather, evaluate, prepare, and summarize recommendations for financial plans, acquisition activity, customer deals, trended future requirements and operating forecasts&nbsp;</span></span></p>",
+     "JobFunctionCode": "FINANCE JOB FAMILY GROUP",
+     "HotJobFlag": false,
+     "TrendingFlag": true,
+     "BeFirstToApplyFlag": false,
+     "WorkplaceTypeCode": "ORA_ON_SITE",
+     "WorkplaceType": "On-site",
+     "OtherRequisitionTitle": null,
+     "NumberOfOpenings": null,
+     "HiringManager": null,
+     "Organization": null,
+     "BusinessUnitId": 300000003072795,
+     "LegalEmployerId": 300000003070516,
+     "OrganizationId": 1,
+     "WorkerType": null,
+     "JobType": null,
+     "WorkMonths": null,
+     "WorkYears": null,
+     "WorkHours": null,
+     "WorkDays": null,
+     "LegalEmployer": null,
+     "BusinessUnit": null,
+     "Department": null,
+     "DomesticTravelRequired": null,
+     "JobFunction": "Finance Job Family Group",
+     "secondaryLocations": [],
+     "media": [],
+     "workLocation": [
+      {
+       "LocationId": 300000036376038,
+       "LocationName": "IN Bangalore-Crystal Downs, Embassy GolfLinks Business Park",
+       "AddressLine1": "Crystal Downs, Embassy GolfLinks Business Park",
+       "AddressLine2": "Inner Ring Road, Koramangala, Domlur",
+       "AddressLine3": null,
+       "AddressLine4": null,
+       "Building": null,
+       "TownOrCity": "Bangalore",
+       "PostalCode": "560071",
+       "Country": "IN",
+       "Region1": null,
+       "Region2": "Karnataka",
+       "Region3": null,
+       "Longitude": "77.64216",
+       "Latitude": "12.95736"
+      }
+     ],
+     "otherWorkLocations": [],
+     "requisitionFlexFields": [],
+     "primaryLocationCoordinates": [
+      {
+       "GeographyNodeId": 100000192472751,
+       "GeographyId": 100000068656125,
+       "Latitude": "12.96614",
+       "Longitude": "77.58694",
+       "CountryCode": "IN"
+      }
+     ],
+     "skills": []
+    }
+   ],
+   "count": 1,
+   "hasMore": false,
+   "limit": 499,
+   "offset": 0,
+   "links": [
+    {
+     "rel": "self",
+     "href": "https://enterpriseplatform.dell.com:443/hcmRestApi/resources/11.13.18.05/recruitingCEJobRequisitionDetails",
+     "name": "recruitingCEJobRequisitionDetails",
+     "kind": "collection"
+    }
+   ]
+  },
+  "text": null
+ },
+ "recorded_at": "2026-11-11T18:35:01.824358+00:00",
+ "user_agent": "Mozilla/5.0 (compatible; JobWatch/0.1; personal job tracker)"
+}

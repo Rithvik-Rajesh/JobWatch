@@ -39,8 +39,7 @@ Groww,auto,true,confirmed,9,1,1,https://job-boards.eu.greenhouse.io/groww,greenh
 Harness,auto,true,confirmed,16,1,1,https://job-boards.greenhouse.io/harnessinc,greenhouse,Shared greenhouse adapter; public data; India via location_text.
 HCLTech,adapter,true,unverified,0,1,1,https://careers.hcltech.com/,successfactors,SuccessFactors; India isolation unresolved (no location in sitemap) -> needs detail-page parsing.
 Hewlett Packard Enterprise,auto,true,confirmed,400,1,1,https://hpe.wd5.myworkdayjobs.com/Jobsathpe,workday,Shared workday adapter; public data; India via location_text.
-IBM,adapter,true,confirmed,1971,1,1,https://www.ibm.com/careers/search,custom_api,IBM search API (POST); endpoint not visible in page source -> verify provenance before enabling.
-Infosys,not_reliable,false,not_applicable,,1,0,https://career.infosys.com/,unknown,Honest User-Agent blocked (bot_protected); not circumvented.
+IBM,not_reliable,false,not_applicable,,1,0,https://www.ibm.com/careers/search,custom_api,Provenance check NOT FOUND (2026-11-12): the inferred search API is not referenced by IBM's own careers pages; careers.ibm.com serves a WAF bot challenge. Bookmarklet only. See data/verification/provenance_ibm_rippling.md.
 Intel,auto,true,confirmed,94,1,1,https://intel.wd1.myworkdayjobs.com/External,workday,Shared workday adapter; public data; India via source_filter.
 Intuit,adapter,true,confirmed,27,1,1,https://jobs.intuit.com/,custom_html,robots disallows /search-jobs/; only sitemap.xml + individual job pages (JSON-LD unverified).
 Jane Street,adapter,true,none_observed,0,1,1,https://www.janestreet.com/join-jane-street/open-roles/,custom_api,"Public main.json, but NO India offices (ATX/CHI/HKG/LDN/NYC/SGP). Monitoring yields nothing today."
@@ -63,7 +62,7 @@ Postman,manual,false,not_applicable,,1,0,https://www.postman.com/company/careers
 Qualcomm,auto,true,confirmed,497,1,1,https://careers.qualcomm.com/careers,eightfold,Eightfold PCSX (apply/v2 returns 403 for this tenant).
 Razorpay,auto,true,confirmed,23,1,1,https://job-boards.greenhouse.io/razorpaysoftwareprivatelimited,greenhouse,Shared greenhouse adapter; public data; India via location_text.
 Red Hat,auto,true,confirmed,6,1,1,https://redhat.wd5.myworkdayjobs.com/Jobs,workday,Shared workday adapter; public data; India via source_filter.
-Rippling,adapter,true,confirmed,101,1,1,https://www.rippling.com/careers/open-roles,custom_api,"Rippling ATS board JSON; endpoint inferred from platform pattern, robots unavailable -> verify first."
+Rippling,not_reliable,false,not_applicable,,1,0,https://www.rippling.com/careers/open-roles,custom_api,"Provenance check NOT FOUND (2026-11-12): the careers page lists jobs via Algolia, not the inferred ATS endpoint. Bookmarklet only. See data/verification/provenance_ibm_rippling.md."
 Rubrik,auto,true,confirmed,30,1,1,https://boards.greenhouse.io/rubrik,greenhouse,Shared greenhouse adapter; public data; India via location_text.
 Salesforce,auto,true,confirmed,96,2,2,https://salesforce.wd12.myworkdayjobs.com/External_Career_Site,workday,Shared workday adapter; public data; India via source_filter.
 Samsung,auto,true,confirmed,34,2,2,https://sec.wd3.myworkdayjobs.com/Samsung_Careers,workday,Shared workday adapter; public data; India via source_filter.
@@ -75,7 +74,6 @@ Spotify,auto,true,confirmed,1,1,1,https://jobs.lever.co/spotify,lever,Shared lev
 Stripe,auto,true,confirmed,45,1,1,https://stripe.com/jobs/search,greenhouse,Shared greenhouse adapter; public data; India via location_text.
 Swiggy,not_reliable,false,not_applicable,,1,0,https://careers.swiggy.in/,smartrecruiters,SmartRecruiters public API host robots.txt disallows generic bots.
 Target,auto,true,confirmed,71,1,1,https://target.wd5.myworkdayjobs.com/targetcareers,workday,Shared workday adapter; public data; India via source_filter.
-Tata Consultancy Services,not_reliable,false,not_applicable,,1,0,https://www.tcs.com/careers,unknown,Honest User-Agent blocked (bot_protected); not circumvented.
 Tech Mahindra,manual,false,not_applicable,,1,0,https://careers.techmahindra.com/CurrentOpportunity.aspx,custom_html,No machine-readable listings found.
 Texas Instruments,auto,true,confirmed,126,1,1,https://careers.ti.com/en/sites/CX,oracle_hcm,Oracle HCM (site CX).
 Tower Research Capital,auto,true,confirmed,12,1,1,https://tower-research.com/open-positions/,greenhouse,Shared greenhouse adapter; public data; India via location_text.

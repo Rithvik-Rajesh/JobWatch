@@ -1,0 +1,518 @@
+{
+ "request": {
+  "method": "POST",
+  "url": "https://nvidia.wd5.myworkdayjobs.com/wday/cxs/nvidia/NVIDIAExternalCareerSite/jobs",
+  "params": null,
+  "json": {
+   "appliedFacets": {
+    "locationHierarchy1": [
+     "2fcb99c455831013ea52b82135ba3266"
+    ]
+   },
+   "limit": 20,
+   "offset": 0,
+   "searchText": ""
+  }
+ },
+ "response": {
+  "status": 200,
+  "content_type": "application/json",
+  "json": {
+   "total": 241,
+   "jobPostings": [
+    {
+     "title": "ASIC Design Engineer, GPU Core Pipeline IP",
+     "externalPath": "/job/India-Bengaluru/ASIC-Design-Engineer--GPU-Core-Pipeline-IP_JR2029760",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR2029760"
+     ]
+    },
+    {
+     "title": "Senior Physical Design Methodology Engineer",
+     "externalPath": "/job/India-Bengaluru/Senior-Physical-Design-Engineer_JR2026183",
+     "locationsText": "2 Locations",
+     "postedOn": "Posted Today",
+     "bulletFields": [
+      "JR2026183"
+     ]
+    },
+    {
+     "title": "Senior Post Silicon HSIO Bringup Lead",
+     "externalPath": "/job/India-Bengaluru/Senior-Post-Silicon-HSIO-Bringup-Lead_JR2016435",
+     "locationsText": "2 Locations",
+     "postedOn": "Posted Yesterday",
+     "bulletFields": [
+      "JR2016435"
+     ]
+    },
+    {
+     "title": "SAP Developer",
+     "externalPath": "/job/India-Bengaluru/SAP-Developer_JR2029586",
+     "locationsText": "3 Locations",
+     "postedOn": "Posted 2 Days Ago",
+     "bulletFields": [
+      "JR2029586"
+     ]
+    },
+    {
+     "title": "Senior System Software Engineer",
+     "externalPath": "/job/India-Bengaluru/Senior-System-Software-Engineer_JR2028433",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted 2 Days Ago",
+     "bulletFields": [
+      "JR2028433"
+     ]
+    },
+    {
+     "title": "Staff Business Systems Analyst, Beeline Vendor Management System",
+     "externalPath": "/job/India-Bengaluru/Staff-Business-Systems-Analyst--Beeline-Vendor-Management-System_JR2029434",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted 5 Days Ago",
+     "bulletFields": [
+      "JR2029434"
+     ]
+    },
+    {
+     "title": "Manager, System Software Engineering - Infrastructure Engineering and Automation",
+     "externalPath": "/job/India-Pune/Manager--System-Software-Engineering---Infrastructure-Engineering-and-Automation_JR2029365",
+     "locationsText": "India, Pune",
+     "postedOn": "Posted 5 Days Ago",
+     "bulletFields": [
+      "JR2029365"
+     ]
+    },
+    {
+     "title": "Verification Engineer, PCIE",
+     "externalPath": "/job/India-Bengaluru/Verification-Engineer--PCIE_JR2029158",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted 5 Days Ago",
+     "bulletFields": [
+      "JR2029158"
+     ]
+    },
+    {
+     "title": "Senior AI Infrastructure Engineer - DGX Cloud",
+     "externalPath": "/job/India-Bengaluru/Senior-AI-Infrastructure-Engineer---DGX-Cloud_JR2029048-1",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted 6 Days Ago",
+     "bulletFields": [
+      "JR2029048"
+     ]
+    },
+    {
+     "title": "Senior Software Engineer, AI Infrastructure Solutions",
+     "externalPath": "/job/India-Pune/Senior-Software-Engineer--AI-Infrastructure-Solutions_JR2029182",
+     "locationsText": "India, Pune",
+     "postedOn": "Posted 6 Days Ago",
+     "bulletFields": [
+      "JR2029182"
+     ]
+    },
+    {
+     "title": "Senior System Software Engineer - Tegra MODS",
+     "externalPath": "/job/India-Bengaluru/Senior-System-Software-Engineer---Tegra-MODS_JR2028565",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted 6 Days Ago",
+     "bulletFields": [
+      "JR2028565"
+     ]
+    },
+    {
+     "title": "Global Trade Compliance Analyst",
+     "externalPath": "/job/India-Pune/Global-Trade-Compliance-Analyst_JR2028679",
+     "locationsText": "India, Pune",
+     "postedOn": "Posted 7 Days Ago",
+     "bulletFields": [
+      "JR2028679"
+     ]
+    },
+    {
+     "title": "Senior Manager, Network Delivery and Security",
+     "externalPath": "/job/India-Bengaluru/Senior-Manager--Network-Delivery-and-Security_JR2029290",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted 8 Days Ago",
+     "bulletFields": [
+      "JR2029290"
+     ]
+    },
+    {
+     "title": "Senior Software QA Engineer",
+     "externalPath": "/job/India-Bengaluru/Senior-Software-QA-Engineer_JR2028491",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted 8 Days Ago",
+     "bulletFields": [
+      "JR2028491"
+     ]
+    },
+    {
+     "title": "Senior System Software Engineer – Accelerated Microservices and Libraries",
+     "externalPath": "/job/India-Pune/Senior-System-Software-Engineer---Accelerated-Microservices-and-Libraries_JR2029168",
+     "locationsText": "2 Locations",
+     "postedOn": "Posted 8 Days Ago",
+     "bulletFields": [
+      "JR2029168"
+     ]
+    },
+    {
+     "title": "SoC Manager, Performance Verification - Networking group",
+     "externalPath": "/job/India-Bengaluru/SoC-Manager--Performance-Verification---Networking-group_JR2028606",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted 8 Days Ago",
+     "bulletFields": [
+      "JR2028606"
+     ]
+    },
+    {
+     "title": "Verification Engineer - Networking IPs",
+     "externalPath": "/job/India-Bengaluru/Verification-Engineer---Networking-IPs_JR2028803",
+     "locationsText": "2 Locations",
+     "postedOn": "Posted 8 Days Ago",
+     "bulletFields": [
+      "JR2028803"
+     ]
+    },
+    {
+     "title": "IP Manager, Design and Verification - Networking",
+     "externalPath": "/job/India-Bengaluru/IP-Manager--Design-and-Verification---Networking_JR2028608",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted 9 Days Ago",
+     "bulletFields": [
+      "JR2028608"
+     ]
+    },
+    {
+     "title": "Senior Mask Design Engineer - Hardware",
+     "externalPath": "/job/India-Bengaluru/Senior-Mask-Design-Engineer---Hardware_JR2028994",
+     "locationsText": "India, Bengaluru",
+     "postedOn": "Posted 9 Days Ago",
+     "bulletFields": [
+      "JR2028994"
+     ]
+    },
+    {
+     "title": "Senior DevOps and Infrastructure Engineer",
+     "externalPath": "/job/India-Pune/Senior-DevOps-and-Infrastructure-Engineer_JR2028545",
+     "locationsText": "2 Locations",
+     "postedOn": "Posted 9 Days Ago",
+     "bulletFields": [
+      "JR2028545"
+     ]
+    }
+   ],
+   "facets": [
+    {
+     "facetParameter": "jobFamilyGroup",
+     "descriptor": "Job Category",
+     "values": [
+      {
+       "descriptor": "Engineering",
+       "id": "0c40f6bd1d8f10ae43ffaefd46dc7e78",
+       "count": 205
+      },
+      {
+       "descriptor": "Sales",
+       "id": "0c40f6bd1d8f10ae43ffcac5bbec7e90",
+       "count": 20
+      },
+      {
+       "descriptor": "IT - Information Technology",
+       "id": "0c40f6bd1d8f10ae43ffbd1459047e84",
+       "count": 5
+      },
+      {
+       "descriptor": "Operations",
+       "id": "0c40f6bd1d8f10ae43ffc3fc7d8c7e8a",
+       "count": 4
+      },
+      {
+       "descriptor": "Professional Services",
+       "id": "e8bdc341a93101bd5f4d2b0a1c005e36",
+       "count": 3
+      },
+      {
+       "descriptor": "Program Manager",
+       "id": "0c40f6bd1d8f10ae43ffc668c6847e8c",
+       "count": 2
+      },
+      {
+       "descriptor": "Univ Employment",
+       "id": "0c40f6bd1d8f10ae43ffda1e8d447e94",
+       "count": 1
+      },
+      {
+       "descriptor": "Finance",
+       "id": "0c40f6bd1d8f10ae43ffb5dd06f47e7e",
+       "count": 1
+      }
+     ]
+    },
+    {
+     "facetParameter": "workerSubType",
+     "descriptor": "Job Type",
+     "values": [
+      {
+       "descriptor": "Regular Employee",
+       "id": "0c40f6bd1d8f10adf6dae161b1844a15",
+       "count": 231
+      },
+      {
+       "descriptor": "Management",
+       "id": "0c40f6bd1d8f10adf6dae2cd57444a16",
+       "count": 9
+      },
+      {
+       "descriptor": "Intern (Fixed Term)",
+       "id": "0c40f6bd1d8f10adf6dae42e46d44a17",
+       "count": 1
+      }
+     ]
+    },
+    {
+     "facetParameter": "timeType",
+     "descriptor": "Time Type",
+     "values": [
+      {
+       "descriptor": "Full time",
+       "id": "5509c0b5959810ac0029943377d47364",
+       "count": 241
+      }
+     ]
+    },
+    {
+     "facetParameter": "locationMainGroup",
+     "values": [
+      {
+       "facetParameter": "locationHierarchy2",
+       "descriptor": "Location Type",
+       "values": [
+        {
+         "descriptor": "Office",
+         "id": "0c3f5f117e9a0101f6422f0fe79d0000",
+         "count": 240
+        },
+        {
+         "descriptor": "Remote",
+         "id": "0c3f5f117e9a0101f63dc469c3010000",
+         "count": 13
+        }
+       ]
+      },
+      {
+       "facetParameter": "locationHierarchy1",
+       "descriptor": "Locations",
+       "values": [
+        {
+         "descriptor": "United States",
+         "id": "2fcb99c455831013ea52fb338f2932d8",
+         "count": 1384
+        },
+        {
+         "descriptor": "Israel",
+         "id": "2fcb99c455831013ea52bbe14cf9326c",
+         "count": 417
+        },
+        {
+         "descriptor": "India",
+         "id": "2fcb99c455831013ea52b82135ba3266",
+         "count": 241
+        },
+        {
+         "descriptor": "China",
+         "id": "2fcb99c455831013ea529fe151e3323c",
+         "count": 241
+        },
+        {
+         "descriptor": "Taiwan",
+         "id": "2fcb99c455831013ea52ed162d4932c0",
+         "count": 143
+        },
+        {
+         "descriptor": "United Kingdom",
+         "id": "2fcb99c455831013ea52f785717432d2",
+         "count": 36
+        },
+        {
+         "descriptor": "Germany",
+         "id": "2fcb99c455831013ea52adc65f5d3254",
+         "count": 32
+        },
+        {
+         "descriptor": "Singapore",
+         "id": "2fcb99c455831013ea52df1adb7432a8",
+         "count": 27
+        },
+        {
+         "descriptor": "Switzerland",
+         "id": "2fcb99c455831013ea52e9ef1a0032ba",
+         "count": 26
+        },
+        {
+         "descriptor": "Vietnam",
+         "id": "2fcb99c455831013ea52fea3f8d732de",
+         "count": 25
+        },
+        {
+         "descriptor": "Japan",
+         "id": "2fcb99c455831013ea52c29d2e923278",
+         "count": 25
+        },
+        {
+         "descriptor": "Poland",
+         "id": "2fcb99c455831013ea52d8783aa0329c",
+         "count": 20
+        },
+        {
+         "descriptor": "Canada",
+         "id": "2fcb99c455831013ea529c3b93ba3236",
+         "count": 19
+        },
+        {
+         "descriptor": "France",
+         "id": "2fcb99c455831013ea52aa2df70e324e",
+         "count": 17
+        },
+        {
+         "descriptor": "Australia",
+         "id": "2fcb99c455831013ea528dce556b3224",
+         "count": 15
+        },
+        {
+         "descriptor": "Korea",
+         "id": "2fcb99c455831013ea52c61ded6e327e",
+         "count": 14
+        },
+        {
+         "descriptor": "Ukraine",
+         "id": "970bf8c909a7012c3733f063d3000107",
+         "count": 6
+        },
+        {
+         "descriptor": "Thailand",
+         "id": "2fcb99c455831013ea52f07ea4c732c6",
+         "count": 6
+        },
+        {
+         "descriptor": "Sweden",
+         "id": "2fcb99c455831013ea52e6c3067832b4",
+         "count": 6
+        },
+        {
+         "descriptor": "Armenia",
+         "id": "d21cf68980ad0128000fd2c6b107c000",
+         "count": 4
+        },
+        {
+         "descriptor": "Denmark",
+         "id": "d21cf68980ad0121a67d319db107a200",
+         "count": 4
+        },
+        {
+         "descriptor": "Spain",
+         "id": "2fcb99c455831013ea52e31a43e832ae",
+         "count": 4
+        },
+        {
+         "descriptor": "Mexico",
+         "id": "2fcb99c455831013ea52cd244532328a",
+         "count": 4
+        },
+        {
+         "descriptor": "Hong Kong",
+         "id": "2fcb99c455831013ea52b157d0d6325a",
+         "count": 4
+        },
+        {
+         "descriptor": "Netherlands",
+         "id": "2fcb99c455831013ea52d0e0e4583290",
+         "count": 3
+        },
+        {
+         "descriptor": "Finland",
+         "id": "2fcb99c455831013ea52a6cbc15f3248",
+         "count": 3
+        },
+        {
+         "descriptor": "Czechia",
+         "id": "2fcb99c455831013ea52a358b3d53242",
+         "count": 3
+        },
+        {
+         "descriptor": "Palestine",
+         "id": "970bf8c909a701f9c086d363d300fa06",
+         "count": 2
+        },
+        {
+         "descriptor": "Hungary",
+         "id": "7bcfe8379f6b01ad4d347d1ca87689a6",
+         "count": 2
+        },
+        {
+         "descriptor": "United Arab Emirates",
+         "id": "2fcb99c455831013ea52f3d5d2c232cc",
+         "count": 2
+        },
+        {
+         "descriptor": "Italy",
+         "id": "2fcb99c455831013ea52bf52796c3272",
+         "count": 2
+        },
+        {
+         "descriptor": "Romania",
+         "id": "e5375aecc8d9103bebfb513cb69200d4",
+         "count": 1
+        },
+        {
+         "descriptor": "Brazil",
+         "id": "2fcb99c455831013ea5298c9e1f63230",
+         "count": 1
+        }
+       ]
+      },
+      {
+       "facetParameter": "locations",
+       "descriptor": "Sites",
+       "values": [
+        {
+         "descriptor": "India, Bengaluru",
+         "id": "91336993fab910af6d6fb9748af4c1df",
+         "count": 197
+        },
+        {
+         "descriptor": "India, Pune",
+         "id": "91336993fab910af6d6fb0782884c1cb",
+         "count": 67
+        },
+        {
+         "descriptor": "India, Hyderabad",
+         "id": "91336993fab910af6d6fb2be0974c1d0",
+         "count": 40
+        },
+        {
+         "descriptor": "India, Remote",
+         "id": "91336993fab910af6d6fb4ee7634c1d5",
+         "count": 13
+        },
+        {
+         "descriptor": "India, Gurugram",
+         "id": "f28ae3c49d2601aff203e114d301695f",
+         "count": 11
+        },
+        {
+         "descriptor": "India, Mumbai",
+         "id": "91336993fab910af6d6fabbb968cc1c1",
+         "count": 7
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "userAuthenticated": false
+  },
+  "text": null
+ },
+ "recorded_at": "2026-11-11T18:34:48.581649+00:00",
+ "user_agent": "Mozilla/5.0 (compatible; JobWatch/0.1; personal job tracker)"
+}

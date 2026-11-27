@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import Literal
 
 from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -23,6 +24,15 @@ class Settings(BaseSettings):
     cors_origins: list[str] = ["http://localhost:5173"]
     log_level: str = "INFO"
     log_json: bool = False
+
+    # New career-site jobs are classified once, before they are added to the inbox.
+    # `auto` uses Gemini when a key is present and otherwise uses the local Ollama server.
+    llm_provider: Literal["auto", "ollama", "gemini", "disabled"] = "auto"
+    ollama_url: str = "http://127.0.0.1:11434"
+    ollama_model: str = "gemma3:4b"
+    gemini_api_key: SecretStr = SecretStr("")
+    gemini_model: str = "gemini-2.5-flash"
+    llm_timeout_seconds: float = Field(default=45.0, gt=0, le=180)
 
     @property
     def is_production(self) -> bool:

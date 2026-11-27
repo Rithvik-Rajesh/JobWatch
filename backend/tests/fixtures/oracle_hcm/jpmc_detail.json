@@ -1,0 +1,126 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://jpmc.fa.oraclecloud.com/hcmRestApi/resources/latest/recruitingCEJobRequisitionDetails",
+  "params": {
+   "expand": "all",
+   "onlyData": "true",
+   "finder": "ById;Id=\"210771209\",siteNumber=CX_1001"
+  },
+  "json": null
+ },
+ "response": {
+  "status": 200,
+  "content_type": "application/json",
+  "json": {
+   "items": [
+    {
+     "Id": "210771209",
+     "Title": "Lead Software Engineer- Python,Django & ReactJS",
+     "Category": "Software Engineering",
+     "RequisitionType": "Professional",
+     "JobGrade": null,
+     "RequisitionId": 300092073416403,
+     "ExternalPostedStartDate": "2026-11-11T08:29:12+00:00",
+     "JobLevel": null,
+     "JobSchedule": "Full time",
+     "JobShift": "Day",
+     "StudyLevel": null,
+     "InternationalTravelRequired": null,
+     "ExternalContactName": null,
+     "ExternalContactEmail": null,
+     "ContractType": null,
+     "ExternalPostedEndDate": "2026-11-13T05:00:00+00:00",
+     "JobFamilyId": 300000086152753,
+     "GeographyId": 300000081155702,
+     "GeographyNodeId": 100302248440418,
+     "ExternalDescriptionStr": "<div>\n We have an opportunity to impact your career and provide an adventure where you can push the limits of what's possible.&nbsp;\n <br>\n <br>\n As a Lead Software Engineer at JPMorgan Chase within the Infrastructure Platforms team, you are an integral part of an agile team that works to enhance, build, and deliver trusted market-leading technology products in a secure, stable, and scalable way. As a core technical contributor, you are responsible for conducting critical technology solutions across multiple technical areas within various business functions in support of the firm’s business objectives.&nbsp;\n <br>\n <br><strong>Job responsibilities</strong>\n</div>\n<div>\n <ul>\n  <li>Build and enhance self-service tools, APIs, and interfaces that empower users to request, manage, and monitor database resources with minimal manual intervention</li>\n  <li>Integrate database automation workflows with enterprise platforms, CI/CD pipelines, and cloud/on-prem infrastructure using scripting languages (Python, etc.) and automation frameworks</li>\n  <li>Execute creative software solutions, design, development, and technical troubleshooting by thinking beyond routine or conventional approaches to build solutions or break down technical problems</li>\n  <li>Develop secure, high-quality production code, and review and debug code written by others</li>\n  <li>Identify opportunities to eliminate or automate remediation of recurring issues to improve overall operational stability of software applications and systems</li>\n  <li>Lead evaluation sessions with external vendors, startups, and internal teams to drive outcomes-oriented probing of architectural designs, technical credentials, and applicability for use within existing systems and information architecture</li>\n  <li>Design, develop, and optimize complex T-SQL queries, stored procedures, functions, and triggers to support business applications and data processing needs</li>\n  <li>Deliver hands-on practical experience in system design, application development, testing, and operational stability</li>\n  <li>Collaborate with cross-functional teams to deliver business solutions and ensure operational stability and performance of developed applications</li>\n  <li>Drives team adoption of enterprise-authorised AI-assisted engineering practices within the work environment to improve code quality, delivery speed, and operational outcomes (e.g., AI-assisted code review/refactoring, test strategy acceleration, incident/root-cause analysis support), while establishing consistent validation standards (secure coding, peer review, automated testing) and promoting reuse of effective patterns across the team</li>\n  <li>Applies knowledge of tools within the Software Development Life Cycle toolchain, including enterprise-authorised AI-assisted development and automation capabilities, to improve the value realised by automation</li>\n </ul>\n</div>\n<div>\n &nbsp;\n</div>\n<div>\n &nbsp;\n</div>\n<div>\n &nbsp;\n</div>\n<div>\n <strong>Required qualifications, capabilities, and skills</strong>\n</div>\n<div>\n &nbsp;\n</div>\n<div>\n <ul>\n  <li>Formal training or certification on software engineering concepts and 5+ years applied experience</li>\n  <li>Extensive experience in coding applications using ReactJS / NodeJS/ Python / Django / Databases.</li>\n  <li>Hands-on practical experience delivering system design, application development, testing, and operational stability</li>\n  <li>Advanced in one or more programming language(s), exhibit excellent Python programming skills</li>\n  <li>Proficiency in automation and continuous delivery methods</li>\n  <li>Proficient in all aspects of the Software Development Life Cycle</li>\n  <li>Advanced understanding of agile methodologies such as CI/CD, Application Resiliency, and Security</li>\n  <li>Demonstrated proficiency in software applications and technical processes within a technical discipline (e.g., cloud, artificial intelligence, machine learning, mobile, etc.)</li>\n  <li>Demonstrated experience leading effective use of approved AI-assisted software development tools (e.g., for coding, code review, test acceleration, troubleshooting) with the ability to set team expectations for validating AI outputs for correctness, performance, and security</li>\n  <li>Strong understanding of responsible AI use in engineering workflows, including data sensitivity considerations, secure handling of inputs/outputs, and adherence to resiliency and security expectations; experience coaching engineers on safe, compliant adoption within delivery practices</li>\n </ul>\n</div>\n<div>\n &nbsp;\n</div>\n<div>\n &nbsp;\n</div>\n<div>\n <strong>Preferred qualifications, capabilities, and skills</strong>\n</div>\n<ul style=\"list-style-type: disc;\">\n <li>Practical cloud native experience</li>\n <li>Ability to initiate and implement ideas to solve business problems</li>\n <li>Advanced development experience in one(Python preferred) &nbsp;or more programming language(s).</li>\n <li>Passion for learning new technologies and driving innovative solutions.</li>\n <li>Extensive working experience &nbsp;in Database technologies is preferred.&nbsp;</li>\n</ul>\n<div>\n &nbsp;\n</div>\n<div>\n &nbsp;\n</div>\n<div>\n &nbsp;\n</div>",
+     "CorporateDescriptionStr": "",
+     "OrganizationDescriptionStr": "",
+     "ShortDescriptionStr": "Carry out critical tech solutions across multiple technical areas as an integral part of an agile team",
+     "ContentLocale": "en",
+     "PrimaryLocation": "Hyderabad, Telangana, India",
+     "PrimaryLocationCountry": "IN",
+     "ObjectVerNumberProfile": null,
+     "ApplyWhenNotPostedFlag": true,
+     "ExternalQualificationsStr": "",
+     "InternalQualificationsStr": "",
+     "InternalResponsibilitiesStr": "",
+     "ExternalResponsibilitiesStr": "",
+     "JobFunctionCode": "TEC",
+     "HotJobFlag": false,
+     "TrendingFlag": false,
+     "BeFirstToApplyFlag": false,
+     "WorkplaceTypeCode": null,
+     "WorkplaceType": "",
+     "OtherRequisitionTitle": null,
+     "NumberOfOpenings": null,
+     "HiringManager": null,
+     "Organization": null,
+     "BusinessUnitId": 300000086610244,
+     "LegalEmployerId": 300000087164225,
+     "OrganizationId": 300001067733542,
+     "WorkerType": null,
+     "JobType": null,
+     "WorkMonths": null,
+     "WorkYears": null,
+     "WorkHours": null,
+     "WorkDays": null,
+     "LegalEmployer": null,
+     "BusinessUnit": "Corporate Sector",
+     "Department": null,
+     "DomesticTravelRequired": null,
+     "JobFunction": "Technology",
+     "secondaryLocations": [],
+     "media": [],
+     "workLocation": [
+      {
+       "LocationId": 300000161082713,
+       "LocationName": "33435-JPMorgan Chase & Co Towers, H",
+       "AddressLine1": "MAGMA,UNIT-1,PHASE-IV,SY NO.83/1,PLOT NO 2, GR Floor TO 2 Floor and 5 Floor TO 16 Floor,Basement 1,2",
+       "AddressLine2": null,
+       "AddressLine3": null,
+       "AddressLine4": null,
+       "Building": null,
+       "TownOrCity": "Hyderabad",
+       "PostalCode": "500081",
+       "Country": "IN",
+       "Region1": null,
+       "Region2": "IN-TG",
+       "Region3": null,
+       "Longitude": "78.38366",
+       "Latitude": "17.44744"
+      }
+     ],
+     "otherWorkLocations": [],
+     "requisitionFlexFields": [],
+     "primaryLocationCoordinates": [
+      {
+       "GeographyNodeId": 100302248440418,
+       "GeographyId": 300000081155702,
+       "Latitude": "17.3174",
+       "Longitude": "78.6611",
+       "CountryCode": "IN"
+      }
+     ],
+     "skills": []
+    }
+   ],
+   "count": 1,
+   "hasMore": false,
+   "limit": 499,
+   "offset": 0,
+   "links": [
+    {
+     "rel": "self",
+     "href": "https://jpmc.fa.oraclecloud.com:443/hcmRestApi/resources/11.13.18.05/recruitingCEJobRequisitionDetails",
+     "name": "recruitingCEJobRequisitionDetails",
+     "kind": "collection"
+    }
+   ]
+  },
+  "text": null
+ },
+ "recorded_at": "2026-11-11T18:35:05.690486+00:00",
+ "user_agent": "Mozilla/5.0 (compatible; JobWatch/0.1; personal job tracker)"
+}

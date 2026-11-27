@@ -10,18 +10,34 @@ from app.core.db import Base
 target_metadata = Base.metadata
 
 
+def include_object(obj, name, type_, reflected, compare_to) -> bool:
+    """Procrastinate (migration 0004) owns the procrastinate_* tables; keep them out of autogenerate."""
+    if type_ == "table":
+        return not (name or "").startswith("procrastinate_")
+    table = getattr(obj, "table", None)
+    return not (table is not None and table.name.startswith("procrastinate_"))
+
+
 def _url() -> str:
     return context.config.get_main_option("sqlalchemy.url") or get_settings().database_url
 
 
 def run_migrations_offline() -> None:
-    context.configure(url=_url(), target_metadata=target_metadata, literal_binds=True, compare_type=True)
+    context.configure(
+        url=_url(),
+        target_metadata=target_metadata,
+        literal_binds=True,
+        compare_type=True,
+        include_object=include_object,
+    )
     with context.begin_transaction():
         context.run_migrations()
 
 
 def _do_run(connection) -> None:
-    context.configure(connection=connection, target_metadata=target_metadata, compare_type=True)
+    context.configure(
+        connection=connection, target_metadata=target_metadata, compare_type=True, include_object=include_object
+    )
     with context.begin_transaction():
         context.run_migrations()
 

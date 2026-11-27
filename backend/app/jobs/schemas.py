@@ -25,6 +25,7 @@ JobSort = Literal[
     "title_asc",
     "status",
     "relevance",
+    "internship_first",
     "updated_desc",
 ]
 
@@ -56,6 +57,15 @@ class JobFilters(APIModel):
     starred: bool | None = None
     tag: list[str] = Field(default_factory=list)
     include_merged: bool = False
+    # Experience filter (freshers: max_experience_years=1). Jobs whose requirement couldn't be parsed are kept
+    # unless include_unknown_experience=false; titles like intern/graduate/fresher always match.
+    max_experience_years: Decimal | None = None
+    include_unknown_experience: bool = True
+    role: list[str] = Field(default_factory=list)  # title must contain ANY of these words (e.g. "software")
+    tech_only: bool = False  # software / data / AI-ML engineering roles only (keyword rules on title + JD)
+    internships_only: bool = False
+    fresher: bool | None = None  # LLM verdict; null means do not filter
+    tab: Literal["not_applied", "interested", "applied", "not_interested", "all"] | None = None
     sort: JobSort = "discovered_desc"
 
 
@@ -76,6 +86,8 @@ class CompanyRef(APIModel):
 
 class JobListItem(APIModel):
     id: int
+    experience_min_years: Decimal | None = None
+    experience_max_years: Decimal | None = None
     title: str
     company: CompanyRef
     location_text: str | None
@@ -98,6 +110,9 @@ class JobListItem(APIModel):
     starred: bool
     is_new: bool  # first_seen_at within 24 h
     is_updated: bool  # meaningful change within 72 h after discovery
+    is_fresher_role: bool | None = None
+    fresher_reason: str | None = None
+    classified_by: str | None = None
     tags: list[str] = Field(default_factory=list)
 
 

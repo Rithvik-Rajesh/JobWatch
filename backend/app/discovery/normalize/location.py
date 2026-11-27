@@ -66,26 +66,31 @@ IN_STATES = {
     "madhya pradesh": "Madhya Pradesh", "odisha": "Odisha", "orissa": "Odisha", "goa": "Goa", "assam": "Assam",
     "bihar": "Bihar", "jharkhand": "Jharkhand", "chhattisgarh": "Chhattisgarh", "uttarakhand": "Uttarakhand",
     "himachal pradesh": "Himachal Pradesh", "chandigarh": "Chandigarh", "puducherry": "Puducherry",
-    "jammu and kashmir": "Jammu and Kashmir",
+    "jammu and kashmir": "Jammu and Kashmir", "delhi": "Delhi", "sikkim": "Sikkim", "tripura": "Tripura",
+    "meghalaya": "Meghalaya", "manipur": "Manipur", "mizoram": "Mizoram", "nagaland": "Nagaland",
+    "arunachal pradesh": "Arunachal Pradesh", "ladakh": "Ladakh", "lakshadweep": "Lakshadweep",
+    "andaman and nicobar islands": "Andaman and Nicobar Islands",
 }  # fmt: skip
 IN_STATE_ABBR = {
     "KA": "Karnataka", "MH": "Maharashtra", "TN": "Tamil Nadu", "TG": "Telangana", "TS": "Telangana",
     "AP": "Andhra Pradesh", "KL": "Kerala", "GJ": "Gujarat", "RJ": "Rajasthan", "UP": "Uttar Pradesh",
     "HR": "Haryana", "WB": "West Bengal", "PB": "Punjab", "MP": "Madhya Pradesh", "OD": "Odisha", "OR": "Odisha",
-    "DL": "Delhi",
+    "DL": "Delhi", "JH": "Jharkhand", "CG": "Chhattisgarh", "HP": "Himachal Pradesh", "BR": "Bihar",
+    "GA": "Goa", "AS": "Assam", "JK": "Jammu and Kashmir",
 }  # fmt: skip
 US_STATES = {
     "california": "California", "texas": "Texas", "new york": "New York", "washington": "Washington",
     "massachusetts": "Massachusetts", "illinois": "Illinois", "georgia": "Georgia", "florida": "Florida",
     "colorado": "Colorado", "virginia": "Virginia", "north carolina": "North Carolina", "oregon": "Oregon",
     "new jersey": "New Jersey", "pennsylvania": "Pennsylvania", "arizona": "Arizona", "ohio": "Ohio",
-    "michigan": "Michigan", "minnesota": "Minnesota", "utah": "Utah",
+    "michigan": "Michigan", "minnesota": "Minnesota", "utah": "Utah", "indiana": "Indiana",
 }  # fmt: skip
 US_STATE_ABBR = {
     "CA": "California", "TX": "Texas", "NY": "New York", "WA": "Washington", "MA": "Massachusetts",
     "IL": "Illinois", "GA": "Georgia", "FL": "Florida", "CO": "Colorado", "VA": "Virginia",
     "NC": "North Carolina", "OR": "Oregon", "NJ": "New Jersey", "PA": "Pennsylvania", "AZ": "Arizona",
     "OH": "Ohio", "MI": "Michigan", "MN": "Minnesota", "UT": "Utah", "DC": "District of Columbia",
+    "IN": "Indiana",
 }  # fmt: skip
 REGIONS: dict[str, dict[str, str]] = {"IN": IN_STATES, "US": US_STATES}
 REGION_ABBR: dict[str, dict[str, str]] = {"IN": IN_STATE_ABBR, "US": US_STATE_ABBR}
@@ -135,6 +140,8 @@ _CITIES: list[tuple[str, str | None, str, list[str]]] = [
     ("Menlo Park", "California", "US", []),
     ("Cupertino", "California", "US", []),
     ("San Diego", "California", "US", []),
+    ("Indianapolis", "Indiana", "US", []),
+    ("Indian Wells", "California", "US", []),
     ("Atlanta", "Georgia", "US", []),
     ("Dallas", "Texas", "US", []),
     ("Houston", "Texas", "US", []),
@@ -194,6 +201,13 @@ for _city, _region, _cc, _aliases in _CITIES:
     for _k in [_city.lower(), *_aliases]:
         CITY_BY_KEY[_k] = (_city, _region, _cc)
 
+# Indiana (US) cities. "<city>, IN" is ambiguous with the ISO code for India, so a trailing "IN" only counts as
+# India after a known Indian city/state; after one of these it is the US state; otherwise it is left unresolved.
+_INDIANA_CITIES = {
+    "fort wayne", "evansville", "south bend", "carmel", "fishers", "bloomington", "west lafayette", "lafayette",
+    "muncie", "terre haute", "kokomo", "noblesville", "greenwood", "elkhart", "mishawaka", "anderson", "jeffersonville",
+    "columbus", "hammond", "gary", "notre dame",
+}  # fmt: skip
 _REMOTE_RE = re.compile(r"\b(?:fully\s+)?(?:remote|wfh|work\s+from\s+home|virtual|telecommute)\b", re.I)
 _COUNT_ONLY_RE = re.compile(r"^\s*(?:\d+|multiple|various|several)\s+locations?\s*$", re.I)
 _SPLIT_RE = re.compile(r"\s*[;|\n/]\s*|\s+(?:and|or)\s+|\s+&\s+")
@@ -206,6 +220,12 @@ def _key(s: str) -> str:
     s = re.sub(r"\bcity of\b", " ", s)
     s = re.sub(r"[^a-z0-9 ]+", " ", s)
     return re.sub(r"\s+", " ", s).strip()
+
+
+def country_name(code: str) -> str:
+    """Display name for an alpha-2 code ('IN' -> 'India'); the code itself when unknown."""
+    names = _COUNTRIES.get(code.upper())
+    return names[0].title() if names else code.upper()
 
 
 def country_for(text: str) -> str | None:
@@ -294,6 +314,17 @@ def _parse_chunk(chunk: str) -> list[_Loc]:
         # region full name in context after a city (e.g. "Dallas, Georgia")
         if cur and cur.city and cur.region is None and country_ctx in REGIONS and k in REGIONS[country_ctx]:
             cur.region = REGIONS[country_ctx][k]
+            cur.parts.append(part)
+            continue
+        if part == "IN" and cur is not None and cur.country != "IN" and not cur.city and not cur.region:
+            # "<unknown city>, IN": Indiana (known Indiana city) or ambiguous (left unresolved) - never India.
+            if cur.country is None and cur.parts and _key(cur.parts[-1]) in _INDIANA_CITIES:
+                cur.region, cur.country = "Indiana", "US"
+            cur.parts.append(part)
+            continue
+        if part == "IN" and cur is not None and cur.country not in (None, "IN"):
+            if cur.region is None and cur.country == "US":
+                cur.region = "Indiana"
             cur.parts.append(part)
             continue
         country = _classify_country(part)

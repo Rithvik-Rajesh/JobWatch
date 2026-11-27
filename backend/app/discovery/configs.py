@@ -96,10 +96,12 @@ class AshbyConfig(_Base):
 
 class OracleHcmConfig(_Base):
     kind: Literal["oracle_hcm"] = "oracle_hcm"
-    host: str = Field(pattern=r"^[a-z0-9.-]+\.oraclecloud\.com$")  # e.g. jpmc.fa.oraclecloud.com
+    # Usually *.oraclecloud.com, but tenants may use their own domain (Dell: enterpriseplatform.dell.com).
+    host: str = Field(pattern=r"^[a-z0-9-]+(\.[a-z0-9-]+)+$")
     site_number: str = Field(pattern=r"^[A-Za-z0-9_]+$")  # e.g. CX_1001
     language: str = "en"
     india_location_id: str | None = None  # resolved by the adapter if absent (cached here)
+    max_pages: int = Field(default=200, ge=1, le=1000)  # safety cap (25 per page); hitting it => incomplete
 
 
 class EightfoldConfig(_Base):
@@ -108,6 +110,7 @@ class EightfoldConfig(_Base):
     domain: str  # e.g. microsoft.com
     variant: Literal["pcsx", "apply_v2"] = "pcsx"  # tenants enable different public endpoints
     location_query: str = "India"
+    max_pages: int = Field(default=200, ge=1, le=1000)  # safety cap; hitting it => incomplete
 
 
 # ───────────────────────────── generic / custom ─────────────────────────────
