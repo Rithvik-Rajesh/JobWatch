@@ -70,6 +70,7 @@ def create_app() -> FastAPI:
     ui = Path(__file__).parent / "ui" / "index.html"
 
     @app.get("/", include_in_schema=False)
+    @app.get("/settings", include_in_schema=False)
     async def index() -> FileResponse:
         return FileResponse(ui)
 

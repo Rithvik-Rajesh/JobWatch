@@ -183,6 +183,38 @@ def parse_registry(csv_path: Path, verification_dir: Path | None = None) -> list
     return out
 
 
+def parse_json_registry(path: Path) -> list[RegistryRow]:
+    """Read the shareable watchlist without depending on CSV files or a database."""
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict) or data.get("version") != 1 or not isinstance(data.get("sites"), list):
+        raise ValueError("Expected a version 1 company registry with a sites list")
+    rows = []
+    identities = set()
+    for index, entry in enumerate(data["sites"], 1):
+        if not isinstance(entry, dict):
+            raise ValueError(f"Invalid career site at index {index}")
+        row = RegistryRow(
+            row_number=index,
+            company=str(entry.get("company") or "").strip(),
+            label=str(entry.get("label") or "").strip(),
+        )
+        identity = (row.company.casefold(), row.label.casefold())
+        if not all(identity) or identity in identities:
+            raise ValueError(f"Missing or duplicate company/site at index {index}")
+        identities.add(identity)
+        row.platform = ExtractorKind(entry["platform"])
+        row.config = sites_service.validated_config(row.platform, entry["config"])
+        row.careers_url = entry.get("careers_url")
+        row.support_class = SupportClass(entry["support_class"])
+        row.india_coverage = IndiaCoverage(entry["india_coverage"])
+        row.verification_status = entry.get("verification_status")
+        date = entry.get("verified_at")
+        row.verified_at = datetime.fromisoformat(date) if date else None
+        row.evidence = {"support_reason": entry.get("reason")}
+        rows.append(row)
+    return rows
+
+
 # --------------------------------------------------------------------------------------------- import
 async def _find_company(session: AsyncSession, name: str) -> Company | None:
     low = name.lower()
@@ -252,9 +284,14 @@ async def _apply_rows(
                 "verified_at": item.verified_at,
                 "evidence": item.evidence,
             }
-            if "scraper_check" in (site.evidence or {}):
+            same_config = site.platform == item.platform and _core(site.config) == _core(item.config)
+            if "csv" not in item.evidence:
+                desired["evidence"] = {**(site.evidence or {}), **item.evidence}
+                if not same_config:
+                    desired["evidence"].pop("scraper_check", None)
+            if "scraper_check" in (site.evidence or {}) and same_config:
                 desired["evidence"] = {**item.evidence, "scraper_check": site.evidence["scraper_check"]}
-            if _core(site.config) != _core(item.config):
+            if not same_config:
                 desired["config"] = item.config
             changed = False
             for attr, value in desired.items():
@@ -280,7 +317,11 @@ async def import_registry(
 ) -> ImportSummary:
     """Run the import inside a savepoint; it is rolled back unless `apply` (the caller commits the outer
     transaction)."""
-    rows = parse_registry(csv_path, verification_dir)
+    rows = (
+        parse_json_registry(csv_path)
+        if csv_path.suffix.lower() == ".json"
+        else parse_registry(csv_path, verification_dir)
+    )
     if companies is not None:
         rows = [row for row in rows if row.company in companies]
     summary = ImportSummary(rows=len(rows), applied=apply)
@@ -297,17 +338,50 @@ async def import_registry(
     return summary
 
 
+def portable_registry(rows: list[RegistryRow]) -> dict[str, Any]:
+    return {
+        "version": 1,
+        "sites": [
+            {
+                "company": row.company,
+                "label": row.label,
+                "platform": row.platform.value,
+                "config": _core(row.config),
+                "careers_url": row.careers_url,
+                "support_class": row.support_class.value,
+                "india_coverage": row.india_coverage.value,
+                "verification_status": row.verification_status,
+                "verified_at": row.verified_at.isoformat() if row.verified_at else None,
+                "reason": row.evidence.get("support_reason") or row.evidence.get("csv", {}).get("support_reason"),
+            }
+            for row in rows
+            if row.valid
+        ],
+    }
+
+
 async def _main(argv: list[str]) -> int:
-    parser = argparse.ArgumentParser(description="Import data/companies.csv into companies + career_sites")
-    parser.add_argument("csv", type=Path)
+    parser = argparse.ArgumentParser(description="Import a JSON or CSV company registry into the local database")
+    parser.add_argument("registry", type=Path)
     parser.add_argument("--apply", action="store_true", help="write to the database (default: dry run)")
+    parser.add_argument("--json-for", type=Path, metavar="WATCHLIST", help="print JSON for the names in this file")
     args = parser.parse_args(argv)
+
+    if args.json_for:
+        names = args.json_for.read_text(encoding="utf-8").splitlines()
+        rows = parse_registry(args.registry)
+        selected = [row for name in names for row in rows if row.company == name]
+        missing = set(names) - {row.company for row in selected if row.valid}
+        if missing:
+            parser.error("No valid registry rows for: " + ", ".join(sorted(missing)))
+        print(json.dumps(portable_registry(selected), indent=2, ensure_ascii=False))
+        return 0
 
     from app.core.db import dispose_engine, get_sessionmaker
 
     try:
         async with get_sessionmaker()() as session:
-            summary = await import_registry(session, args.csv, apply=args.apply)
+            summary = await import_registry(session, args.registry, apply=args.apply)
             if args.apply:
                 await session.commit()
         print(summary.render())

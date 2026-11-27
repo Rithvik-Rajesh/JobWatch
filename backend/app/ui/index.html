@@ -78,6 +78,42 @@
     color:var(--text); background:var(--panel); font:12px/1.5 ui-monospace, monospace; }
   .dot { width:7px; height:7px; border-radius:50%; flex:none; background:var(--line); }
   .dot.ok { background:var(--ok); } .dot.bad { background:var(--bad); } .dot.part { background:var(--warn); }
+  .nav-link { color:var(--text); text-decoration:none; padding:7px 12px; font-weight:600; border-radius:8px; }
+  .nav-link[aria-current=page], .nav-link:hover { background:var(--soft); color:var(--accent); }
+  #app[data-view=settings] .jobs-only, #app:not([data-view=settings]) .settings-only { display:none; }
+  .settings { max-width:1180px; margin:auto; padding:34px 24px 60px; }
+  .settings-head, .settings-actions, .scraper-tools { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .settings-head { justify-content:space-between; gap:16px; }
+  .settings h1 { font-size:clamp(26px,4vw,36px); letter-spacing:-.04em; margin:0; }
+  .settings-head p { margin:4px 0 0; color:var(--muted); }
+  .scraper-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:24px 0 10px; }
+  .scraper-stats button { text-align:left; padding:12px 16px; color:var(--muted); }
+  .scraper-stats button[aria-pressed=true] { border-color:var(--accent); background:var(--soft); }
+  .scraper-stats strong { display:block; font-size:25px; color:var(--text); font-variant-numeric:tabular-nums; }
+  .scraper-stats [data-filter=works] strong { color:var(--ok); }
+  .scraper-stats [data-filter=failed] strong { color:var(--bad); }
+  .scraper-panel { border:1px solid var(--line); border-radius:var(--radius); background:var(--panel); }
+  .scraper-tools { padding:12px 16px; }
+  .scraper-tools input { flex:1; min-width:0; max-width:300px; }
+  .scraper-row { display:grid; grid-template-columns:minmax(175px,1fr) minmax(145px,.8fr) minmax(220px,1.6fr) 72px; gap:14px;
+    padding:12px 16px; border-top:1px solid var(--line); align-items:center; }
+  .scraper-row.heading { color:var(--muted); font-size:12px; font-weight:600; background:var(--raised); }
+  .scraper-company { display:flex; gap:10px; align-items:center; min-width:0; }
+  .scraper-company .logo { width:36px; height:36px; flex:none; }
+  .scraper-company .logo img { width:24px; height:24px; }
+  .scraper-company strong, .scraper-note { overflow-wrap:anywhere; }
+  .scraper-note { color:var(--muted); font-size:12px; }
+  .scraper-row .badge { white-space:nowrap; }
+  .scraper-row button { padding:5px 10px; }
+  @media (max-width:740px) {
+    .settings { padding:22px 12px; }
+    .scraper-stats { grid-template-columns:repeat(2,1fr); }
+    .scraper-row { grid-template-columns:minmax(0,1fr) auto; gap:8px; }
+    .scraper-row.heading { display:none; }
+    .scraper-note { grid-column:1; grid-row:2; }
+    .scraper-action { grid-column:2; grid-row:2; justify-self:end; }
+    .top { flex-wrap:wrap; }
+  }
   details summary { cursor:pointer; color:var(--muted); font-size:13px; margin-top:6px; }
 
   .searchbox { display:flex; flex-wrap:wrap; gap:6px; align-items:center; background:var(--panel); border:1px solid var(--line);
@@ -163,14 +199,15 @@
     <span class="grow"></span>
     <span id="topStatus" class="small muted"></span>
     <button id="reviewFetch" hidden>Review fetch</button>
-    <button id="openCompanies">Companies <span id="coCount" class="muted"></span></button>
-    <button id="openSettings">Settings</button>
-    <button id="fetchTop" class="primary">Fetch jobs</button>
+    <button id="openCompanies" class="jobs-only">Companies <span id="coCount" class="muted"></span></button>
+    <a href="/" class="nav-link settings-only">Jobs</a>
+    <a id="settingsLink" href="/settings" class="nav-link">Settings</a>
+    <button id="fetchTop" class="primary jobs-only">Fetch jobs</button>
     <button id="theme" class="ghost" title="Toggle dark mode">🌙</button>
     <button id="logout" class="ghost">Sign out</button>
   </div>
 
-  <div class="wrap">
+  <div class="wrap jobs-only">
     <div id="progress" class="card" hidden>
       <div class="prog-head"><strong id="progTitle"></strong><span><span id="progTime" class="small muted"></span> <button id="closeReview" class="ghost">Close</button></span></div>
       <div class="bar"><div id="progBar"></div></div>
@@ -228,6 +265,31 @@
   </div>
 </div>
 
+<main class="settings settings-only" aria-labelledby="scraperSettingsTitle" hidden>
+  <header class="settings-head">
+    <div>
+      <h1 id="scraperSettingsTitle">Company scrapers</h1>
+      <p id="scraperTotals">Loading watchlist…</p>
+    </div>
+    <div class="settings-actions">
+      <a class="nav-link" href="/api/v1/settings/scrapers/registry.json" download>Download JSON</a>
+      <button id="installWatchlist" disabled title="Add missing sites and update site definitions from the shared registry">Sync registry</button>
+      <button id="checkWatchlist" class="primary" disabled>Check all supported sites</button>
+    </div>
+  </header>
+  <div id="scraperStats" class="scraper-stats" aria-label="Filter sites by status"></div>
+  <p id="scraperStatus" class="small muted" role="status"></p>
+  <section class="scraper-panel" aria-label="Career sites">
+    <div class="scraper-tools">
+      <input id="scraperSearch" type="search" aria-label="Search companies or sites" placeholder="Search companies or sites">
+      <button id="showAllSites" aria-pressed="true">All sites</button>
+      <span id="scraperVisible" class="small muted"></span>
+    </div>
+    <div class="scraper-row heading" aria-hidden="true"><span>Company / site</span><span>Status</span><span>Last check / notes</span><span></span></div>
+    <div id="scraperCompanies"></div>
+  </section>
+</main>
+
 <div id="modal" class="backdrop" hidden>
   <div class="modal">
     <header>
@@ -246,20 +308,6 @@
   </div>
 </div>
 
-<dialog id="scraperSettings" class="modal card" hidden aria-labelledby="scraperSettingsTitle" style="color:var(--text)">
-  <header>
-    <div class="row">
-      <h3 id="scraperSettingsTitle">Company scrapers</h3>
-      <button id="closeSettings">Close</button>
-    </div>
-    <div class="row">
-      <button id="installWatchlist">Add watchlist to JobWatch</button>
-      <button id="checkWatchlist" class="primary">Check all supported sites</button>
-    </div>
-    <div id="scraperStatus" class="small muted" role="status"></div>
-  </header>
-  <div id="scraperCompanies" style="overflow:auto;padding:12px"></div>
-</dialog>
 
 <script>
 const API = "/api/v1", H = {"Content-Type": "application/json", "X-JobWatch-Client": "web"};
@@ -275,15 +323,29 @@ const DOMAINS = { "Accenture":"accenture.com","Adobe":"adobe.com","Airbnb":"airb
   "Oracle":"oracle.com","Qualcomm":"qualcomm.com","Razorpay":"razorpay.com","Red Hat":"redhat.com","Rubrik":"rubrik.com",
   "Salesforce":"salesforce.com","Samsung":"samsung.com","Snowflake":"snowflake.com","Spotify":"spotify.com","Stripe":"stripe.com",
   "Target":"target.com","Texas Instruments":"ti.com","Tower Research Capital":"tower-research.com","Twilio":"twilio.com","Visa":"visa.com",
-  "Workday":"workday.com","Zscaler":"zscaler.com" };
+  "Workday":"workday.com","Zscaler":"zscaler.com","Jane Street":"janestreet.com","Google":"google.com",
+  "LinkedIn":"linkedin.com","Arista Networks":"arista.com","D. E. Shaw":"deshaw.com","Atlassian":"atlassian.com",
+  "ServiceNow":"servicenow.com","Intuit":"intuit.com","American Express":"americanexpress.com","SAP":"sap.com",
+  "Graviton Research Capital":"gravitontrading.com","Bloomberg":"bloomberg.com","Apple":"apple.com",
+  "Palo Alto Networks":"paloaltonetworks.com","Walmart":"walmart.com","Morgan Stanley":"morganstanley.com",
+  "PayPal":"paypal.com","Cisco":"cisco.com","Deutsche Bank":"db.com","Wells Fargo":"wellsfargo.com",
+  "Goldman Sachs":"goldmansachs.com","Postman":"postman.com","Uber":"uber.com","Flipkart":"flipkart.com",
+  "Confluent":"confluent.io","Nike":"nike.com","Dream11":"dream11.com","Cohesity":"cohesity.com","Grab":"grab.com",
+  "Myntra":"myntra.com","Wayfair":"wayfair.com","Rippling":"rippling.com","Slice":"sliceit.com","Swiggy":"swiggy.com",
+  "Blinkit":"blinkit.com","Amazon":"amazon.com","WinZO":"winzogames.com" };
 const PRESETS = ["software", "developer", "SDE", "data", "machine learning", "AI", "backend", "frontend", "full stack", "intern"];
 const TABS = [["not_applied","Not applied"],["interested","Interested"],["applied","Applied"],["not_interested","Not interested"],["all","All"]];
 function hue(name) { let h = 0; for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) % 360; return `hsl(${h} 70% 52%)`; }
 function logo(name) {
   const d = DOMAINS[name];
-  const img = d ? `<img src="https://www.google.com/s2/favicons?domain=${d}&sz=64" alt="" loading="lazy" onerror="this.replaceWith(document.createTextNode('${esc(name[0])}'))">` : esc(name[0] || "?");
+  const img = d ? `<img class="company-icon" src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(d)}&sz=64" alt="" loading="lazy" data-fallback="${esc(name[0])}">` : esc(name[0] || "?");
   return `<div class="logo" >${img}</div>`;
 }
+document.addEventListener("error", event => {
+  if (event.target.matches?.("img.company-icon")) {
+    event.target.replaceWith(document.createTextNode(event.target.dataset.fallback || "?"));
+  }
+}, true);
 
 let companies = [], selected = new Set(store.get("selected", [])), roles = store.get("roles", ["software", "data", "machine learning", "AI"]);
 let tab = store.get("tab", "not_applied"), page = 1, running = false, pollTimer = null;
@@ -296,38 +358,70 @@ async function api(path, opts = {}) {
   if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error?.message || r.statusText);
   return r.status === 204 ? null : r.json();
 }
-function showLogin() { $("app").hidden = true; $("login").hidden = false; }
-function showApp() { $("login").hidden = true; $("app").hidden = false; init(); }
+const isSettings = location.pathname === "/settings";
+$("app").dataset.view = isSettings ? "settings" : "jobs";
+if (isSettings) $("settingsLink").setAttribute("aria-current", "page");
+const settingsPage = document.querySelector("main.settings");
+function showLogin() { $("app").hidden = true; settingsPage.hidden = true; $("login").hidden = false; }
+function showApp() {
+  $("login").hidden = true;
+  $("app").hidden = false;
+  settingsPage.hidden = !isSettings;
+  if (isSettings) {
+    loadScrapers().catch(error => { $("scraperStatus").textContent = error.message; });
+  } else {
+    init();
+  }
+}
 
 let scraperCompanies = [];
 let checkingScrapers = false;
+let installingSites = false;
+let scraperFilter = "all";
 const scraperLabels = {
   not_added: "Not added", unavailable: "Scraper unavailable", unchecked: "Ready to check",
-  checking: "Checking…", works: "Scraper works", failed: "Scraper check failed"
+  checking: "Checking…", works: "Working", failed: "Check failed"
 };
+const scraperGroups = [
+  ["works", "Working"], ["failed", "Failed"], ["unavailable", "Unavailable"], ["pending", "Pending"]
+];
+function scraperOutcome(site) {
+  if (site.check) return site.check.ok ? "works" : "failed";
+  return site.status === "unavailable" ? "unavailable" : "pending";
+}
 function renderScrapers() {
-  const list = $("scraperCompanies");
-  list.innerHTML = scraperCompanies.map(({company, sites}) => `
-    <div class="review-job" style="margin-bottom:8px;padding:8px 10px">
-      <strong>${esc(company)}</strong>
-      ${sites.map(site => {
-        const check = site.check;
-        const status = site.status === "checking" ? "checking" : check ? (check.ok ? "works" : "failed") : site.status;
-        const details = check
-          ? [check.at && new Date(check.at).toLocaleString(), check.sampled != null && `${check.sampled} listings sampled`,
-              check.detail_checked && "detail tested", check.reason].filter(Boolean).join(" · ")
-          : site.reason;
-        return `<div class="meta">
-          <span>${esc(site.label)} · ${esc(site.platform)}</span>
-          <span class="badge ${status === "works" ? "b-exp" : status === "failed" ? "b-no" : ""}">${esc(scraperLabels[status])}</span>
-          ${site.checkable ? `<button data-check-site="${site.id}" ${checkingScrapers ? "disabled" : ""}>Check</button>` : ""}
-          <span>${esc(details || "")}</span>
-        </div>`;
-      }).join("")}
-    </div>`).join("");
-  const sites = scraperCompanies.flatMap(company => company.sites);
-  $("installWatchlist").disabled = checkingScrapers || !sites.some(site => site.status === "not_added");
-  $("checkWatchlist").disabled = checkingScrapers || !sites.some(site => site.checkable);
+  const rows = scraperCompanies.flatMap(({company, sites}) => sites.map(site => ({company, site})));
+  const busy = checkingScrapers || installingSites;
+  $("scraperTotals").textContent = `${scraperCompanies.length} companies · ${rows.length} career sites`;
+  $("scraperStats").innerHTML = scraperGroups.map(([key, label]) => {
+    const count = rows.filter(({site}) => scraperOutcome(site) === key).length;
+    return `<button data-filter="${key}" aria-pressed="${key === scraperFilter}"><strong>${count}</strong>${label}</button>`;
+  }).join("");
+  $("showAllSites").setAttribute("aria-pressed", scraperFilter === "all");
+  const search = $("scraperSearch").value.trim().toLowerCase();
+  const visible = rows.filter(({company, site}) =>
+    `${company} ${site.label} ${site.platform}`.toLowerCase().includes(search) &&
+    (scraperFilter === "all" || scraperOutcome(site) === scraperFilter)
+  );
+  $("scraperVisible").textContent = `${visible.length} of ${rows.length} sites`;
+  $("scraperCompanies").innerHTML = visible.map(({company, site}) => {
+    const check = site.check;
+    const outcome = scraperOutcome(site);
+    const status = site.status === "checking" ? "checking" : check ? outcome : site.status;
+    const checked = check?.at ? new Date(check.at).toLocaleString() : "";
+    const sampled = check?.sampled != null ? `${check.sampled} listings sampled` : "";
+    const notes = site.requestError || (check ? [checked, sampled, check.reason].filter(Boolean).join(" · ") : site.reason);
+    const siteLabel = [site.label === "main" ? "Main site" : site.label,
+      site.platform !== "none" ? site.platform : ""].filter(Boolean).join(" · ");
+    return `<div class="scraper-row">
+      <div class="scraper-company">${logo(company)}<div><strong>${esc(company)}</strong><div class="small muted">${esc(siteLabel)}</div></div></div>
+      <div><span class="badge ${status === "works" ? "b-exp" : status === "failed" ? "b-no" : ""}">${scraperLabels[status]}</span></div>
+      <div class="scraper-note">${esc(notes || "")}</div>
+      <div class="scraper-action">${site.checkable ? `<button data-check-site="${site.id}" aria-label="Check ${esc(company)} ${esc(site.label)}" ${busy ? "disabled" : ""}>Check</button>` : ""}</div>
+    </div>`;
+  }).join("") || '<div class="empty">No sites match these filters.</div>';
+  $("installWatchlist").disabled = busy || !rows.length;
+  $("checkWatchlist").disabled = busy || !rows.some(({site}) => site.checkable);
 }
 async function loadScrapers() {
   scraperCompanies = await api("/settings/scrapers");
@@ -337,6 +431,7 @@ async function checkScrapers(sites) {
   if (checkingScrapers) return;
   checkingScrapers = true;
   let done = 0;
+  let requestErrors = 0;
   try {
     for (const site of sites) {
       site.status = "checking";
@@ -344,37 +439,40 @@ async function checkScrapers(sites) {
       $("scraperStatus").textContent = `Checked ${done} of ${sites.length} sites`;
       try {
         site.check = await api(`/settings/scrapers/${site.id}/check`, {method:"POST"});
+        site.requestError = null;
       } catch (error) {
-        site.check = {ok:false, reason:error.message};
+        site.requestError = error.message;
+        requestErrors++;
       }
       site.status = "unchecked";
       done++;
     }
-    $("scraperStatus").textContent = `Finished checking ${done} sites`;
+    $("scraperStatus").textContent = requestErrors
+      ? `${done - requestErrors} of ${done} checks completed · ${requestErrors} request errors`
+      : `Finished checking ${done} ${done === 1 ? "site" : "sites"}`;
   } finally {
     checkingScrapers = false;
     renderScrapers();
   }
 }
-$("openSettings").onclick = async () => {
-  const dialog = $("scraperSettings");
-  dialog.hidden = false;
-  dialog.showModal();
-  if (!checkingScrapers) {
-    try { await loadScrapers(); } catch (error) { $("scraperStatus").textContent = error.message; }
-  }
+$("scraperSearch").oninput = renderScrapers;
+$("showAllSites").onclick = () => { scraperFilter = "all"; renderScrapers(); };
+$("scraperStats").onclick = event => {
+  const button = event.target.closest("[data-filter]");
+  if (!button) return;
+  scraperFilter = button.dataset.filter;
+  renderScrapers();
+  $("scraperStats").querySelector(`[data-filter="${scraperFilter}"]`).focus();
 };
-$("closeSettings").onclick = () => $("scraperSettings").close();
-$("scraperSettings").onclose = () => { $("scraperSettings").hidden = true; };
 $("installWatchlist").onclick = async () => {
-  $("installWatchlist").disabled = true;
+  installingSites = true;
+  renderScrapers();
   try {
-    const result = await api("/settings/scrapers/install", {method:"POST"});
-    $("scraperStatus").textContent = `Added ${result.companies_created} companies and ${result.sites_created} career sites`;
+    const result = await api("/settings/scrapers/install?sync=true", {method:"POST"});
+    $("scraperStatus").textContent = `Registry synced · ${result.companies_created} companies added · ${result.sites_created} sites added · ${result.sites_updated} sites updated`;
     await loadScrapers();
-    await loadCompanies();
   } catch (error) { $("scraperStatus").textContent = error.message; }
-  finally { renderScrapers(); }
+  finally { installingSites = false; renderScrapers(); }
 };
 $("checkWatchlist").onclick = () => checkScrapers(scraperCompanies.flatMap(company => company.sites).filter(site => site.checkable));
 $("scraperCompanies").onclick = event => {

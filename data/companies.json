@@ -1,0 +1,1175 @@
+{
+  "version": 1,
+  "sites": [
+    {
+      "company": "Databricks",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "databricks",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://www.databricks.com/company/careers/open-positions",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared greenhouse adapter; public data; India via location_text."
+    },
+    {
+      "company": "Jane Street",
+      "label": "main",
+      "platform": "custom",
+      "config": {
+        "max_pages": 100,
+        "kind": "custom",
+        "module": "jane_street",
+        "options": {}
+      },
+      "careers_url": "https://www.janestreet.com/join-jane-street/open-roles/",
+      "support_class": "adapter",
+      "india_coverage": "none_observed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Public main.json, but NO India offices (ATX/CHI/HKG/LDN/NYC/SGP). Monitoring yields nothing today."
+    },
+    {
+      "company": "Google",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://www.google.com/about/careers/applications/jobs/results?location=India",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Only page 1 (20 of ~272 India jobs) is reachable: robots.txt disallows ?page= pagination. Incomplete listings cannot drive new/closed detection."
+    },
+    {
+      "company": "Nvidia",
+      "label": "main",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared workday adapter; public data; India via source_filter."
+    },
+    {
+      "company": "LinkedIn",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://careers.linkedin.com/",
+      "support_class": "manual",
+      "india_coverage": "not_applicable",
+      "verification_status": "failed",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Listings live on linkedin.com; LinkedIn's terms forbid automated access (also Cloudflare-challenged)."
+    },
+    {
+      "company": "Arista Networks",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://www.arista.com/en/careers",
+      "support_class": "manual",
+      "india_coverage": "not_applicable",
+      "verification_status": "failed",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Site returns HTTP 406; ATS unknown."
+    },
+    {
+      "company": "Workday",
+      "label": "main",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://workday.wd5.myworkdayjobs.com/Workday",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://workday.wd5.myworkdayjobs.com/Workday",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared workday adapter; public data; India via source_filter."
+    },
+    {
+      "company": "Tower Research Capital",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "towerresearchcapital",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://tower-research.com/open-positions/",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared greenhouse adapter; public data; India via location_text."
+    },
+    {
+      "company": "D. E. Shaw",
+      "label": "global",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://apply.deshaw.com/",
+      "support_class": "manual",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_page",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "No machine-readable listings found."
+    },
+    {
+      "company": "D. E. Shaw",
+      "label": "india",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://www.apply.deshawindia.com/",
+      "support_class": "manual",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_page",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "No machine-readable listings found."
+    },
+    {
+      "company": "Microsoft",
+      "label": "main",
+      "platform": "eightfold",
+      "config": {
+        "kind": "eightfold",
+        "host": "apply.careers.microsoft.com",
+        "domain": "microsoft.com",
+        "variant": "pcsx",
+        "location_query": "India",
+        "max_pages": 200
+      },
+      "careers_url": "https://apply.careers.microsoft.com/careers?location=India",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Eightfold PCSX; robots.txt explicitly allows /api/pcsx."
+    },
+    {
+      "company": "Airbnb",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "airbnb",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://careers.airbnb.com/positions/",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared greenhouse adapter; public data; India via location_text."
+    },
+    {
+      "company": "Atlassian",
+      "label": "main",
+      "platform": "custom",
+      "config": {
+        "max_pages": 100,
+        "kind": "custom",
+        "module": "atlassian",
+        "options": {}
+      },
+      "careers_url": "https://www.atlassian.com/company/careers/all-jobs",
+      "support_class": "adapter",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Public listings JSON used by the careers page."
+    },
+    {
+      "company": "ServiceNow",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://careers.servicenow.com/jobs",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "failed",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Honest User-Agent blocked (bot_protected); not circumvented."
+    },
+    {
+      "company": "Intuit",
+      "label": "main",
+      "platform": "custom",
+      "config": {
+        "max_pages": 100,
+        "kind": "custom",
+        "module": "intuit",
+        "options": {}
+      },
+      "careers_url": "https://jobs.intuit.com/",
+      "support_class": "adapter",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "robots disallows /search-jobs/; only sitemap.xml + individual job pages (JSON-LD unverified)."
+    },
+    {
+      "company": "American Express",
+      "label": "main",
+      "platform": "eightfold",
+      "config": {
+        "kind": "eightfold",
+        "host": "aexp.eightfold.ai",
+        "domain": "aexp.com",
+        "variant": "pcsx",
+        "location_query": "India",
+        "max_pages": 200
+      },
+      "careers_url": "https://aexp.eightfold.ai/careers",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_page",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Eightfold tenant requires a browser session/CSRF."
+    },
+    {
+      "company": "Adobe",
+      "label": "main",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://adobe.wd5.myworkdayjobs.com/external_experienced",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://adobe.wd5.myworkdayjobs.com/external_experienced",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared workday adapter; public data; India via source_filter."
+    },
+    {
+      "company": "SAP",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://jobs.sap.com/",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "failed",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Honest User-Agent blocked (bot_protected); not circumvented."
+    },
+    {
+      "company": "Texas Instruments",
+      "label": "main",
+      "platform": "oracle_hcm",
+      "config": {
+        "kind": "oracle_hcm",
+        "host": "edbz.fa.us2.oraclecloud.com",
+        "site_number": "CX",
+        "language": "en",
+        "max_pages": 200
+      },
+      "careers_url": "https://careers.ti.com/en/sites/CX",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Oracle HCM (site CX)."
+    },
+    {
+      "company": "Graviton Research Capital",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://www.gravitontrading.com/careers.html",
+      "support_class": "manual",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_page",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "No machine-readable listings found."
+    },
+    {
+      "company": "JPMorgan Chase",
+      "label": "main",
+      "platform": "oracle_hcm",
+      "config": {
+        "kind": "oracle_hcm",
+        "host": "jpmc.fa.oraclecloud.com",
+        "site_number": "CX_1001",
+        "language": "en",
+        "max_pages": 200
+      },
+      "careers_url": "https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared oracle_hcm adapter; public data; India via source_filter."
+    },
+    {
+      "company": "Visa",
+      "label": "campus",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://visa.wd5.myworkdayjobs.com/Visa_Early_Careers",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://visa.wd5.myworkdayjobs.com/Visa_Early_Careers",
+      "support_class": "auto",
+      "india_coverage": "unverified",
+      "verification_status": "unverified",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared workday adapter; public data; India via source_filter."
+    },
+    {
+      "company": "Visa",
+      "label": "main",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://visa.wd5.myworkdayjobs.com/Visa",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://visa.wd5.myworkdayjobs.com/Visa",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared workday adapter; public data; India via source_filter."
+    },
+    {
+      "company": "Bloomberg",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://careers.bloomberg.com",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "failed",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Honest User-Agent blocked (bot_protected); not circumvented."
+    },
+    {
+      "company": "Autodesk",
+      "label": "main",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://autodesk.wd1.myworkdayjobs.com/Ext",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://autodesk.wd1.myworkdayjobs.com/Ext",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Workday 'Ext' site lists only 4 jobs and autodesk.com blocks the honest UA -> LOW CONFIDENCE, re-verify."
+    },
+    {
+      "company": "Target",
+      "label": "main",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://target.wd5.myworkdayjobs.com/targetcareers",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://target.wd5.myworkdayjobs.com/targetcareers",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared workday adapter; public data; India via source_filter."
+    },
+    {
+      "company": "BlackRock",
+      "label": "main",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://blackrock.wd1.myworkdayjobs.com/BlackRock_Professional",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://blackrock.wd1.myworkdayjobs.com/BlackRock_Professional",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared workday adapter; public data; India via source_filter."
+    },
+    {
+      "company": "Mastercard",
+      "label": "main",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://mastercard.wd1.myworkdayjobs.com/CorporateCareers",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://mastercard.wd1.myworkdayjobs.com/CorporateCareers",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared workday adapter; public data; India via source_filter."
+    },
+    {
+      "company": "Apple",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://jobs.apple.com/en-in/search?location=india-INDC",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "JSON search API requires a CSRF token handshake; HTML gives only page 1."
+    },
+    {
+      "company": "Qualcomm",
+      "label": "main",
+      "platform": "eightfold",
+      "config": {
+        "kind": "eightfold",
+        "host": "careers.qualcomm.com",
+        "domain": "qualcomm.com",
+        "variant": "pcsx",
+        "location_query": "India",
+        "max_pages": 200
+      },
+      "careers_url": "https://careers.qualcomm.com/careers",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Eightfold PCSX (apply/v2 returns 403 for this tenant)."
+    },
+    {
+      "company": "Airbus",
+      "label": "main",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://ag.wd3.myworkdayjobs.com/Airbus",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://ag.wd3.myworkdayjobs.com/Airbus",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared workday adapter; public data; India via source_filter."
+    },
+    {
+      "company": "Rubrik",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "rubrik",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://boards.greenhouse.io/rubrik",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared greenhouse adapter; public data; India via location_text."
+    },
+    {
+      "company": "Stripe",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "stripe",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://stripe.com/jobs/search",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared greenhouse adapter; public data; India via location_text."
+    },
+    {
+      "company": "Palo Alto Networks",
+      "label": "main",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://paloaltonetworks.wd5.myworkdayjobs.com/panwexternalcareers",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://paloaltonetworks.wd5.myworkdayjobs.com/panwexternalcareers",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "robots.txt disallows /panwexternalcareers/ (the Workday site path); cxs API path not mentioned. Treated as disallowed until you decide otherwise."
+    },
+    {
+      "company": "Walmart",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://careers.walmart.com/us/en/search-results",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_page",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Data API under robots-disallowed /api."
+    },
+    {
+      "company": "Morgan Stanley",
+      "label": "main",
+      "platform": "eightfold",
+      "config": {
+        "kind": "eightfold",
+        "host": "morganstanley.eightfold.ai",
+        "domain": "morganstanley.com",
+        "variant": "pcsx",
+        "location_query": "India",
+        "max_pages": 200
+      },
+      "careers_url": "https://morganstanley.eightfold.ai/careers",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "robots.txt Disallow: / except /careers and /api/apply; the allowed endpoint returns 'Not authorized'."
+    },
+    {
+      "company": "PayPal",
+      "label": "workday",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://paypal.wd1.myworkdayjobs.com/en-US/jobs",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://paypal.wd1.myworkdayjobs.com/en-US/jobs",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-27T00:00:00+00:00",
+      "reason": "Workday listing and detail passed a live probe."
+    },
+    {
+      "company": "PayPal",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://careers.pypl.com",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "failed",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Honest User-Agent blocked (bot_protected); not circumvented."
+    },
+    {
+      "company": "Cisco",
+      "label": "main",
+      "platform": "custom",
+      "config": {
+        "max_pages": 100,
+        "kind": "custom",
+        "module": "cisco",
+        "options": {}
+      },
+      "careers_url": "https://careers.cisco.com/global/en/search-results?qcountry=India",
+      "support_class": "adapter",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Phenom: job data embedded in search pages; robots allows search."
+    },
+    {
+      "company": "Deutsche Bank",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://careers.db.com/professionals/search-roles/",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_page",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "No public listing API identified yet."
+    },
+    {
+      "company": "Barclays",
+      "label": "main",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://barclays.wd3.myworkdayjobs.com/External_Career_Site_Barclays",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://barclays.wd3.myworkdayjobs.com/External_Career_Site_Barclays",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared workday adapter; public data; India via location_text."
+    },
+    {
+      "company": "Wells Fargo",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://www.wellsfargojobs.com",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "failed",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Honest User-Agent blocked (bot_protected); not circumvented."
+    },
+    {
+      "company": "Boeing",
+      "label": "main",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://boeing.wd1.myworkdayjobs.com/EXTERNAL_CAREERS",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://boeing.wd1.myworkdayjobs.com/EXTERNAL_CAREERS",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared workday adapter; public data; India via source_filter."
+    },
+    {
+      "company": "CRED",
+      "label": "main",
+      "platform": "lever",
+      "config": {
+        "kind": "lever",
+        "company": "cred",
+        "region": "global"
+      },
+      "careers_url": "https://careers.cred.club/careers/openings",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared lever adapter; public data; India via location_text."
+    },
+    {
+      "company": "Groww",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "groww",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://job-boards.eu.greenhouse.io/groww",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared greenhouse adapter; public data; India via location_text."
+    },
+    {
+      "company": "Goldman Sachs",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://higher.gs.com/results",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "higher.gs.com robots disallows all but /roles/; GraphQL API undocumented. Fragile."
+    },
+    {
+      "company": "Postman",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://www.postman.com/company/careers/open-positions/",
+      "support_class": "manual",
+      "india_coverage": "not_applicable",
+      "verification_status": "unverified",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "No machine-readable listings found."
+    },
+    {
+      "company": "Uber",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://www.uber.com/us/en/careers/",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "failed",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Honest User-Agent blocked (bot_protected); not circumvented."
+    },
+    {
+      "company": "Flipkart",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://flipkart.turbohire.co/careerpage/4d757ba0-3d57-448a-b82c-238ed87ac90f",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_page",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "TurboHire host robots.txt: Disallow: / for all bots."
+    },
+    {
+      "company": "Zscaler",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "zscaler",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://job-boards.greenhouse.io/zscaler",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared greenhouse adapter; public data; India via location_text."
+    },
+    {
+      "company": "Confluent",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://www.ibm.com/careers/search?q=confluent",
+      "support_class": "manual",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_page",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "No machine-readable listings found."
+    },
+    {
+      "company": "NetApp",
+      "label": "main",
+      "platform": "eightfold",
+      "config": {
+        "kind": "eightfold",
+        "host": "netapp.eightfold.ai",
+        "domain": "netapp.com",
+        "variant": "apply_v2",
+        "location_query": "India",
+        "max_pages": 200
+      },
+      "careers_url": "https://netapp.eightfold.ai/careers?domain=netapp.com",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Eightfold apply/v2 (PCSX disabled for this tenant)."
+    },
+    {
+      "company": "Samsung",
+      "label": "Samsung_Careers (SRI-Bangalore / SSIR / Samsung India Electronics)",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://sec.wd3.myworkdayjobs.com/Samsung_Careers",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://sec.wd3.myworkdayjobs.com/Samsung_Careers",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared workday adapter; public data; India via source_filter."
+    },
+    {
+      "company": "Samsung",
+      "label": "Samsung_Jobs",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://sec.wd3.myworkdayjobs.com/Samsung_Jobs",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://sec.wd3.myworkdayjobs.com/Samsung_Jobs",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared workday adapter; public data; India via source_filter."
+    },
+    {
+      "company": "Nike",
+      "label": "main",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://nike.wd1.myworkdayjobs.com/nke",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://nike.wd1.myworkdayjobs.com/nke",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "robots.txt disallows the Workday site paths."
+    },
+    {
+      "company": "Meesho",
+      "label": "main",
+      "platform": "lever",
+      "config": {
+        "kind": "lever",
+        "company": "meesho",
+        "region": "global"
+      },
+      "careers_url": "https://www.meesho.io/jobs",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared lever adapter; public data; India via location_text."
+    },
+    {
+      "company": "Eightfold AI",
+      "label": "main",
+      "platform": "eightfold",
+      "config": {
+        "kind": "eightfold",
+        "host": "app.eightfold.ai",
+        "domain": "eightfold.ai",
+        "variant": "pcsx",
+        "location_query": "India",
+        "max_pages": 200
+      },
+      "careers_url": "https://app.eightfold.ai/careers?start=0&pid=68763995769&sort_by=hot",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared eightfold adapter; public data; India via source_filter."
+    },
+    {
+      "company": "Dream11",
+      "label": "main",
+      "platform": "lever",
+      "config": {
+        "kind": "lever",
+        "company": "dreamsports",
+        "region": "global"
+      },
+      "careers_url": "https://jobs.lever.co/dreamsports",
+      "support_class": "manual",
+      "india_coverage": "not_applicable",
+      "verification_status": "failed",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Careers page links a Lever board that returns 404; no live listings host found."
+    },
+    {
+      "company": "Harness",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "harnessinc",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://job-boards.greenhouse.io/harnessinc",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared greenhouse adapter; public data; India via location_text."
+    },
+    {
+      "company": "Cohesity",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://careers.cohesity.com/",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "failed",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Honest User-Agent blocked (bot_protected); not circumvented."
+    },
+    {
+      "company": "Grab",
+      "label": "main",
+      "platform": "custom",
+      "config": {
+        "max_pages": 100,
+        "kind": "custom",
+        "module": "grab",
+        "options": {}
+      },
+      "careers_url": "https://www.grab.careers/en/jobs/",
+      "support_class": "adapter",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "XML job feed; country filter applied client-side."
+    },
+    {
+      "company": "Myntra",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://jobs.myntra.com/home",
+      "support_class": "manual",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_page",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "No machine-readable listings found."
+    },
+    {
+      "company": "Twilio",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "twilio",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://job-boards.greenhouse.io/twilio",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared greenhouse adapter; public data; India via location_text."
+    },
+    {
+      "company": "Wayfair",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://www.wayfair.com/careers/jobs",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_page",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "No public listing API identified yet."
+    },
+    {
+      "company": "Razorpay",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "razorpaysoftwareprivatelimited",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://job-boards.greenhouse.io/razorpaysoftwareprivatelimited",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared greenhouse adapter; public data; India via location_text."
+    },
+    {
+      "company": "Rippling",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://www.rippling.com/careers/open-roles",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Provenance check NOT FOUND (2026-11-12): the careers page lists jobs via Algolia, not the inferred ATS endpoint. Bookmarklet only. See data/verification/provenance_ibm_rippling.md."
+    },
+    {
+      "company": "Slice",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://careers.kula.ai/slice?jobs=true",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_page",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Kula ATS robots.txt disallows /api/."
+    },
+    {
+      "company": "Swiggy",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://careers.swiggy.in/",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "SmartRecruiters public API host robots.txt disallows generic bots."
+    },
+    {
+      "company": "Coinbase",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "coinbase",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://www.coinbase.com/careers/positions",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared greenhouse adapter; public data; India via location_text."
+    },
+    {
+      "company": "Blinkit",
+      "label": "eternal_group",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://www.eternal.com/careers/",
+      "support_class": "manual",
+      "india_coverage": "not_applicable",
+      "verification_status": "verified_page",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "No machine-readable listings found."
+    },
+    {
+      "company": "Blinkit",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://blinkit.com/careers",
+      "support_class": "not_reliable",
+      "india_coverage": "not_applicable",
+      "verification_status": "failed",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Honest User-Agent blocked (bot_protected); not circumvented."
+    },
+    {
+      "company": "Amazon",
+      "label": "main",
+      "platform": "custom",
+      "config": {
+        "max_pages": 100,
+        "kind": "custom",
+        "module": "amazon",
+        "options": {}
+      },
+      "careers_url": "https://www.amazon.jobs/en/search?normalized_country_code[]=IND",
+      "support_class": "adapter",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "amazon.jobs search.json (normalized_country_code[]=IND); robots allows. ~2100 India jobs."
+    },
+    {
+      "company": "WinZO",
+      "label": "main",
+      "platform": "none",
+      "config": {},
+      "careers_url": "https://www.winzogames.com/",
+      "support_class": "manual",
+      "india_coverage": "not_applicable",
+      "verification_status": "failed",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "No working careers page (404) and robots disallows most paths."
+    },
+    {
+      "company": "Spotify",
+      "label": "main",
+      "platform": "lever",
+      "config": {
+        "kind": "lever",
+        "company": "spotify",
+        "region": "global"
+      },
+      "careers_url": "https://jobs.lever.co/spotify",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared lever adapter; public data; India via location_text."
+    },
+    {
+      "company": "Hewlett Packard Enterprise",
+      "label": "main",
+      "platform": "workday",
+      "config": {
+        "kind": "workday",
+        "url": "https://hpe.wd5.myworkdayjobs.com/Jobsathpe",
+        "india_strategy": "auto",
+        "facet_param": null,
+        "split_facet_param": null,
+        "max_pages": 150
+      },
+      "careers_url": "https://hpe.wd5.myworkdayjobs.com/Jobsathpe",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "Shared workday adapter; public data; India via location_text."
+    }
+  ]
+}

@@ -55,10 +55,29 @@ Open [http://localhost:8077](http://localhost:8077). The `make run` command star
 applies migrations, and serves both the API and the built-in UI. Click **Fetch jobs** in the UI to
 open the fetch review window.
 
-Under **Settings → Company scrapers**, use **Add watchlist to JobWatch** to register missing companies
-and career sites from the supplied list. **Check all supported sites** samples the listing feed and,
+On the dedicated **Settings** page (`/settings`), use **Sync registry** to add missing companies
+and apply scraper configuration updates from `data/companies.json`. **Download JSON** shares the
+bundled watchlist and scraper definitions. **Check all supported sites** samples the listing feed and,
 where available, one job detail. Checks save their status and timestamp without importing jobs or
 calling an LLM. Unsupported or restricted portals stay visible with their reason.
+
+Anyone with a JobWatch checkout can import the shared file into their own migrated database:
+
+```bash
+cd backend
+uv run python -m app.discovery.registry_import ../data/companies.json
+uv run python -m app.discovery.registry_import ../data/companies.json --apply
+```
+
+The first command previews the sync. The second updates sites by company and site label, adds missing
+entries, and keeps local jobs, application history, and scheduling settings. The JSON contains only
+the bundled company and scraper definitions.
+
+After editing the research CSV, regenerate the shareable watchlist from `backend/`:
+
+```bash
+uv run python -m app.discovery.registry_import ../data/companies.csv --json-for ../data/watchlist.txt > ../data/companies.json
+```
 
 The interactive review flow is intentionally manual:
 

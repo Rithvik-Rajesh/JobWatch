@@ -202,3 +202,28 @@ async def test_real_registry_dry_run_then_apply_is_idempotent(session):
     again = await import_registry(session, REAL_CSV, apply=True)
     assert (again.companies_created, again.sites_created, again.sites_updated) == (0, 0, 0)
     assert again.sites_unchanged == 95
+
+
+async def test_shareable_json_sync_updates_existing_sites(session):
+    from app.discovery.registry_import import parse_json_registry, portable_registry
+
+    path = REAL_CSV.with_suffix(".json")
+    rows = parse_json_registry(path)
+    assert len({row.company for row in rows}) == 70
+    names = (path.parent / "watchlist.txt").read_text(encoding="utf-8").splitlines()
+    research_rows = parse_registry(REAL_CSV)
+    assert portable_registry(rows) == portable_registry(
+        [row for name in names for row in research_rows if row.company == name]
+    )
+    await import_registry(session, REAL_CSV, apply=True, companies={"Amazon"})
+    site = await session.scalar(select(CareerSite))
+    original_config = dict(site.config)
+    site.config = {**original_config, "max_pages": 1}
+    site.evidence = {**site.evidence, "scraper_check": {"ok": True}}
+    await session.flush()
+
+    result = await import_registry(session, path, apply=True, companies={"Amazon"})
+    assert result.sites_updated == 1 and result.sites_created == 0
+    assert site.config == original_config
+    assert "scraper_check" not in site.evidence
+    assert (await import_registry(session, path, apply=True, companies={"Amazon"})).sites_unchanged == 1

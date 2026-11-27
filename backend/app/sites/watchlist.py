@@ -5,21 +5,23 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from fastapi import APIRouter
+from fastapi.responses import FileResponse
 from sqlalchemy import select
 
 from app.core.auth import CurrentUser
 from app.core.db import SessionDep
 from app.core.errors import Conflict, NotFound
-from app.discovery.registry_import import import_registry, parse_registry
+from app.discovery.registry_import import import_registry, parse_json_registry
 from app.models import CareerSite, Company, CompanyAlias
 from app.sites import service
 
 router = APIRouter(prefix="/settings/scrapers", tags=["scraper settings"])
 DATA = Path(__file__).resolve().parents[3] / "data"
+REGISTRY = DATA / "companies.json"
 
 
 def watchlist() -> list[str]:
-    return (DATA / "watchlist.txt").read_text(encoding="utf-8").splitlines()
+    return list(dict.fromkeys(row.company for row in parse_json_registry(REGISTRY)))
 
 
 @router.get("")
@@ -33,7 +35,7 @@ async def scraper_inventory(session: SessionDep, user: CurrentUser):
     for site in await session.scalars(select(CareerSite).order_by(CareerSite.label)):
         sites_by_company.setdefault(site.company_id, []).append(site)
     registry = {}
-    for row in parse_registry(DATA / "companies.csv"):
+    for row in parse_json_registry(REGISTRY):
         registry.setdefault(row.company, []).append(row)
 
     result = []
@@ -56,7 +58,11 @@ async def scraper_inventory(session: SessionDep, user: CurrentUser):
                     "status": "unchecked" if checkable else "unavailable",
                     "reason": "Archived"
                     if supported and not checkable
-                    else (evidence.get("csv", {}).get("support_reason") or "No supported adapter for this portal."),
+                    else (
+                        evidence.get("support_reason")
+                        or evidence.get("csv", {}).get("support_reason")
+                        or (None if checkable else "No supported adapter for this portal.")
+                    ),
                     "check": evidence.get("scraper_check") if checkable else None,
                 }
             )
@@ -71,7 +77,7 @@ async def scraper_inventory(session: SessionDep, user: CurrentUser):
                     "platform": row.platform.value,
                     "checkable": False,
                     "status": "not_added",
-                    "reason": row.error or row.evidence.get("csv", {}).get("support_reason"),
+                    "reason": row.evidence.get("support_reason"),
                     "check": None,
                 }
             )
@@ -79,10 +85,15 @@ async def scraper_inventory(session: SessionDep, user: CurrentUser):
     return result
 
 
+@router.get("/registry.json")
+async def download_registry(user: CurrentUser):
+    return FileResponse(REGISTRY, media_type="application/json", filename="companies.json")
+
+
 @router.post("/install")
-async def install_watchlist(session: SessionDep, user: CurrentUser):
+async def install_watchlist(session: SessionDep, user: CurrentUser, sync: bool = False):
     result = await import_registry(
-        session, DATA / "companies.csv", apply=True, companies=set(watchlist()), preserve_existing=True
+        session, REGISTRY, apply=True, companies=set(watchlist()), preserve_existing=not sync
     )
     summary = asdict(result)
     summary["platforms"] = dict(result.platforms)

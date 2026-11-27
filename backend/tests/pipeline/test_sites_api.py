@@ -57,6 +57,10 @@ async def test_watchlist_install_and_check(client, fake_adapter, monkeypatch):
     monkeypatch.setattr(sites_service, "make_fetcher", FixtureFetcher)
     endpoint = f"{API}/settings/scrapers"
 
+    download = await client.get(f"{endpoint}/registry.json")
+    assert download.status_code == 200
+    assert "companies.json" in download.headers["content-disposition"]
+    assert len({site["company"] for site in download.json()["sites"]}) == 70
     assert (await client.get(endpoint)).json()[1]["sites"][0]["status"] == "not_added"
     response = await client.post(f"{endpoint}/install")
     assert response.status_code == 200, response.text
