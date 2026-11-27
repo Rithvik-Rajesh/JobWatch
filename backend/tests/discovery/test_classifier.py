@@ -1,7 +1,7 @@
 import httpx
 
 from app.core.config import Settings
-from app.discovery.classifier import JobClassifier, rule_classification
+from app.discovery.classifier import FresherClassifierSettings, JobClassifier, rule_classification
 
 
 def settings(**values):
@@ -55,7 +55,7 @@ def test_rules_skip_model_for_obvious_senior_titles():
     for title in ("Engineering Manager", "Staff Engineer", "Tech Lead", "Principal Architect"):
         result = rule_classification(title, "Freshers can apply")
         assert result is not None and result.is_fresher is False
-        assert result.provider == "rules:title-seniority"
+        assert result.provider == "rules:title-rejection"
 
 
 def test_rules_skip_model_for_explicit_fresher_roles():
@@ -63,11 +63,18 @@ def test_rules_skip_model_for_explicit_fresher_roles():
     jd_result = rule_classification("Software Engineer", "Freshers are welcome to apply for this position.")
     experience_result = rule_classification("Software Engineer", "Required experience: 0-1 years.")
     assert title_result is not None and title_result.is_fresher is True
-    assert title_result.provider == "rules:title-fresher"
+    assert title_result.provider == "rules:title-acceptance"
     assert jd_result is not None and jd_result.is_fresher is True
-    assert jd_result.provider == "rules:jd-fresher"
+    assert jd_result.provider == "rules:jd-acceptance"
     assert experience_result is not None and experience_result.is_fresher is True
 
 
 def test_ambiguous_role_is_left_for_the_model():
     assert rule_classification("Software Engineer", "Build APIs using Python and PostgreSQL.") is None
+
+
+def test_custom_words_replace_defaults():
+    rules = FresherClassifierSettings(rejection_words=["wizard"], acceptance_words=["starter role"])
+    assert rule_classification("Python Wizard", None, rules).is_fresher is False
+    assert rule_classification("Engineering Manager", None, rules) is None
+    assert rule_classification("Engineer", "This is a starter role", rules).is_fresher is True

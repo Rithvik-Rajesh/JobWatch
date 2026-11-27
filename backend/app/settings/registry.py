@@ -11,6 +11,7 @@ from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.discovery.classifier import FresherClassifierSettings
 from app.models import AppSetting
 
 
@@ -100,6 +101,7 @@ SETTINGS_MODELS: dict[str, type[BaseModel]] = {
     "notifications": NotificationSettings,
     "title_filters": TitleFilterSettings,
     "scheduler": SchedulerSettings,
+    "fresher_classifier": FresherClassifierSettings,
 }
 
 

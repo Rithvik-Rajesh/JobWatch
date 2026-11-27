@@ -6,7 +6,7 @@ def test_live_progress_counts_rules_ai_and_storage():
     fetch_all._record_progress("Acme", {"stage": "listed", "count": 3})
     fetch_all._record_progress(
         "Acme",
-        {"stage": "classified", "title": "Graduate Engineer", "provider": "rules:title-fresher", "verdict": True},
+        {"stage": "classified", "title": "Graduate Engineer", "provider": "rules:title-acceptance", "verdict": True},
     )
     fetch_all._record_progress(
         "Acme",

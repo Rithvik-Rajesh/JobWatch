@@ -53,8 +53,18 @@ make run
 
 Open [http://localhost:8077](http://localhost:8077). The `make run` command starts PostgreSQL,
 applies migrations, and serves both the API and the built-in UI. Click **Fetch jobs** in the UI to
-watch sites, individual JDs, rule decisions, Ollama/Gemini checks, verdicts, and newly stored jobs in
-real time.
+open the fetch review window.
+
+The interactive review flow is intentionally manual:
+
+1. Fetch all selected companies and inspect each expandable job description.
+2. Edit/save the primary rejection and acceptance word lists and run preliminary rules.
+3. Review Freshers, Not freshers, and Unmarked tabs.
+4. Edit/save the model prompt, then send only Unmarked jobs to Ollama or Gemini.
+5. Review Clear freshers, Not freshers, and Unclear LLM tabs before closing the window.
+
+Rules and the model prompt are stored in the database setting `fresher_classifier`, so changes made
+in the window are reused by later reviews and scheduled runs.
 
 ## Fresher classification
 

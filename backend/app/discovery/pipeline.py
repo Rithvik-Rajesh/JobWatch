@@ -43,7 +43,7 @@ from app.discovery.adapters.base import (
     PortalBlocked,
     RobotsDisallowed,
 )
-from app.discovery.classifier import FresherClassification, JobClassifier
+from app.discovery.classifier import FresherClassification, FresherClassifierSettings, JobClassifier
 from app.discovery.configs import validate_config
 from app.discovery.contracts import LocationInput, PostingInput, RunSummary, ScopeDecision
 from app.discovery.india import evaluate_listing
@@ -279,6 +279,7 @@ async def run_site(
     scrape_run_id: int | None = None,
     session_factory: SessionFactory | None = None,
     progress: ProgressCallback | None = None,
+    classify_new: bool = True,
 ) -> RunSummary:
     trigger = RunTrigger(trigger)
     now = now or _utcnow()
@@ -295,6 +296,7 @@ async def run_site(
         assert company is not None
         loc_cfg = await get_setting(s, LocationScopeSettings)
         title_cfg = await get_setting(s, TitleFilterSettings)
+        fresher_cfg = await get_setting(s, FresherClassifierSettings)
         sched = await get_setting(s, SchedulerSettings)
         site = _SiteInfo(
             id=site_row.id,
@@ -428,24 +430,25 @@ async def run_site(
             if c.detail is not None:  # re-evaluate scope with detail evidence
                 c.decision = evaluate_listing(c.posting, c.detail, loc_cfg)
 
-        classifier = JobClassifier()
+        classifier = JobClassifier(classifier_settings=fresher_cfg)
         for c in keep:
             if c.existing_id is not None:
                 continue
             description = None
             if c.detail is not None:
                 description = c.detail.description_text or html_to_text(c.detail.description_html)
-            _emit(progress, "classifying", external_id=c.posting.external_id, title=c.posting.title)
-            c.classification = await classifier.classify(c.posting.title, description)
-            _emit(
-                progress,
-                "classified",
-                external_id=c.posting.external_id,
-                title=c.posting.title,
-                verdict=c.classification.is_fresher,
-                provider=c.classification.provider,
-                reason=c.classification.reason,
-            )
+            if classify_new:
+                _emit(progress, "classifying", external_id=c.posting.external_id, title=c.posting.title)
+                c.classification = await classifier.classify(c.posting.title, description)
+                _emit(
+                    progress,
+                    "classified",
+                    external_id=c.posting.external_id,
+                    title=c.posting.title,
+                    verdict=c.classification.is_fresher,
+                    provider=c.classification.provider,
+                    reason=c.classification.reason,
+                )
 
         if deferred:
             outcome.warnings.append({"code": "details_deferred", "count": deferred, "cap": sched.max_details_per_run})
@@ -670,8 +673,16 @@ async def _ingest_all(
                     _emit(
                         progress,
                         "stored",
+                        job_id=outcome.job_id,
                         external_id=c.posting.external_id,
                         title=c.posting.title,
+                        company=site.company_name,
+                        location="; ".join(c.posting.location_texts) or None,
+                        description=(
+                            (c.detail.description_text or html_to_text(c.detail.description_html))
+                            if c.detail is not None
+                            else None
+                        ),
                         verdict=c.classification.is_fresher if c.classification else None,
                     )
                 elif outcome.new_version:

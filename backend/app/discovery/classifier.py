@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from typing import Any, Literal
 
 import httpx
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from app.core.config import Settings, get_settings
 
@@ -35,38 +35,51 @@ graduates, says 0-1 years, or has no required prior experience and is clearly en
 when it requires 2+ years or uses senior/lead/staff/manager wording. Return unclear when evidence is
 missing or contradictory. Judge required qualifications, not preferred qualifications. Be concise."""
 
-# Cheap, deterministic decisions run before an LLM call. Keep these intentionally conservative:
-# ambiguous jobs still go to Ollama/Gemini instead of being guessed by a large regex ruleset.
-SENIOR_TITLE = re.compile(
-    r"\b(senior|sr\.?|lead|staff|principal|manager|director|head|architect|"
-    r"vice[ -]?president|vp|avp|chief|distinguished|fellow)\b",
-    re.IGNORECASE,
-)
-FRESHER_TITLE = re.compile(
-    r"\b(intern(?:ship)?|graduate|new[ -]?grad|fresher|entry[ -]?level|trainee|apprentice)\b",
-    re.IGNORECASE,
-)
-FRESHER_DESCRIPTION = re.compile(
-    r"\b(?:freshers? (?:may|can) apply|freshers? (?:are )?(?:welcome|eligible)|"
-    r"no (?:prior |professional |work )?experience (?:is )?required|"
-    r"(?:0\s*(?:-|\u2013|to)\s*1|zero\s*(?:-|\u2013|to)\s*one) years? (?:of )?experience|"
-    r"experience(?: required)?\s*:?\s*(?:0\s*(?:-|\u2013|to)\s*1|zero\s*(?:-|\u2013|to)\s*one) years?|"
-    r"(?:(?:new|recent) )?graduates? (?:may|can|are|welcome)|campus (?:hire|hiring|recruitment))\b",
-    re.IGNORECASE,
-)
+class FresherClassifierSettings(BaseModel):
+    rejection_words: list[str] = Field(
+        default_factory=lambda: [
+            "senior", "sr", "lead", "staff", "principal", "manager", "director", "head", "architect",
+            "vice president", "vp", "avp", "chief", "distinguished", "fellow",
+        ]
+    )
+    acceptance_words: list[str] = Field(
+        default_factory=lambda: [
+            "intern", "internship", "graduate", "new grad", "fresher", "entry level", "trainee", "apprentice",
+            "freshers can apply", "freshers may apply", "freshers are welcome", "no experience required",
+            "0-1 years", "0 to 1 years", "campus hiring",
+        ]
+    )
+    prompt: str = Field(default=SYSTEM_PROMPT, min_length=20, max_length=10_000)
+
+    @field_validator("rejection_words", "acceptance_words")
+    @classmethod
+    def _clean_words(cls, values: list[str]) -> list[str]:
+        return list(dict.fromkeys(word.strip().lower() for word in values if word.strip()))
 
 
-def rule_classification(title: str, description: str | None) -> FresherClassification | None:
+def _find_phrase(text: str, phrases: list[str]) -> str | None:
+    normalized = re.sub(r"[\u2010-\u2015]", "-", text.lower())
+    for phrase in phrases:
+        pattern = r"(?<!\w)" + re.escape(phrase).replace(r"\ ", r"\s+") + r"(?!\w)"
+        if re.search(pattern, normalized, re.IGNORECASE):
+            return phrase
+    return None
+
+
+def rule_classification(
+    title: str, description: str | None, rules: FresherClassifierSettings | None = None
+) -> FresherClassification | None:
     """Return an obvious verdict, or None when the model must decide."""
-    senior = SENIOR_TITLE.search(title)
+    rules = rules or FresherClassifierSettings()
+    senior = _find_phrase(title, rules.rejection_words)
     if senior:
-        return FresherClassification(False, f"Seniority keyword in title: {senior.group(0)}", "rules:title-seniority")
-    fresher = FRESHER_TITLE.search(title)
+        return FresherClassification(False, f"Rejection wording in title: {senior}", "rules:title-rejection")
+    fresher = _find_phrase(title, rules.acceptance_words)
     if fresher:
-        return FresherClassification(True, f"Fresher keyword in title: {fresher.group(0)}", "rules:title-fresher")
-    direct = FRESHER_DESCRIPTION.search(description or "")
+        return FresherClassification(True, f"Acceptance wording in title: {fresher}", "rules:title-acceptance")
+    direct = _find_phrase(description or "", rules.acceptance_words)
     if direct:
-        return FresherClassification(True, f"Job description explicitly says: {direct.group(0)}", "rules:jd-fresher")
+        return FresherClassification(True, f"Acceptance wording in JD: {direct}", "rules:jd-acceptance")
     return None
 
 
@@ -86,9 +99,15 @@ def _json_schema() -> dict[str, Any]:
 
 
 class JobClassifier:
-    def __init__(self, settings: Settings | None = None, client: httpx.AsyncClient | None = None):
+    def __init__(
+        self,
+        settings: Settings | None = None,
+        client: httpx.AsyncClient | None = None,
+        classifier_settings: FresherClassifierSettings | None = None,
+    ):
         self.settings = settings or get_settings()
         self.client = client
+        self.classifier_settings = classifier_settings or FresherClassifierSettings()
 
     @property
     def provider(self) -> str:
@@ -98,9 +117,12 @@ class JobClassifier:
         return configured
 
     async def classify(self, title: str, description: str | None) -> FresherClassification:
-        ruled = rule_classification(title, description)
+        ruled = rule_classification(title, description, self.classifier_settings)
         if ruled is not None:
             return ruled
+        return await self.classify_with_model(title, description)
+
+    async def classify_with_model(self, title: str, description: str | None) -> FresherClassification:
         provider = self.provider
         if provider == "disabled" or self.settings.env == "test":
             return FresherClassification(None, "LLM classification is disabled", "disabled")
@@ -129,7 +151,7 @@ class JobClassifier:
                 "stream": False,
                 "format": _json_schema(),
                 "messages": [
-                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "system", "content": self.classifier_settings.prompt},
                     {"role": "user", "content": _prompt(title, description)},
                 ],
                 "options": {"temperature": 0},
@@ -147,7 +169,7 @@ class JobClassifier:
             f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
             headers={"x-goog-api-key": key, "Content-Type": "application/json"},
             json={
-                "systemInstruction": {"parts": [{"text": SYSTEM_PROMPT}]},
+                "systemInstruction": {"parts": [{"text": self.classifier_settings.prompt}]},
                 "contents": [{"role": "user", "parts": [{"text": _prompt(title, description)}]}],
                 "generationConfig": {
                     "temperature": 0,
