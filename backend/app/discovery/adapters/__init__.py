@@ -17,6 +17,9 @@ _REGISTRY: dict[str, str] = {
     "oracle_hcm": "app.discovery.adapters.oracle_hcm:OracleHcmAdapter",
     "eightfold": "app.discovery.adapters.eightfold:EightfoldAdapter",
     "custom:amazon": "app.discovery.adapters.amazon:AmazonAdapter",
+    "custom:atlassian": "app.discovery.adapters.public_feeds:AtlassianAdapter",
+    "custom:grab": "app.discovery.adapters.public_feeds:GrabAdapter",
+    "custom:amd": "app.discovery.adapters.public_feeds:IcimsJibeAdapter",
 }
 
 

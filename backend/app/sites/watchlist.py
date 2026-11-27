@@ -13,6 +13,7 @@ from app.core.db import SessionDep
 from app.core.errors import Conflict, NotFound
 from app.discovery.registry_import import import_registry, parse_json_registry
 from app.models import CareerSite, Company, CompanyAlias
+from app.models.enums import HealthStatus
 from app.sites import service
 
 router = APIRouter(prefix="/settings/scrapers", tags=["scraper settings"])
@@ -48,6 +49,7 @@ async def scraper_inventory(session: SessionDep, user: CurrentUser):
                 site.platform, site.config
             )
             checkable = supported and site.archived_at is None and company.archived_at is None
+            paused = checkable and site.health == HealthStatus.blocked
             evidence = site.evidence or {}
             portals.append(
                 {
@@ -55,7 +57,8 @@ async def scraper_inventory(session: SessionDep, user: CurrentUser):
                     "label": site.label,
                     "platform": site.platform.value,
                     "checkable": checkable,
-                    "status": "unchecked" if checkable else "unavailable",
+                    "status": "paused" if paused else "unchecked" if checkable else "unavailable",
+                    "pause_reason": site.paused_reason if paused else None,
                     "reason": "Archived"
                     if supported and not checkable
                     else (
@@ -101,7 +104,7 @@ async def install_watchlist(session: SessionDep, user: CurrentUser, sync: bool =
 
 
 @router.post("/{site_id}/check")
-async def check_scraper(site_id: int, session: SessionDep, user: CurrentUser):
+async def check_scraper(site_id: int, session: SessionDep, user: CurrentUser, resume: bool = False):
     site = await session.get(CareerSite, site_id)
     if site is None:
         raise NotFound("Career site not found")
@@ -121,4 +124,7 @@ async def check_scraper(site_id: int, session: SessionDep, user: CurrentUser):
         "reason": result.error_message or probe.get("error"),
     }
     site.evidence = {**(site.evidence or {}), "scraper_check": checked}
-    return checked
+    resumed = resume and checked["ok"] and site.health == HealthStatus.blocked
+    if resumed:
+        await service.resume_site(session, site_id)
+    return {**checked, "resumed": resumed} if resume else checked

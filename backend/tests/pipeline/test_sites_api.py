@@ -47,7 +47,7 @@ async def new_site(client, company_id, body=None):
     return r.json()
 
 
-async def test_watchlist_install_and_check(client, fake_adapter, monkeypatch):
+async def test_watchlist_install_and_check(client, session, fake_adapter, monkeypatch):
     from app.sites import watchlist
 
     monkeypatch.setattr(watchlist, "watchlist", lambda: ["Acme", "Amazon", "Swiggy"])
@@ -60,7 +60,7 @@ async def test_watchlist_install_and_check(client, fake_adapter, monkeypatch):
     download = await client.get(f"{endpoint}/registry.json")
     assert download.status_code == 200
     assert "companies.json" in download.headers["content-disposition"]
-    assert len({site["company"] for site in download.json()["sites"]}) == 70
+    assert {"Amazon", "AMD", "Atlassian", "Grab"} <= {site["company"] for site in download.json()["sites"]}
     assert (await client.get(endpoint)).json()[1]["sites"][0]["status"] == "not_added"
     response = await client.post(f"{endpoint}/install")
     assert response.status_code == 200, response.text
@@ -76,6 +76,19 @@ async def test_watchlist_install_and_check(client, fake_adapter, monkeypatch):
     assert checked["ok"] and checked["sampled"] == 1 and checked["detail_checked"]
     assert (await client.get(endpoint)).json()[0]["sites"][0]["check"] == checked
     assert (await client.get(f"{API}/jobs")).json()["total"] == 0
+
+    site = await session.get(CareerSite, acme_site["id"])
+    site.health = HealthStatus.blocked
+    site.paused_reason = "Previous request failed"
+    await session.flush()
+    paused = (await client.get(endpoint)).json()[0]["sites"][0]
+    assert paused["status"] == "paused" and paused["check"]["ok"]
+    response = await client.post(f"{endpoint}/{site.id}/check?resume=true")
+    assert response.status_code == 200, response.text
+    assert response.json()["resumed"] is True
+    await session.refresh(site)
+    assert site.health == HealthStatus.unknown and site.paused_reason is None
+    assert not site.monitoring_enabled
 
 
 # ------------------------------------------------------------------------------------------------ CRUD

@@ -61,6 +61,9 @@ bundled watchlist and scraper definitions. **Check all supported sites** samples
 where available, one job detail. Checks save their status and timestamp without importing jobs or
 calling an LLM. Unsupported or restricted portals stay visible with their reason.
 
+Grab uses its public XML job feed. Atlassian uses its careers-page JSON feed, and AMD uses a
+paginated iCIMS feed. All three provide descriptions in their listing responses.
+
 Anyone with a JobWatch checkout can import the shared file into their own migrated database:
 
 ```bash

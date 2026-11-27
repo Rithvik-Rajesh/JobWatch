@@ -176,6 +176,9 @@
   .ctile .logo { width:32px; height:32px; border-radius:6px; font-size:13px; }
   .ctile .logo img { width:20px; height:20px; }
   .ctile .n { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:500; font-size:13px; }
+  .ctile button { padding:4px 8px; font-size:12px; }
+  .ctile.manage { cursor:default; }
+  .cgrid .empty { grid-column:1 / -1; padding:20px; }
   .modal footer { padding:14px 20px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; gap:10px; }
   @media (max-width:760px) { .job { grid-template-columns:40px 1fr; } .actions { grid-column:1 / -1; } .logo { width:40px; height:40px; }
     #progress { inset:8px; } .rule-grid { grid-template-columns:1fr; }
@@ -296,9 +299,11 @@
       <div class="row"><h3>Companies</h3><span id="mSel" class="small muted"></span></div>
       <div class="row">
         <input id="coFilter" type="search" placeholder="Search companies…" style="flex:1">
-        <button id="selAll">Select all</button><button id="selNone">Clear</button>
+        <span id="companySelectionActions"><button id="selAll">Select all</button> <button id="selNone">Clear</button></span>
+        <button id="manageCompanies" aria-pressed="false">Edit list</button>
       </div>
       <label class="small muted"><input type="checkbox" id="onlySel"> Show jobs only from selected companies</label>
+      <p id="companyListHint" class="small muted" hidden>Add or remove companies from this picker. Changes save in this browser.</p>
     </header>
     <div id="cgrid" class="cgrid"></div>
     <footer>
@@ -332,7 +337,10 @@ const DOMAINS = { "Accenture":"accenture.com","Adobe":"adobe.com","Airbnb":"airb
   "Goldman Sachs":"goldmansachs.com","Postman":"postman.com","Uber":"uber.com","Flipkart":"flipkart.com",
   "Confluent":"confluent.io","Nike":"nike.com","Dream11":"dream11.com","Cohesity":"cohesity.com","Grab":"grab.com",
   "Myntra":"myntra.com","Wayfair":"wayfair.com","Rippling":"rippling.com","Slice":"sliceit.com","Swiggy":"swiggy.com",
-  "Blinkit":"blinkit.com","Amazon":"amazon.com","WinZO":"winzogames.com" };
+  "Blinkit":"blinkit.com","Amazon":"amazon.com","AMD":"amd.com","WinZO":"winzogames.com",
+  "Cloudflare":"cloudflare.com","Elastic":"elastic.co","Everpure":"everpuredata.com","GitLab":"gitlab.com",
+  "Grafana Labs":"grafana.com","HighRadius":"highradius.com","LogicMonitor":"logicmonitor.com",
+  "MongoDB":"mongodb.com","Okta":"okta.com" };
 const PRESETS = ["software", "developer", "SDE", "data", "machine learning", "AI", "backend", "frontend", "full stack", "intern"];
 const TABS = [["not_applied","Not applied"],["interested","Interested"],["applied","Applied"],["not_interested","Not interested"],["all","All"]];
 function hue(name) { let h = 0; for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) % 360; return `hsl(${h} 70% 52%)`; }
@@ -348,6 +356,8 @@ document.addEventListener("error", event => {
 }, true);
 
 let companies = [], selected = new Set(store.get("selected", [])), roles = store.get("roles", ["software", "data", "machine learning", "AI"]);
+const removedCompanies = new Set(store.get("removedCompanies", []));
+let editingCompanyList = false;
 let tab = store.get("tab", "not_applied"), page = 1, running = false, pollTimer = null;
 let reviewOpen = true, reviewTab = "all", fetchState = null, classifierConfig = null;
 const pageSize = 40;
@@ -380,12 +390,13 @@ let installingSites = false;
 let scraperFilter = "all";
 const scraperLabels = {
   not_added: "Not added", unavailable: "Scraper unavailable", unchecked: "Ready to check",
-  checking: "Checking…", works: "Working", failed: "Check failed"
+  checking: "Checking…", works: "Working", failed: "Check failed", paused: "Paused for fetching"
 };
 const scraperGroups = [
   ["works", "Working"], ["failed", "Failed"], ["unavailable", "Unavailable"], ["pending", "Pending"]
 ];
 function scraperOutcome(site) {
+  if (site.status === "paused") return "unavailable";
   if (site.check) return site.check.ok ? "works" : "failed";
   return site.status === "unavailable" ? "unavailable" : "pending";
 }
@@ -407,17 +418,20 @@ function renderScrapers() {
   $("scraperCompanies").innerHTML = visible.map(({company, site}) => {
     const check = site.check;
     const outcome = scraperOutcome(site);
-    const status = site.status === "checking" ? "checking" : check ? outcome : site.status;
+    const status = site.status === "checking" || site.status === "paused" ? site.status : check ? outcome : site.status;
     const checked = check?.at ? new Date(check.at).toLocaleString() : "";
     const sampled = check?.sampled != null ? `${check.sampled} listings sampled` : "";
     const notes = site.requestError || (check ? [checked, sampled, check.reason].filter(Boolean).join(" · ") : site.reason);
+    const pauseNote = site.status === "paused"
+      ? [check?.ok ? "Latest check passed." : "", site.pause_reason].filter(Boolean).join(" ")
+      : "";
     const siteLabel = [site.label === "main" ? "Main site" : site.label,
       site.platform !== "none" ? site.platform : ""].filter(Boolean).join(" · ");
     return `<div class="scraper-row">
       <div class="scraper-company">${logo(company)}<div><strong>${esc(company)}</strong><div class="small muted">${esc(siteLabel)}</div></div></div>
       <div><span class="badge ${status === "works" ? "b-exp" : status === "failed" ? "b-no" : ""}">${scraperLabels[status]}</span></div>
-      <div class="scraper-note">${esc(notes || "")}</div>
-      <div class="scraper-action">${site.checkable ? `<button data-check-site="${site.id}" aria-label="Check ${esc(company)} ${esc(site.label)}" ${busy ? "disabled" : ""}>Check</button>` : ""}</div>
+      <div class="scraper-note">${esc([pauseNote, notes].filter(Boolean).join(" · "))}</div>
+      <div class="scraper-action">${site.checkable ? `<button data-check-site="${site.id}" aria-label="${site.status === "paused" ? "Recheck and resume" : "Check"} ${esc(company)} ${esc(site.label)}" ${busy ? "disabled" : ""}>${site.status === "paused" ? "Resume" : "Check"}</button>` : ""}</div>
     </div>`;
   }).join("") || '<div class="empty">No sites match these filters.</div>';
   $("installWatchlist").disabled = busy || !rows.length;
@@ -427,24 +441,25 @@ async function loadScrapers() {
   scraperCompanies = await api("/settings/scrapers");
   renderScrapers();
 }
-async function checkScrapers(sites) {
+async function checkScrapers(sites, resume = false) {
   if (checkingScrapers) return;
   checkingScrapers = true;
   let done = 0;
   let requestErrors = 0;
   try {
     for (const site of sites) {
+      const priorStatus = site.status;
       site.status = "checking";
       renderScrapers();
       $("scraperStatus").textContent = `Checked ${done} of ${sites.length} sites`;
       try {
-        site.check = await api(`/settings/scrapers/${site.id}/check`, {method:"POST"});
+        site.check = await api(`/settings/scrapers/${site.id}/check${resume ? "?resume=true" : ""}`, {method:"POST"});
         site.requestError = null;
       } catch (error) {
         site.requestError = error.message;
         requestErrors++;
       }
-      site.status = "unchecked";
+      site.status = resume && !site.requestError && site.check.resumed ? "unchecked" : priorStatus;
       done++;
     }
     $("scraperStatus").textContent = requestErrors
@@ -479,7 +494,7 @@ $("scraperCompanies").onclick = event => {
   const button = event.target.closest("[data-check-site]");
   if (!button) return;
   const site = scraperCompanies.flatMap(company => company.sites).find(site => site.id === Number(button.dataset.checkSite));
-  if (site?.checkable) checkScrapers([site]);
+  if (site?.checkable) checkScrapers([site], site.status === "paused");
 };
 $("loginForm").onsubmit = async e => {
   e.preventDefault();
@@ -523,28 +538,65 @@ $("tabs").onclick = e => { const b = e.target.closest("button[data-t]"); if (!b)
 /* ---------- companies modal ---------- */
 async function loadCompanies() {
   companies = await api("/fetch/companies");
-  if (!store.get("selected", null)) selected = new Set(companies.map(c => c.id));
-  selected = new Set([...selected].filter(id => companies.some(c => c.id === id)));
+  const visibleIds = visibleCompanies().map(c => c.id);
+  selected = new Set(store.get("selected", null) ? visibleIds.filter(id => selected.has(id)) : visibleIds);
   renderCompanies();
 }
+function visibleCompanies() { return companies.filter(company => !removedCompanies.has(company.id)); }
 function renderCompanies() {
   const f = $("coFilter").value.trim().toLowerCase();
-  $("cgrid").innerHTML = companies.filter(c => !f || c.name.toLowerCase().includes(f)).map(c => `
+  const visible = visibleCompanies();
+  const candidates = editingCompanyList ? companies : visible;
+  $("manageCompanies").setAttribute("aria-pressed", editingCompanyList);
+  $("manageCompanies").textContent = editingCompanyList ? "Done editing" : "Edit list";
+  $("companyListHint").hidden = !editingCompanyList;
+  $("companySelectionActions").hidden = editingCompanyList;
+  $("cgrid").innerHTML = candidates.filter(c => !f || c.name.toLowerCase().includes(f)).map(c => {
+    if (editingCompanyList) {
+      const action = removedCompanies.has(c.id) ? "Add" : "Remove";
+      return `<div class="ctile manage">
+        ${logo(c.name)}<span class="n" title="${esc(c.name)}">${esc(c.name)}</span>
+        <button data-edit-company="${c.id}" aria-label="${action} ${esc(c.name)}">${action}</button>
+      </div>`;
+    }
+    return `
     <label class="ctile ${selected.has(c.id) ? "on" : ""}"  title="${c.last_success_at ? "Last fetched " + new Date(c.last_success_at).toLocaleString() : "Not fetched yet"}">
       <input type="checkbox" data-id="${c.id}" ${selected.has(c.id) ? "checked" : ""} hidden>
-      ${logo(c.name)}<span class="n">${esc(c.name)}</span><span class="small muted">${c.jobs || ""}</span></label>`).join("");
-  const n = selected.size, all = companies.length;
-  $("mSel").textContent = `${n} of ${all} selected`;
-  $("coCount").textContent = n === all ? "· all" : `· ${n}/${all}`;
-  $("fetch").textContent = `Fetch ${n === all ? "all" : n} ${n === 1 ? "company" : "companies"}`;
-  $("fetch").disabled = $("fetchTop").disabled = !n || running;
+      ${logo(c.name)}<span class="n">${esc(c.name)}</span><span class="small muted">${c.jobs || ""}</span></label>`;
+  }).join("") || '<div class="empty">No companies match. Use Edit list to add companies back.</div>';
+  const n = selected.size, all = visible.length;
+  $("mSel").textContent = editingCompanyList ? `${all} of ${companies.length} shown` : `${n} of ${all} selected`;
+  $("coCount").textContent = n && n === all ? "· all" : `· ${n}/${all}`;
+  $("fetch").textContent = `Fetch ${n && n === all ? "all listed" : n} ${n === 1 ? "company" : "companies"}`;
+  $("fetchTop").disabled = !n || running;
+  $("fetch").disabled = $("fetchTop").disabled || editingCompanyList;
   store.set("selected", [...selected]);
 }
 $("cgrid").onchange = e => { const id = +e.target.dataset.id; if (!id) return; e.target.checked ? selected.add(id) : selected.delete(id); renderCompanies(); if ($("onlySel").checked) loadJobs(); };
+$("cgrid").onclick = event => {
+  const button = event.target.closest("[data-edit-company]");
+  if (!button) return;
+  const id = Number(button.dataset.editCompany);
+  if (!removedCompanies.delete(id)) {
+    removedCompanies.add(id);
+    selected.delete(id);
+  }
+  store.set("removedCompanies", [...removedCompanies]);
+  renderCompanies();
+  $("cgrid").querySelector(`[data-edit-company="${id}"]`)?.focus();
+  if ($("onlySel").checked) loadJobs();
+};
+$("manageCompanies").onclick = () => { editingCompanyList = !editingCompanyList; renderCompanies(); };
 $("coFilter").oninput = renderCompanies;
-$("selAll").onclick = () => { companies.forEach(c => selected.add(c.id)); renderCompanies(); };
+$("selAll").onclick = () => { visibleCompanies().forEach(c => selected.add(c.id)); renderCompanies(); };
 $("selNone").onclick = () => { selected.clear(); renderCompanies(); };
-$("openCompanies").onclick = () => { $("modal").hidden = false; $("coFilter").focus(); };
+$("openCompanies").onclick = () => {
+  editingCompanyList = false;
+  renderCompanies();
+  $("modal").hidden = false;
+  $("coFilter").focus();
+  loadCompanies().catch(error => { $("mSel").textContent = error.message; });
+};
 $("mClose").onclick = () => { $("modal").hidden = true; loadJobs(); };
 $("modal").onclick = e => { if (e.target === $("modal")) { $("modal").hidden = true; loadJobs(); } };
 $("onlySel").checked = store.get("onlySel", false);
@@ -615,7 +667,8 @@ $("reviewFetch").onclick = () => { reviewOpen = true; $("progress").hidden = fal
 
 async function startFetch() {
   try {
-    const ids = selected.size === companies.length ? null : [...selected];
+    const ids = [...selected];
+    if (!ids.length) return;
     await api("/fetch-all", {method: "POST", body: JSON.stringify({company_ids: ids})});
     reviewOpen = true; reviewTab = "all"; $("modal").hidden = true; await loadClassifierConfig(); poll();
   } catch (e) { alert(e.message); }

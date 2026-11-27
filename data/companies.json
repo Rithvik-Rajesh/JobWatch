@@ -1125,6 +1125,23 @@
       "reason": "amazon.jobs search.json (normalized_country_code[]=IND); robots allows. ~2100 India jobs."
     },
     {
+      "company": "AMD",
+      "label": "main",
+      "platform": "custom",
+      "config": {
+        "max_pages": 100,
+        "kind": "custom",
+        "module": "amd",
+        "options": {}
+      },
+      "careers_url": "https://careers.amd.com/careers-home/jobs",
+      "support_class": "adapter",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-11T00:00:00+00:00",
+      "reason": "iCIMS/Jibe /api/jobs; robots crawl-delay 5 s must be honoured."
+    },
+    {
       "company": "WinZO",
       "label": "main",
       "platform": "none",
@@ -1170,6 +1187,150 @@
       "verification_status": "verified_live",
       "verified_at": "2026-11-11T00:00:00+00:00",
       "reason": "Shared workday adapter; public data; India via location_text."
+    },
+    {
+      "company": "Cloudflare",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "cloudflare",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://job-boards.greenhouse.io/cloudflare",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-28T00:00:00+00:00",
+      "reason": "Public Greenhouse feed returned India roles and a sampled job description."
+    },
+    {
+      "company": "Elastic",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "elastic",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://job-boards.greenhouse.io/elastic",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-28T00:00:00+00:00",
+      "reason": "Public Greenhouse feed returned India roles and a sampled job description."
+    },
+    {
+      "company": "Everpure",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "purestorage",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://job-boards.greenhouse.io/purestorage",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-28T00:00:00+00:00",
+      "reason": "Public Greenhouse feed returned India roles and a sampled job description."
+    },
+    {
+      "company": "GitLab",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "gitlab",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://job-boards.greenhouse.io/gitlab",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-28T00:00:00+00:00",
+      "reason": "Public Greenhouse feed returned India roles and a sampled job description."
+    },
+    {
+      "company": "Grafana Labs",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "grafanalabs",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://job-boards.greenhouse.io/grafanalabs",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-28T00:00:00+00:00",
+      "reason": "Public Greenhouse feed returned India roles and a sampled job description."
+    },
+    {
+      "company": "HighRadius",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "highradius",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://job-boards.greenhouse.io/highradius",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-28T00:00:00+00:00",
+      "reason": "Public Greenhouse feed returned India roles and a sampled job description."
+    },
+    {
+      "company": "LogicMonitor",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "logicmonitor",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://job-boards.greenhouse.io/logicmonitor",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-28T00:00:00+00:00",
+      "reason": "Public Greenhouse feed returned India roles and a sampled job description."
+    },
+    {
+      "company": "MongoDB",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "mongodb",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://job-boards.greenhouse.io/mongodb",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-28T00:00:00+00:00",
+      "reason": "Public Greenhouse feed returned India roles and a sampled job description."
+    },
+    {
+      "company": "Okta",
+      "label": "main",
+      "platform": "greenhouse",
+      "config": {
+        "kind": "greenhouse",
+        "board_token": "okta",
+        "api_host": "boards-api.greenhouse.io"
+      },
+      "careers_url": "https://job-boards.greenhouse.io/okta",
+      "support_class": "auto",
+      "india_coverage": "confirmed",
+      "verification_status": "verified_live",
+      "verified_at": "2026-11-28T00:00:00+00:00",
+      "reason": "Public Greenhouse feed returned India roles and a sampled job description."
     }
   ]
 }
