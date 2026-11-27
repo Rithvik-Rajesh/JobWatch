@@ -47,6 +47,33 @@ async def new_site(client, company_id, body=None):
     return r.json()
 
 
+async def test_watchlist_install_and_check(client, fake_adapter, monkeypatch):
+    from app.sites import watchlist
+
+    monkeypatch.setattr(watchlist, "watchlist", lambda: ["Acme", "Amazon", "Swiggy"])
+    company = await new_company(client)
+    acme_site = await new_site(client, company["id"])
+    fake_adapter.result = listing(lp("JR1"))
+    monkeypatch.setattr(sites_service, "make_fetcher", FixtureFetcher)
+    endpoint = f"{API}/settings/scrapers"
+
+    assert (await client.get(endpoint)).json()[1]["sites"][0]["status"] == "not_added"
+    response = await client.post(f"{endpoint}/install")
+    assert response.status_code == 200, response.text
+    assert response.json()["sites_created"] == 2
+    assert (await client.post(f"{endpoint}/install")).json()["sites_created"] == 0
+
+    rows = (await client.get(endpoint)).json()
+    assert rows[1]["sites"][0]["checkable"] is True
+    assert rows[2]["sites"][0]["checkable"] is False
+    response = await client.post(f"{endpoint}/{acme_site['id']}/check")
+    assert response.status_code == 200, response.text
+    checked = response.json()
+    assert checked["ok"] and checked["sampled"] == 1 and checked["detail_checked"]
+    assert (await client.get(endpoint)).json()[0]["sites"][0]["check"] == checked
+    assert (await client.get(f"{API}/jobs")).json()["total"] == 0
+
+
 # ------------------------------------------------------------------------------------------------ CRUD
 async def test_create_get_list_and_validation(client, fake_adapter):
     c = await new_company(client)

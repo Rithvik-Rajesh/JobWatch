@@ -164,6 +164,7 @@
     <span id="topStatus" class="small muted"></span>
     <button id="reviewFetch" hidden>Review fetch</button>
     <button id="openCompanies">Companies <span id="coCount" class="muted"></span></button>
+    <button id="openSettings">Settings</button>
     <button id="fetchTop" class="primary">Fetch jobs</button>
     <button id="theme" class="ghost" title="Toggle dark mode">🌙</button>
     <button id="logout" class="ghost">Sign out</button>
@@ -245,6 +246,21 @@
   </div>
 </div>
 
+<dialog id="scraperSettings" class="modal card" hidden aria-labelledby="scraperSettingsTitle" style="color:var(--text)">
+  <header>
+    <div class="row">
+      <h3 id="scraperSettingsTitle">Company scrapers</h3>
+      <button id="closeSettings">Close</button>
+    </div>
+    <div class="row">
+      <button id="installWatchlist">Add watchlist to JobWatch</button>
+      <button id="checkWatchlist" class="primary">Check all supported sites</button>
+    </div>
+    <div id="scraperStatus" class="small muted" role="status"></div>
+  </header>
+  <div id="scraperCompanies" style="overflow:auto;padding:12px"></div>
+</dialog>
+
 <script>
 const API = "/api/v1", H = {"Content-Type": "application/json", "X-JobWatch-Client": "web"};
 const $ = id => document.getElementById(id);
@@ -282,6 +298,91 @@ async function api(path, opts = {}) {
 }
 function showLogin() { $("app").hidden = true; $("login").hidden = false; }
 function showApp() { $("login").hidden = true; $("app").hidden = false; init(); }
+
+let scraperCompanies = [];
+let checkingScrapers = false;
+const scraperLabels = {
+  not_added: "Not added", unavailable: "Scraper unavailable", unchecked: "Ready to check",
+  checking: "Checking…", works: "Scraper works", failed: "Scraper check failed"
+};
+function renderScrapers() {
+  const list = $("scraperCompanies");
+  list.innerHTML = scraperCompanies.map(({company, sites}) => `
+    <div class="review-job" style="margin-bottom:8px;padding:8px 10px">
+      <strong>${esc(company)}</strong>
+      ${sites.map(site => {
+        const check = site.check;
+        const status = site.status === "checking" ? "checking" : check ? (check.ok ? "works" : "failed") : site.status;
+        const details = check
+          ? [check.at && new Date(check.at).toLocaleString(), check.sampled != null && `${check.sampled} listings sampled`,
+              check.detail_checked && "detail tested", check.reason].filter(Boolean).join(" · ")
+          : site.reason;
+        return `<div class="meta">
+          <span>${esc(site.label)} · ${esc(site.platform)}</span>
+          <span class="badge ${status === "works" ? "b-exp" : status === "failed" ? "b-no" : ""}">${esc(scraperLabels[status])}</span>
+          ${site.checkable ? `<button data-check-site="${site.id}" ${checkingScrapers ? "disabled" : ""}>Check</button>` : ""}
+          <span>${esc(details || "")}</span>
+        </div>`;
+      }).join("")}
+    </div>`).join("");
+  const sites = scraperCompanies.flatMap(company => company.sites);
+  $("installWatchlist").disabled = checkingScrapers || !sites.some(site => site.status === "not_added");
+  $("checkWatchlist").disabled = checkingScrapers || !sites.some(site => site.checkable);
+}
+async function loadScrapers() {
+  scraperCompanies = await api("/settings/scrapers");
+  renderScrapers();
+}
+async function checkScrapers(sites) {
+  if (checkingScrapers) return;
+  checkingScrapers = true;
+  let done = 0;
+  try {
+    for (const site of sites) {
+      site.status = "checking";
+      renderScrapers();
+      $("scraperStatus").textContent = `Checked ${done} of ${sites.length} sites`;
+      try {
+        site.check = await api(`/settings/scrapers/${site.id}/check`, {method:"POST"});
+      } catch (error) {
+        site.check = {ok:false, reason:error.message};
+      }
+      site.status = "unchecked";
+      done++;
+    }
+    $("scraperStatus").textContent = `Finished checking ${done} sites`;
+  } finally {
+    checkingScrapers = false;
+    renderScrapers();
+  }
+}
+$("openSettings").onclick = async () => {
+  const dialog = $("scraperSettings");
+  dialog.hidden = false;
+  dialog.showModal();
+  if (!checkingScrapers) {
+    try { await loadScrapers(); } catch (error) { $("scraperStatus").textContent = error.message; }
+  }
+};
+$("closeSettings").onclick = () => $("scraperSettings").close();
+$("scraperSettings").onclose = () => { $("scraperSettings").hidden = true; };
+$("installWatchlist").onclick = async () => {
+  $("installWatchlist").disabled = true;
+  try {
+    const result = await api("/settings/scrapers/install", {method:"POST"});
+    $("scraperStatus").textContent = `Added ${result.companies_created} companies and ${result.sites_created} career sites`;
+    await loadScrapers();
+    await loadCompanies();
+  } catch (error) { $("scraperStatus").textContent = error.message; }
+  finally { renderScrapers(); }
+};
+$("checkWatchlist").onclick = () => checkScrapers(scraperCompanies.flatMap(company => company.sites).filter(site => site.checkable));
+$("scraperCompanies").onclick = event => {
+  const button = event.target.closest("[data-check-site]");
+  if (!button) return;
+  const site = scraperCompanies.flatMap(company => company.sites).find(site => site.id === Number(button.dataset.checkSite));
+  if (site?.checkable) checkScrapers([site]);
+};
 $("loginForm").onsubmit = async e => {
   e.preventDefault();
   const r = await fetch(API + "/auth/login", {method: "POST", headers: H, credentials: "same-origin",

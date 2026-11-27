@@ -165,16 +165,16 @@ async def test_matches_existing_company_by_name_or_alias(session, tmp_path):
     assert site is not None and site.platform == ExtractorKind.lever
 
 
-def test_real_registry_parses_95_rows():  # 97 minus TCS and Infosys (removed by the user)
+def test_real_registry_parses_all_rows():
     rows = parse_registry(REAL_CSV)
-    assert len(rows) == 95 and len({(r.company, r.label) for r in rows}) == 95
+    assert len(rows) == 96 and len({(r.company, r.label) for r in rows}) == 96
     valid = [r for r in rows if r.valid]
-    assert len(valid) == 94
+    assert len(valid) == 95
     bad = [r for r in rows if not r.valid]
     assert [(r.company, r.label) for r in bad] == [("Salesforce", "subsidiary_sites_checked")]  # placeholder, no site
     assert Counter(r.platform.value for r in valid) == {
         "none": 34,
-        "workday": 22,
+        "workday": 23,
         "greenhouse": 12,
         "custom": 11,
         "eightfold": 6,
@@ -192,13 +192,13 @@ def test_real_registry_parses_95_rows():  # 97 minus TCS and Infosys (removed by
 async def test_real_registry_dry_run_then_apply_is_idempotent(session):
     before = await session.scalar(select(func.count()).select_from(CareerSite))
     dry = await import_registry(session, REAL_CSV)
-    assert dry.rows == 95 and dry.valid_rows == 94 and len(dry.errors) == 1 and not dry.applied
+    assert dry.rows == 96 and dry.valid_rows == 95 and len(dry.errors) == 1 and not dry.applied
     assert await session.scalar(select(func.count()).select_from(CareerSite)) == before
 
     applied = await import_registry(session, REAL_CSV, apply=True)
-    assert applied.sites_created == 94 and applied.companies_created > 80
+    assert applied.sites_created == 95 and applied.companies_created > 80
     monitored = await session.scalar(select(func.count()).select_from(CareerSite).where(CareerSite.monitoring_enabled))
     assert monitored == 0
     again = await import_registry(session, REAL_CSV, apply=True)
     assert (again.companies_created, again.sites_created, again.sites_updated) == (0, 0, 0)
-    assert again.sites_unchanged == 94
+    assert again.sites_unchanged == 95

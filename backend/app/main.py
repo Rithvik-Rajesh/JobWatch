@@ -18,6 +18,7 @@ from app.reminders.router import router as reminders_router
 from app.settings.router import router as settings_router
 from app.sites.fetch_all import router as fetch_router
 from app.sites.router import router as sites_router
+from app.sites.watchlist import router as watchlist_router
 from app.sources.router import router as sources_router
 from app.statuses.router import router as statuses_router
 
@@ -50,6 +51,7 @@ def create_app() -> FastAPI:
         reminders_router,
         companies_router,
         sites_router,
+        watchlist_router,
         fetch_router,
         statuses_router,
         settings_router,

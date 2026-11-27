@@ -1,0 +1,70 @@
+Databricks
+Jane Street
+Google
+Nvidia
+LinkedIn
+Arista Networks
+Workday
+Tower Research Capital
+D. E. Shaw
+Microsoft
+Airbnb
+Atlassian
+ServiceNow
+Intuit
+American Express
+Adobe
+SAP
+Texas Instruments
+Graviton Research Capital
+JPMorgan Chase
+Visa
+Bloomberg
+Autodesk
+Target
+BlackRock
+Mastercard
+Apple
+Qualcomm
+Airbus
+Rubrik
+Stripe
+Palo Alto Networks
+Walmart
+Morgan Stanley
+PayPal
+Cisco
+Deutsche Bank
+Barclays
+Wells Fargo
+Boeing
+CRED
+Groww
+Goldman Sachs
+Postman
+Uber
+Flipkart
+Zscaler
+Confluent
+NetApp
+Samsung
+Nike
+Meesho
+Eightfold AI
+Dream11
+Harness
+Cohesity
+Grab
+Myntra
+Twilio
+Wayfair
+Razorpay
+Rippling
+Slice
+Swiggy
+Coinbase
+Blinkit
+Amazon
+WinZO
+Spotify
+Hewlett Packard Enterprise

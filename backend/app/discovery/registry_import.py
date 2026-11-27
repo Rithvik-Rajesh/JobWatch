@@ -200,7 +200,9 @@ def _core(config: dict[str, Any]) -> dict[str, Any]:
     return {k: v for k, v in config.items() if k not in CACHE_KEYS}
 
 
-async def _apply_rows(session: AsyncSession, rows: list[RegistryRow], summary: ImportSummary) -> None:
+async def _apply_rows(
+    session: AsyncSession, rows: list[RegistryRow], summary: ImportSummary, *, preserve_existing: bool = False
+) -> None:
     seen_companies: set[int] = set()
     for item in rows:
         if not item.valid:
@@ -237,6 +239,9 @@ async def _apply_rows(session: AsyncSession, rows: list[RegistryRow], summary: I
                 evidence=item.evidence,
             )
             summary.sites_created += 1
+        elif preserve_existing:
+            summary.sites_unchanged += 1
+            continue
         else:
             desired: dict[str, Any] = {
                 "platform": item.platform,
@@ -247,6 +252,8 @@ async def _apply_rows(session: AsyncSession, rows: list[RegistryRow], summary: I
                 "verified_at": item.verified_at,
                 "evidence": item.evidence,
             }
+            if "scraper_check" in (site.evidence or {}):
+                desired["evidence"] = {**item.evidence, "scraper_check": site.evidence["scraper_check"]}
             if _core(site.config) != _core(item.config):
                 desired["config"] = item.config
             changed = False
@@ -263,15 +270,23 @@ async def _apply_rows(session: AsyncSession, rows: list[RegistryRow], summary: I
 
 
 async def import_registry(
-    session: AsyncSession, csv_path: Path, *, apply: bool = False, verification_dir: Path | None = None
+    session: AsyncSession,
+    csv_path: Path,
+    *,
+    apply: bool = False,
+    verification_dir: Path | None = None,
+    companies: set[str] | None = None,
+    preserve_existing: bool = False,
 ) -> ImportSummary:
     """Run the import inside a savepoint; it is rolled back unless `apply` (the caller commits the outer
     transaction)."""
     rows = parse_registry(csv_path, verification_dir)
+    if companies is not None:
+        rows = [row for row in rows if row.company in companies]
     summary = ImportSummary(rows=len(rows), applied=apply)
     nested = await session.begin_nested()
     try:
-        await _apply_rows(session, rows, summary)
+        await _apply_rows(session, rows, summary, preserve_existing=preserve_existing)
     except BaseException:
         await nested.rollback()
         raise

@@ -81,6 +81,7 @@ class DryRunResult(APIModel):
     error_message: str | None
     robots_status: str | None
     samples: list[DryRunSample]
+    diagnostics: dict = Field(default_factory=dict)
 
 
 class SchedulerStatus(APIModel):

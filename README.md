@@ -55,6 +55,11 @@ Open [http://localhost:8077](http://localhost:8077). The `make run` command star
 applies migrations, and serves both the API and the built-in UI. Click **Fetch jobs** in the UI to
 open the fetch review window.
 
+Under **Settings → Company scrapers**, use **Add watchlist to JobWatch** to register missing companies
+and career sites from the supplied list. **Check all supported sites** samples the listing feed and,
+where available, one job detail. Checks save their status and timestamp without importing jobs or
+calling an LLM. Unsupported or restricted portals stay visible with their reason.
+
 The interactive review flow is intentionally manual:
 
 1. Fetch all selected companies and inspect each expandable job description.

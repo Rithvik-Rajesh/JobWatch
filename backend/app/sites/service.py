@@ -490,6 +490,7 @@ async def test_site(session: AsyncSession, site_id: int, *, now: datetime | None
         error_message=summary.error_message,
         robots_status=robots,
         samples=samples,
+        diagnostics=summary.diagnostics,
     )
 
 

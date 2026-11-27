@@ -151,6 +151,7 @@ class SuccessFactorsCsbConfig(_Base):
 
 
 class CustomConfig(_Base):
+    max_pages: int = Field(default=100, ge=1, le=1000)
     kind: Literal["custom"] = "custom"
     module: str = Field(pattern=r"^[a-z0-9_]+$")  # app/discovery/adapters/custom/<module>.py
     options: dict[str, Any] = Field(default_factory=dict)
