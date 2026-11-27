@@ -43,13 +43,15 @@ from app.discovery.adapters.base import (
     PortalBlocked,
     RobotsDisallowed,
 )
+from app.discovery.classifier import FresherClassification, JobClassifier
 from app.discovery.configs import validate_config
 from app.discovery.contracts import LocationInput, PostingInput, RunSummary, ScopeDecision
 from app.discovery.india import evaluate_listing
 from app.discovery.ingest import ingest_service, mark_seen
+from app.discovery.normalize.html import html_to_text
 from app.discovery.normalize.location import country_for, country_name, parse_locations
 from app.discovery.title_filter import passes
-from app.models import CareerSite, Company, Posting, ScrapeRun, Source
+from app.models import CareerSite, Company, Job, Posting, ScrapeRun, Source
 from app.models.enums import (
     Availability,
     DatePrecision,
@@ -70,6 +72,16 @@ DRY_RUN_MAX_PAGES = 3
 DRY_RUN_MAX_POSTINGS = 60  # 3 pages x 20
 FAILURES_BEFORE_FAILING = 3
 SessionFactory = Callable[[], Any]  # () -> async context manager yielding an AsyncSession
+ProgressCallback = Callable[[dict[str, Any]], None]
+
+
+def _emit(progress: ProgressCallback | None, stage: str, **details: Any) -> None:
+    """Best-effort live progress; UI reporting must never be able to fail a scrape."""
+    if progress is not None:
+        try:
+            progress({"stage": stage, **details})
+        except Exception:
+            log.warning("progress_callback_failed", stage=stage)
 
 
 @dataclass
@@ -82,6 +94,7 @@ class _Candidate:
     needs_detail: bool = False
     touch_only: bool = False  # unchanged open posting: only mark it seen
     existing_id: int | None = None
+    classification: FresherClassification | None = None
 
 
 @dataclass
@@ -180,11 +193,6 @@ def build_posting_input(
 
     remote = bool(posting.remote or (d and d.remote))
     work_arrangement = (d.work_arrangement if d else None) or (WorkArrangement.remote if remote else None)
-    raw: dict[str, Any] = {}
-    if posting.raw:
-        raw["listing"] = posting.raw
-    if d and d.raw:
-        raw["detail"] = d.raw
     posted_at = (d.posted_at if d and d.posted_at else None) or posting.posted_at
     if d and d.posted_at:
         precision = d.posted_at_precision or posting.posted_at_precision
@@ -212,7 +220,8 @@ def build_posting_input(
         description_html=d.description_html if d else None,
         description_text=d.description_text if d else None,
         listing_fingerprint=posting.fingerprint,
-        raw_payload=_json_safe(raw) if raw else None,
+        # Adapter payloads can be very large and are not needed after normalization.
+        raw_payload=None,
         scope=decision.scope,
         scope_reason=decision.reason,
     )
@@ -269,6 +278,7 @@ async def run_site(
     dry_run: bool = False,
     scrape_run_id: int | None = None,
     session_factory: SessionFactory | None = None,
+    progress: ProgressCallback | None = None,
 ) -> RunSummary:
     trigger = RunTrigger(trigger)
     now = now or _utcnow()
@@ -358,6 +368,7 @@ async def run_site(
         if dry_run and len(postings) > DRY_RUN_MAX_POSTINGS:
             postings, outcome.complete = postings[:DRY_RUN_MAX_POSTINGS], False
         summary.postings_seen = listed_count = len(postings)
+        _emit(progress, "listed", count=listed_count, site_id=site.id, company=site.company_name)
 
         # -- India gate + title filters (listing evidence) ---------------------------------------------------
         by_id: dict[str, ListedPosting] = {}
@@ -387,36 +398,21 @@ async def run_site(
         keep = [c for c in candidates if c.decision.scope != ScopeMatch.out_of_scope and not c.filtered]
         async with sf() as s:
             existing = await _existing_postings(s, site.company_id, [c.posting.external_id for c in keep])
-        stale_before = now - timedelta(days=sched.detail_refresh_days)
         for c in keep:
             row = existing.get(c.posting.external_id)
             c.existing_id = row.id if row else None
-            fingerprint_changed = (
-                row is not None
-                and c.posting.fingerprint is not None
-                and c.posting.fingerprint != row.listing_fingerprint
-            )
-            c.needs_detail = (
-                row is None
-                or row.availability != Availability.open
-                or fingerprint_changed
-                or row.detail_fetched_at is None
-                or row.detail_fetched_at < stale_before
-                or c.posting.has_full_detail
-            )
-        # New postings first, then changed/stale ones, so a capped run prioritises unseen jobs.
-        keep.sort(key=lambda c: c.existing_id is not None)
+            # Career-site jobs are immutable inbox entries: fetch and classify only unseen listings.
+            # Existing rows are merely touched below, preventing repeated JD downloads and versions.
+            c.needs_detail = row is None
         deferred = 0
         for c in keep:
             c.touch_only = c.existing_id is not None and not c.needs_detail
             if not c.needs_detail:
                 continue
+            _emit(progress, "fetching_jd", external_id=c.posting.external_id, title=c.posting.title)
             if not c.posting.has_full_detail and summary.details_fetched >= sched.max_details_per_run:
-                # Politeness cap: defer the remaining detail requests to later runs. Same handling as a
-                # failed detail: existing postings keep stored content, new ones are stored listing-only
-                # (detail_fetched_at NULL -> fetched on a later run).
+                # Store the listing even when the politeness cap prevents a JD request.
                 deferred += 1
-                c.touch_only = c.existing_id is not None
                 continue
             try:
                 c.detail = await adapter.detail(cfg, c.posting, fetcher)
@@ -429,11 +425,27 @@ async def run_site(
                 outcome.warnings.append(
                     {"code": "detail_failed", "external_id": c.posting.external_id, "detail": str(e)[:200]}
                 )
-                # An existing posting keeps its stored content (only marked seen). A new one is ingested
-                # listing-only; detail_fetched_at stays NULL so the detail is retried next run.
-                c.touch_only = c.existing_id is not None
             if c.detail is not None:  # re-evaluate scope with detail evidence
                 c.decision = evaluate_listing(c.posting, c.detail, loc_cfg)
+
+        classifier = JobClassifier()
+        for c in keep:
+            if c.existing_id is not None:
+                continue
+            description = None
+            if c.detail is not None:
+                description = c.detail.description_text or html_to_text(c.detail.description_html)
+            _emit(progress, "classifying", external_id=c.posting.external_id, title=c.posting.title)
+            c.classification = await classifier.classify(c.posting.title, description)
+            _emit(
+                progress,
+                "classified",
+                external_id=c.posting.external_id,
+                title=c.posting.title,
+                verdict=c.classification.is_fresher,
+                provider=c.classification.provider,
+                reason=c.classification.reason,
+            )
 
         if deferred:
             outcome.warnings.append({"code": "details_deferred", "count": deferred, "cap": sched.max_details_per_run})
@@ -460,10 +472,10 @@ async def run_site(
             outcome.error_message = "Listing was not exhaustive (a page failed or a cap was hit)"
 
         # -- phase E: ingest in batches of 20 (savepoint per posting) -------------------------------------------
-        store = [c for c in candidates if c.decision.scope != ScopeMatch.out_of_scope and not c.filtered]
-        seen_ids = {c.posting.external_id for c in store}
+        eligible = [c for c in candidates if c.decision.scope != ScopeMatch.out_of_scope and not c.filtered]
+        seen_ids = {c.posting.external_id for c in eligible}
         if outcome.status != RunStatus.quarantined:
-            await _ingest_all(sf, site, store, summary, ingest_errors, run_id, now)
+            await _ingest_all(sf, site, eligible, summary, ingest_errors, run_id, now, progress)
         outcome.warnings.extend(ingest_errors)
     except (PortalBlocked, RobotsDisallowed, AdapterError) as e:
         outcome.status = RunStatus.failed
@@ -621,6 +633,7 @@ async def _ingest_all(
     errors: list[dict[str, Any]],
     run_id: int | None,
     now: datetime,
+    progress: ProgressCallback | None = None,
 ) -> None:
     for i in range(0, len(store), INGEST_BATCH):
         batch = store[i : i + INGEST_BATCH]
@@ -634,6 +647,14 @@ async def _ingest_all(
                     data = build_posting_input(site, c.posting, c.detail, c.decision)
                     async with s.begin_nested():
                         outcome = await ingest_service.ingest(s, data, seen_at=now, scrape_run_id=run_id)
+                        if c.classification is not None:
+                            job = await s.get(Job, outcome.job_id)
+                            assert job is not None
+                            if job.classified_at is None:
+                                job.is_fresher_role = c.classification.is_fresher
+                                job.fresher_reason = c.classification.reason
+                                job.classified_by = c.classification.provider
+                                job.classified_at = now
                         if c.detail_ok:
                             posting = await s.get(Posting, outcome.posting_id)
                             assert posting is not None
@@ -646,6 +667,13 @@ async def _ingest_all(
                     continue
                 if outcome.created_posting:
                     summary.postings_new += 1
+                    _emit(
+                        progress,
+                        "stored",
+                        external_id=c.posting.external_id,
+                        title=c.posting.title,
+                        verdict=c.classification.is_fresher if c.classification else None,
+                    )
                 elif outcome.new_version:
                     summary.postings_updated += 1
                 if outcome.reopened:

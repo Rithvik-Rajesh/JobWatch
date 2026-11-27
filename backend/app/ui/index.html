@@ -55,6 +55,10 @@
   .results { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:6px; margin-top:8px; }
   .res { display:flex; gap:8px; align-items:center; font-size:13px; padding:6px 8px; border-radius:8px; background:var(--raised); }
   .res .n { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .activity { display:grid; gap:5px; max-height:220px; overflow:auto; margin-top:8px; }
+  .activity-row { display:grid; grid-template-columns:92px 1fr auto; gap:10px; align-items:center; padding:6px 8px;
+    border-radius:7px; background:var(--raised); font-size:12px; }
+  .activity-row .job-name { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .dot { width:7px; height:7px; border-radius:50%; flex:none; background:var(--line); }
   .dot.ok { background:var(--ok); } .dot.bad { background:var(--bad); } .dot.part { background:var(--warn); }
   details summary { cursor:pointer; color:var(--muted); font-size:13px; margin-top:6px; }
@@ -96,6 +100,7 @@
   .badge { font-size:11.5px; font-weight:600; padding:2px 8px; border-radius:4px; background:var(--raised); color:var(--muted); }
   .b-intern { background:var(--soft); color:var(--accent); }
   .b-exp { background:color-mix(in srgb, var(--ok) 12%, transparent); color:var(--ok); }
+  .b-no { background:color-mix(in srgb, var(--bad) 10%, transparent); color:var(--bad); }
   .b-new { background:transparent; color:var(--accent); padding-left:0; }
   .b-st { background:var(--raised); color:var(--text); }
   .actions { display:flex; gap:6px; }
@@ -152,10 +157,15 @@
       <div class="stats">
         <div class="stat"><b id="stDone">0</b><span class="small muted">sites done</span></div>
         <div class="stat"><b id="stIndia">0</b><span class="small muted">India jobs seen</span></div>
-        <div class="stat"><b id="stNew">0</b><span class="small muted">new jobs</span></div>
+        <div class="stat"><b id="stFound">0</b><span class="small muted">jobs retrieved</span></div>
+        <div class="stat"><b id="stChecked">0</b><span class="small muted">fresher checked</span></div>
+        <div class="stat"><b id="stAI">0</b><span class="small muted">AI calls</span></div>
+        <div class="stat"><b id="stRules">0</b><span class="small muted">rule decisions</span></div>
+        <div class="stat"><b id="stNew">0</b><span class="small muted">new jobs stored</span></div>
         <div class="stat"><b id="stFail">0</b><span class="small muted">failed</span></div>
       </div>
       <div id="nowWrap"><span class="small muted">Scraping now</span><div id="now" class="chips"></div></div>
+      <details open><summary>Live job and AI activity</summary><div id="activity" class="activity"></div></details>
       <details id="waitWrap"><summary id="waitSummary"></summary><div id="wait" class="chips"></div></details>
       <details id="doneWrap"><summary id="doneSummary"></summary><div id="results" class="results"></div></details>
     </div>
@@ -169,8 +179,7 @@
 
     <div class="toolbar">
       <label class="toggle" ><input type="checkbox" id="techOnly" checked>Engineering only</label>
-      <label class="toggle" ><input type="checkbox" id="fresher" checked>Freshers (0–1 yrs)</label>
-      <label class="toggle" ><input type="checkbox" id="unknownExp">Include unstated experience</label>
+      <label class="toggle" ><input type="checkbox" id="fresher">Freshers only</label>
       <label class="toggle" ><input type="checkbox" id="internOnly">Internships only</label>
       <span class="grow"></span>
       <span id="count" class="small muted"></span>
@@ -245,7 +254,7 @@ $("loginForm").onsubmit = async e => {
 $("logout").onclick = async () => { await api("/auth/logout", {method: "POST"}).catch(() => {}); showLogin(); };
 
 /* ---------- toggles ---------- */
-const TOGGLES = ["techOnly", "fresher", "unknownExp", "internOnly"];
+const TOGGLES = ["techOnly", "fresher", "internOnly"];
 TOGGLES.forEach(id => {
   const el = $(id); el.checked = store.get(id, el.checked);
   const paint = () => el.parentElement.classList.toggle("on", el.checked);
@@ -325,9 +334,18 @@ async function poll() {
   $("progTitle").textContent = s.running ? `Fetching ${s.done} of ${s.total} sites…` : `Last fetch · ${s.done} of ${s.total} sites`;
   $("progTime").textContent = `${s.running ? "running" : "finished"} · ${dur((s.finished_at ? new Date(s.finished_at) : new Date()) - new Date(s.started_at))}`;
   $("progBar").style.width = `${s.total ? 100 * s.done / s.total : 0}%`;
-  $("stDone").textContent = `${s.done}/${s.total}`; $("stIndia").textContent = s.india_jobs; $("stNew").textContent = s.new_jobs; $("stFail").textContent = failed;
+  $("stDone").textContent = `${s.done}/${s.total}`; $("stIndia").textContent = s.india_jobs;
+  $("stFound").textContent = s.jobs_found || 0; $("stChecked").textContent = s.jobs_classified || 0;
+  $("stAI").textContent = s.ai_checked || 0; $("stRules").textContent = s.rules_checked || 0;
+  $("stNew").textContent = s.stored_jobs ?? s.new_jobs; $("stFail").textContent = failed;
   $("nowWrap").hidden = !s.current.length;
   $("now").innerHTML = s.current.map(l => `<span class="chip">${esc(l)}</span>`).join("");
+  const stageName = {fetching_jd:"Fetching JD", classifying:"Checking", classified:"Classified", stored:"Stored"};
+  $("activity").innerHTML = [...(s.activity || [])].reverse().map(x => {
+    const verdict = x.stage === "classified" ? (x.verdict === true ? "Fresher" : x.verdict === false ? "Not fresher" : "Unclear") : "";
+    const source = x.provider ? `${x.provider}${verdict ? " · " + verdict : ""}` : verdict;
+    return `<div class="activity-row" title="${esc(x.reason || "")}"><span class="muted">${esc(stageName[x.stage] || x.stage)}</span><span class="job-name"><b>${esc(x.title || "Job")}</b> · ${esc(x.site)}</span><span>${esc(source)}</span></div>`;
+  }).join("") || '<span class="small muted">Waiting for the first job…</span>';
   $("waitWrap").hidden = !s.pending.length; $("waitSummary").textContent = `Waiting (${s.pending.length})`;
   $("wait").innerHTML = s.pending.map(l => `<span class="chip wait">${esc(l)}</span>`).join("");
   $("doneSummary").textContent = `Completed (${s.sites.length})`; $("doneWrap").open = !s.running;
@@ -344,7 +362,7 @@ function params(forTab) {
   roles.forEach(r => p.append("role", r));
   if ($("techOnly").checked) p.set("tech_only", "true");
   if ($("internOnly").checked) p.set("internships_only", "true");
-  if ($("fresher").checked) { p.set("max_experience_years", "1"); p.set("include_unknown_experience", $("unknownExp").checked); }
+  if ($("fresher").checked) p.set("fresher", "true");
   if ($("onlySel").checked) selected.forEach(id => p.append("company_id", id));
   return p;
 }
@@ -377,6 +395,7 @@ function renderJobs(data) {
         <div class="meta">
           <span class="company">${esc(j.company.name)}</span><span>${esc(j.location_text || "India")}</span>
           ${intern ? '<span class="badge b-intern">Internship</span>' : ""}${exp(j)}
+          ${j.is_fresher_role === true ? '<span class="badge b-intern" title="' + esc(j.fresher_reason || '') + '">Fresher</span>' : j.is_fresher_role === false ? '<span class="badge b-no" title="' + esc(j.fresher_reason || '') + '">Not fresher</span>' : '<span class="badge" title="Classification unavailable or unclear">Fresher?</span>'}
           ${j.is_new ? '<span class="badge b-new">new</span>' : ""}
           ${k !== "new" ? `<span class="badge b-st">${esc(j.status.label)}</span>` : ""}
           <span>found ${new Date(j.first_seen_at).toLocaleDateString()}</span>

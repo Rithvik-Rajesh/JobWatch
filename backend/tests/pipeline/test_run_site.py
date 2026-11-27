@@ -118,7 +118,7 @@ async def test_detail_persisted_and_scope_reevaluated_with_detail(env, session, 
 
 
 # ------------------------------------------------------------------------------------------ details / idempotency
-async def test_detail_fetched_only_when_needed(env, session):
+async def test_detail_is_fetched_only_for_new_jobs(env, session):
     a, b = lp("A", "Engineer"), lp("B", "Developer")
     s1 = await env.run(listing(a, b))
     assert s1.details_fetched == 2 and sorted(env.adapter.detail_calls) == ["A", "B"]
@@ -129,11 +129,11 @@ async def test_detail_fetched_only_when_needed(env, session):
 
     changed = lp("A", "Engineer", fingerprint="fp-A-changed")
     s3 = await env.run(listing(changed, b), at=T0 + 2 * H)
-    assert env.adapter.detail_calls == ["A"] and s3.details_fetched == 1
+    assert env.adapter.detail_calls == [] and s3.details_fetched == 0
 
-    env.adapter.detail_calls.clear()  # stale: scheduler.detail_refresh_days default 7
+    env.adapter.detail_calls.clear()
     s4 = await env.run(listing(changed, b), at=T0 + timedelta(days=8))
-    assert sorted(env.adapter.detail_calls) == ["A", "B"] and s4.details_fetched == 2
+    assert env.adapter.detail_calls == [] and s4.details_fetched == 0
 
 
 async def test_has_full_detail_still_calls_detail_but_not_counted(env, session):
@@ -143,7 +143,7 @@ async def test_has_full_detail_still_calls_detail_but_not_counted(env, session):
     assert p.apply_url == "https://careers.example.com/jobs/A/apply"
 
 
-async def test_detail_failure_keeps_stored_content_and_retries(env, session):
+async def test_detail_failure_still_stores_new_job_without_retrying_existing(env, session):
     await env.run(listing(lp("A", "Engineer")))
     (p,) = (await postings(session, env.site)).values()
     versions = await count(session, JobVersion, JobVersion.posting_id == p.id)
@@ -153,11 +153,12 @@ async def test_detail_failure_keeps_stored_content_and_retries(env, session):
     await reload(session, p)
     assert await count(session, JobVersion, JobVersion.posting_id == p.id) == versions  # content untouched
     assert p.listing_fingerprint != "new" and p.consecutive_misses == 0 and p.last_seen_at == T0 + H
-    assert "B" in await postings(session, env.site)  # new posting stored listing-only
+    assert "B" in await postings(session, env.site)  # every new listing is retained
     env.adapter.detail_error = None
     env.adapter.detail_calls.clear()
     await env.run(at=T0 + 2 * H)
-    assert sorted(env.adapter.detail_calls) == ["A", "B"]  # retried
+    assert env.adapter.detail_calls == []  # both listings now exist, so neither is checked again
+    assert "B" in await postings(session, env.site)
 
 
 async def test_idempotent_rerun(env, session):
@@ -351,21 +352,25 @@ async def test_detail_requests_are_capped_per_run_and_resumed_next_run(env, sess
     await put_setting(session, "scheduler", {"max_details_per_run": 2})
     posts = [lp(f"P{i}", f"Engineer {i}") for i in range(5)]
     s1 = await env.run(listing(*posts))
-    assert s1.details_fetched == 2 and s1.postings_new == 5  # all stored, only 2 details fetched
+    assert s1.details_fetched == 2 and s1.postings_new == 5
     stored = await postings(session, env.site)
-    assert sum(p.detail_fetched_at is not None for p in stored.values()) == 2
+    assert len(stored) == 5 and sum(p.detail_fetched_at is not None for p in stored.values()) == 2
 
     env.adapter.detail_calls.clear()
     s2 = await env.run(listing(*posts), at=T0 + H)
-    assert s2.details_fetched == 2 and len(env.adapter.detail_calls) == 2
-    fetched = (
-        await session.scalars(
-            select(Posting.detail_fetched_at)
-            .where(Posting.career_site_id == env.site.id)
-            .execution_options(populate_existing=True)
-        )
-    ).all()
-    assert sum(d is not None for d in fetched) == 4
+    assert s2.details_fetched == 0 and s2.postings_new == 0
+    assert env.adapter.detail_calls == []
+    assert len(await postings(session, env.site)) == 5
+
+
+async def test_progress_reports_only_new_job_classification(env):
+    events = []
+    await env.run(listing(lp("A", "Software Engineer")), progress=events.append)
+    assert [e["stage"] for e in events] == ["listed", "fetching_jd", "classifying", "classified", "stored"]
+
+    events.clear()
+    await env.run(listing(lp("A", "Software Engineer")), at=T0 + H, progress=events.append)
+    assert [e["stage"] for e in events] == ["listed"]
 
 
 async def test_dry_run_is_read_only_everywhere_and_reports_diagnostics(env, session):

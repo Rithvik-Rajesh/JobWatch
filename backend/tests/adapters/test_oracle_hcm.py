@@ -3,7 +3,6 @@ from datetime import UTC
 
 import pytest
 
-from app.discovery.adapters import oracle_hcm as mod
 from app.discovery.adapters.base import IndiaQuery, PortalBlocked, RobotsDisallowed, SchemaChanged
 from app.discovery.adapters.oracle_hcm import OracleHcmAdapter, _search_params
 from app.discovery.configs import OracleHcmConfig

@@ -64,6 +64,7 @@ class JobFilters(APIModel):
     role: list[str] = Field(default_factory=list)  # title must contain ANY of these words (e.g. "software")
     tech_only: bool = False  # software / data / AI-ML engineering roles only (keyword rules on title + JD)
     internships_only: bool = False
+    fresher: bool | None = None  # LLM verdict; null means do not filter
     tab: Literal["not_applied", "interested", "applied", "not_interested", "all"] | None = None
     sort: JobSort = "discovered_desc"
 
@@ -109,6 +110,9 @@ class JobListItem(APIModel):
     starred: bool
     is_new: bool  # first_seen_at within 24 h
     is_updated: bool  # meaningful change within 72 h after discovery
+    is_fresher_role: bool | None = None
+    fresher_reason: str | None = None
+    classified_by: str | None = None
     tags: list[str] = Field(default_factory=list)
 
 

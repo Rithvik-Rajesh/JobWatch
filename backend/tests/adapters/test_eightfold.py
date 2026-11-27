@@ -3,7 +3,6 @@ from datetime import UTC
 
 import pytest
 
-from app.discovery.adapters import eightfold as mod
 from app.discovery.adapters.base import IndiaQuery, PortalBlocked, RobotsDisallowed, SchemaChanged
 from app.discovery.adapters.eightfold import EightfoldAdapter
 from app.discovery.configs import EightfoldConfig

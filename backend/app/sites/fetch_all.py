@@ -32,15 +32,41 @@ def _fresh_state() -> dict[str, Any]:
         "total": 0,  # sites in this fetch
         "done": 0,
         "new_jobs": 0,
+        "jobs_found": 0,
+        "jobs_classified": 0,
+        "ai_checked": 0,
+        "rules_checked": 0,
+        "stored_jobs": 0,
         "india_jobs": 0,
         "current": [],  # sites being scraped right now
         "pending": [],  # sites waiting
         "sites": [],  # finished: {site, company, status, in_scope, new, error}
+        "activity": [],  # most recent per-job pipeline events for the live UI
     }
 
 
 _state: dict[str, Any] = _fresh_state()
 _task: asyncio.Task | None = None
+
+
+def _record_progress(site: str, event: dict[str, Any]) -> None:
+    stage = event.get("stage")
+    if stage == "listed":
+        _state["jobs_found"] += int(event.get("count") or 0)
+    elif stage == "classified":
+        _state["jobs_classified"] += 1
+        provider = str(event.get("provider") or "")
+        if provider.startswith("rules:"):
+            _state["rules_checked"] += 1
+        elif provider.startswith(("ollama:", "gemini:")):
+            _state["ai_checked"] += 1
+    elif stage == "stored":
+        _state["stored_jobs"] += 1
+
+    if stage in {"fetching_jd", "classifying", "classified", "stored"}:
+        item = {"site": site, "at": datetime.now(UTC).isoformat(), **event}
+        _state["activity"].append(item)
+        _state["activity"] = _state["activity"][-40:]
 
 
 async def _eligible(company_ids: list[int] | None = None) -> list[dict[str, Any]]:
@@ -91,7 +117,12 @@ async def _run(sites: list[dict[str, Any]]) -> None:
                 _state["pending"].remove(label)
                 _state["current"].append(label)
                 try:
-                    r = await run_site(site["site_id"], trigger="manual", fetcher=client)
+                    r = await run_site(
+                        site["site_id"],
+                        trigger="manual",
+                        fetcher=client,
+                        progress=lambda event: _record_progress(label, event),
+                    )
                     entry = {
                         "status": r.status,
                         "in_scope": r.postings_in_scope,

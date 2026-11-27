@@ -101,6 +101,8 @@ def job_conditions(
         conds.append(or_(*[Job.title.ilike(f"%{r.strip()}%") for r in filters.role if r.strip()]))
     if filters.internships_only:
         conds.append(Job.title.op("~*")(INTERN_TITLE))
+    if filters.fresher is not None:
+        conds.append(Job.is_fresher_role.is_(filters.fresher))
     if filters.tech_only:
         desc = func.coalesce(Job.description_text, "")
         conds.append(
@@ -305,6 +307,9 @@ async def build_items(
                     job.last_changed_at > job.first_seen_at + UPDATED_MIN_AFTER_DISCOVERY
                     and now - job.last_changed_at <= UPDATED_WINDOW
                 ),
+                is_fresher_role=job.is_fresher_role,
+                fresher_reason=job.fresher_reason,
+                classified_by=job.classified_by,
                 tags=sorted(tags.get(job.id, [])),
             )
         )
